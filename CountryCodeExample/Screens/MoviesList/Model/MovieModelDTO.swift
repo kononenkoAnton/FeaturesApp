@@ -63,19 +63,36 @@ struct EntryDTO: Codable {
         mediaGroup = try container.decode([MediaGroupDTO].self, forKey: .mediaGroup)
         extensions = try container.decodeIfPresent(ExtensionsDTO.self, forKey: .extensions)
     }
-    
+
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.id, forKey: .id)
-        try container.encode(self.title, forKey: .title)
-        try container.encode(self.summary, forKey: .summary)
-        try container.encode(self.published, forKey: .published)
-        try container.encode(self.content, forKey: .content)
-        try container.encode(self.mediaGroup, forKey: .mediaGroup)
-        try container.encodeIfPresent(self.extensions, forKey: .extensions)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encode(summary, forKey: .summary)
+        try container.encode(published, forKey: .published)
+        try container.encode(content, forKey: .content)
+        try container.encode(mediaGroup, forKey: .mediaGroup)
+        try container.encodeIfPresent(extensions, forKey: .extensions)
+    }
+
+    init(id: String,
+         title: String,
+         summary: String,
+         published: String,
+         content: ContentDTO,
+         mediaGroup: [MediaGroupDTO],
+         extensions: ExtensionsDTO?) {
+        self.id = id
+        self.title = title
+        self.summary = summary
+        self.published = published
+        self.content = content
+        self.mediaGroup = mediaGroup
+        self.extensions = extensions
     }
 }
 
 struct FeedDTO: Codable {
+    let id: String
     let entry: [EntryDTO]
 }

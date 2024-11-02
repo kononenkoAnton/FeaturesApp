@@ -35,9 +35,9 @@ enum NetworkError: Error {
 
 
 protocol NetworkServiceProtocol {
-    associatedtype Parsable: JSONParsable
+    associatedtype Parsable: DTODecodable
     func fetchRequest(endPoint: EndpointProtocol,
-                      parser: Parsable) async throws -> Parsable.Model?
+                      parser: Parsable) async throws -> Parsable.ModelDTO?
     func fetchURL(endPoint: EndpointProtocol,
-                  parser: Parsable) async throws -> Parsable.Model?
+                  parser: Parsable) async throws -> Parsable.ModelDTO?
 }

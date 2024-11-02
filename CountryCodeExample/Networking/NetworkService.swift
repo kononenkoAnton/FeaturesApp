@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DefaultNetworkService<Parser: JSONParsable>: NetworkServiceProtocol {
+class DefaultNetworkService<Parser: DTODecodable>: NetworkServiceProtocol {
     typealias Parsable = Parser
     // TODO: Add logger, error, response, request
     let config: APIConfigurable
@@ -73,12 +73,7 @@ class DefaultNetworkService<Parser: JSONParsable>: NetworkServiceProtocol {
                 return .generalError(error)
             }
         }
-
-        if let error = error as? RequestError,
-           case .canNotCreateURL = error {
-            return NetworkError.parsingError
-        }
-
+        
         return .generalError(error)
     }
 }

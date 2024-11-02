@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol JSONParsable: Codable {
-    associatedtype Model
-    func parse(data: Data) throws -> Model
+protocol DTODecodable: Codable {
+    associatedtype ModelDTO
+    func decodeDTO(from data: Data) throws -> ModelDTO
 }

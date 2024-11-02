@@ -56,3 +56,8 @@ struct Entry {
         self.extensions = extensions
     }
 }
+
+struct Feed {
+    let id: String
+    let entry: [Entry]
+}

@@ -19,7 +19,7 @@ class MoviesListRepository {
     }
 
     func loadMovilesList(endpoint: Endpoint) async throws -> [Entry] {
-//        let feed = networkService.fetchRequest(endPoint: endpoint,
-//                                               parser: <#T##any NetworkServiceProtocol.Parsable#>)
+        let feed = networkService.fetchRequest(endPoint: endpoint,
+                                               parser: FeedDTODecoder())
     }
 }
