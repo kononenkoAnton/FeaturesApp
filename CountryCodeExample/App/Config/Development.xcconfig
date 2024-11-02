@@ -1,0 +1,8 @@
+//
+//  Development.xcconfig
+//  CountryCodeExample
+//
+//  Created by Anton Kononenko on 10/30/24.
+//
+
+API_BASE_URL = https://gist.githubusercontent.com

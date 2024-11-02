@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		40CD77132CD29698001B6D99 /* Description.txt in Resources */ = {isa = PBXBuildFile; fileRef = 40CD77122CD29698001B6D99 /* Description.txt */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		40CD76F52CD2968B001B6D99 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		40CD76DE2CD29688001B6D99 /* CountryCodeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryCodeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40CD76F42CD2968B001B6D99 /* CountryCodeExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryCodeExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		40CD76FE2CD2968B001B6D99 /* CountryCodeExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryCodeExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		40CD77122CD29698001B6D99 /* Description.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Description.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		40CD76D52CD29688001B6D99 = {
 			isa = PBXGroup;
 			children = (
+				40CD77122CD29698001B6D99 /* Description.txt */,
 				40CD76E02CD29688001B6D99 /* CountryCodeExample */,
 				40CD76F72CD2968B001B6D99 /* CountryCodeExampleTests */,
 				40CD77012CD2968B001B6D99 /* CountryCodeExampleUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40CD77132CD29698001B6D99 /* Description.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +291,8 @@
 /* Begin XCBuildConfiguration section */
 		40CD77082CD2968B001B6D99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 40CD76E02CD29688001B6D99 /* CountryCodeExample */;
+			baseConfigurationReferenceRelativePath = App/Config/Development.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -311,6 +320,8 @@
 		};
 		40CD77092CD2968B001B6D99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 40CD76E02CD29688001B6D99 /* CountryCodeExample */;
+			baseConfigurationReferenceRelativePath = App/Config/Production.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

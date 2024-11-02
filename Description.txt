@@ -1,0 +1,66 @@
+1. Fetch a list of countries in JSON format from this URL: https://gist.githubusercontent.com/peymano-wmt/32dcb892b06648910ddd40406e37fdab/raw/db25946fd77c5873b0303b858e861ce724e0dcd0/countries.json
+
+2. Display all the countries in a UITableView ordered by the position they appear in the JSON. In each table cell, show the country's "name", "region", "code" and "capital" in this format:
+
+  ---------------------------------------
+  |                                     |
+  | "name", "region"             "code" |
+  |                                     |
+  | "capital"                           |
+  |                                     |
+  ---------------------------------------
+
+  For exampple:
+
+  ---------------------------------------
+  |                                     |
+  | United States of America, NA     US |
+  |                                     |
+  | Washington, D.C.                    |
+  |                                     |
+  ---------------------------------------
+  |                                     |
+  | Uruguay, SA                      UY |
+  |                                     |
+  | Montevideo                          |
+  |                                     |
+  ---------------------------------------
+    
+The user should be able to scroll thru the entire list of countries.
+
+3. Use a UISearchController to enable filtering by "name" or "capital" as the user types each character of their search.
+
+The implementation should be robust (i.e., handle errors and edge cases), support Dynamic Type, support iPhone and iPad, and support device rotation.
+
+Limit yourself to 60 minutes. We don't expect you to finish. The goal is to write high-quality code for the portion you choose to implement, not the number of features implemented.
+
+
+4. Add offline support (local cache)
+
+
+As a user I want to be able to view the list of countries offline.
+
+Requirements:
+
+    - Add a way to persist the data locally in the app
+    - Data should be persisted even through app crashes or restarts
+    - The app should always try the network first, then fall back to the last successfully cached result
+    - If the networking fails and we have no local cache fall back to showing the error alert
+
+5. Refresh control
+ let refreshControl = UIRefreshControl()
+
+ override func viewDidLoad() {
+   super.viewDidLoad()
+
+   refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+   refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+   tableView.addSubview(refreshControl) // not required when using UITableViewController
+ }
+
+ @objc func refresh(_ sender: AnyObject) {
+   // Code to refresh table view
+ }
+
+
+
