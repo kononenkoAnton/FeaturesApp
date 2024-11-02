@@ -19,8 +19,8 @@ class AppCoordinator: Coordinator {
 
     func start() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ContriesListViewController") as? ContriesListViewController else {
-            fatalError("ContriesListViewController not found")
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "MoviesListViewController") as? MoviesListViewController else {
+            fatalError("MoviesListViewController not found")
         }
 
         viewController.coordinator = self

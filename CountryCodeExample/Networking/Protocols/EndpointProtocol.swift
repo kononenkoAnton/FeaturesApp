@@ -1,16 +1,14 @@
 //
-//  APIConfigurable.swift
+//  EndpointProtocol.swift
 //  CountryCodeExample
 //
-//  Created by Anton Kononenko on 10/30/24.
+//  Created by Anton Kononenko on 11/2/24.
 //
 
 import Foundation
 
-protocol APIConfigurable {
-    var baseURL: URL { get }
-    var headers: [String: String] { get }
-    var query: [String: String] { get }
+enum EndpointError: Error {
+    case canNotCreateURL
 }
 
 protocol EndpointProtocol {
@@ -24,14 +22,10 @@ protocol EndpointProtocol {
     func url(config: APIConfigurable) throws -> URL
 }
 
-enum RequestError: Error {
-    case canNotCreateURL
-}
-
 extension EndpointProtocol {
     func url(config: APIConfigurable) throws -> URL {
         guard var components = URLComponents(url: config.baseURL, resolvingAgainstBaseURL: true) else {
-            throw RequestError.canNotCreateURL
+            throw EndpointError.canNotCreateURL
         }
 
         components.path = path
@@ -45,7 +39,7 @@ extension EndpointProtocol {
         }
 
         guard let url = components.url else {
-            throw RequestError.canNotCreateURL
+            throw EndpointError.canNotCreateURL
         }
 
         return url
@@ -56,7 +50,7 @@ extension EndpointProtocol {
 
         if config.query.count == 0 || query.count == 0 {
             guard var components = URLComponents(url: config.baseURL, resolvingAgainstBaseURL: true) else {
-                throw RequestError.canNotCreateURL
+                throw EndpointError.canNotCreateURL
             }
 
             for queryPair in config.query {
@@ -68,7 +62,7 @@ extension EndpointProtocol {
             }
 
             guard let url = components.url else {
-                throw RequestError.canNotCreateURL
+                throw EndpointError.canNotCreateURL
             }
 
             requestURL = url

@@ -1,5 +1,5 @@
 //
-//  ContriesListViewController.swift
+//  MoviesListViewController.swift
 //  CountryCodeExample
 //
 //  Created by Anton Kononenko on 10/30/24.
@@ -7,6 +7,6 @@
 
 import UIKit
 
-class ContriesListViewController: UIViewController, Coordinatable {
+class MoviesListViewController: UIViewController, Coordinatable {
     weak var coordinator: Coordinator?
 }

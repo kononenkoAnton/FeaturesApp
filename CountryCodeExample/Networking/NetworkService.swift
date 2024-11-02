@@ -7,49 +7,7 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case parsingError
-    case serverError(code: Int)
-    case networkEror
-    case invalidResponse
-    case timeout
-    case canceled
-    case generalError(Error)
-
-    var localizedDescription: String {
-        switch self {
-        case .parsingError:
-            return "Parsing Error"
-        case let .serverError(code):
-            return "Sever Error- code: \(code)"
-        case .networkEror:
-            return "Network Error"
-        case .invalidResponse:
-            return "Invalid Response Error"
-        case .timeout:
-            return "Timeout Error"
-        case .canceled:
-            return "Canceled"
-        case let .generalError(error):
-            return error.localizedDescription
-        }
-    }
-}
-
-protocol JSONParsable: Codable {
-    associatedtype Model
-    func parse(data: Data) throws -> Model
-}
-
-protocol NetworkFetchable {
-    associatedtype Parsable: JSONParsable
-    func fetchRequest(endPoint: EndpointProtocol,
-                      parser: Parsable) async throws -> Parsable.Model?
-    func fetchURL(endPoint: EndpointProtocol,
-                  parser: Parsable) async throws -> Parsable.Model?
-}
-
-class DefaultNetworkService<Parser: JSONParsable>: NetworkFetchable {
+class DefaultNetworkService<Parser: JSONParsable>: NetworkServiceProtocol {
     typealias Parsable = Parser
     // TODO: Add logger, error, response, request
     let config: APIConfigurable
@@ -64,7 +22,6 @@ class DefaultNetworkService<Parser: JSONParsable>: NetworkFetchable {
     }
 
     func fetchRequest(endPoint: any EndpointProtocol,
-
                       parser: Parser) async throws -> Parsable.Model? {
         do {
             let request = try endPoint.request(config: config)
