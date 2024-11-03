@@ -10,11 +10,29 @@ import Foundation
 class AppDIContainer {
     lazy var applicationAPIConfig = ApplicationAPIConfig()
 
-    lazy var networkConfig: APIConfigurable = {
+    var baseURL: URL {
         guard let url = URL(string: applicationAPIConfig.baseURL) else {
             fatalError("Can not create base api url")
         }
-        
-        return APIConfiguration(baseURL: url)
+
+        return url
+    }
+
+    lazy var apiNetworkService: NetworkServiceProtocol = {
+        let apiConfiguration = APIConfiguration(baseURL: baseURL)
+
+        return DefaultNetworkService(config: apiConfiguration)
     }()
+
+    lazy var imageNetworkService: NetworkServiceProtocol = {
+        let apiConfiguration = APIConfiguration(baseURL: baseURL)
+
+        return DefaultNetworkService(config: apiConfiguration)
+    }()
+
+    // TODO: Possible should be repository
+    func getDIContainer() -> MoviewsScreenDIContainer {
+        MoviewsScreenDIContainer(apiNetworkService: apiNetworkService,
+                                 imageNetworkService: imageNetworkService)
+    }
 }

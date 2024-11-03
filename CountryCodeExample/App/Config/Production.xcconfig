@@ -5,4 +5,4 @@
 //  Created by Anton Kononenko on 10/30/24.
 //
 
-API_BASE_URL = https://gist.githubusercontent.com
+API_BASE_URL = https://wino-feed.s3.amazonaws.com/movieFeed

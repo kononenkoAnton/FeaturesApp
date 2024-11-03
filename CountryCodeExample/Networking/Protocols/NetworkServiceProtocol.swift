@@ -5,13 +5,10 @@
 //  Created by Anton Kononenko on 11/2/24.
 //
 
-
-
 enum NetworkError: Error {
     case serverError(code: Int)
-    case networkEror
+    case retryNeeded(originalError: Error)
     case invalidResponse
-    case timeout
     case canceled
     case generalError(Error)
 
@@ -19,25 +16,21 @@ enum NetworkError: Error {
         switch self {
         case let .serverError(code):
             return "Sever Error- code: \(code)"
-        case .networkEror:
-            return "Network Error"
         case .invalidResponse:
             return "Invalid Response Error"
-        case .timeout:
-            return "Timeout Error"
         case .canceled:
             return "Canceled"
+        case let .retryNeeded(originalError):
+            return "Retry needed, original error: \(originalError.localizedDescription)"
         case let .generalError(error):
             return error.localizedDescription
         }
     }
 }
 
-
 protocol NetworkServiceProtocol {
-    associatedtype Parsable: DTODecodable
-    func fetchRequest(endPoint: EndpointProtocol,
-                      parser: Parsable) async throws -> Parsable.ModelDTO?
-    func fetchURL(endPoint: EndpointProtocol,
-                  parser: Parsable) async throws -> Parsable.ModelDTO?
+    func fetchRequest<Decoder: DTODecodable>(endPoint: EndpointProtocol,
+                                             decoder: Decoder) async throws -> Decoder.ModelDTO
+    func fetchURL<Decoder: DTODecodable>(endPoint: EndpointProtocol,
+                                         decoder: Decoder) async throws -> Decoder.ModelDTO
 }

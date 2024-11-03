@@ -7,8 +7,7 @@
 
 import Foundation
 
-class DefaultNetworkService<Parser: DTODecodable>: NetworkServiceProtocol {
-    typealias Parsable = Parser
+class DefaultNetworkService: NetworkServiceProtocol {
     // TODO: Add logger, error, response, request
     let config: APIConfigurable
     let logger: NetworkLoggable
@@ -21,32 +20,32 @@ class DefaultNetworkService<Parser: DTODecodable>: NetworkServiceProtocol {
         self.session = session
     }
 
-    func fetchRequest(endPoint: any EndpointProtocol,
-                      parser: Parser) async throws -> Parsable.Model? {
+    func fetchRequest<Decoder>(endPoint: any EndpointProtocol,
+                               decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
         do {
             let request = try endPoint.request(config: config)
             logger.log(request: request)
             let (data, response) = try await session.data(for: request)
-            return try resolveResponse(data: data, response: response, parser: parser)
+            return try await resolveResponse(data: data, response: response, decoder: decoder)
         } catch {
             throw resolveError(error: error)
         }
     }
 
-    func fetchURL(endPoint: any EndpointProtocol,
-                  parser: Parser) async throws -> Parsable.Model? {
+    func fetchURL<Decoder>(endPoint: any EndpointProtocol,
+                           decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
         do {
             let url: URL = try endPoint.url(config: config)
             let (data, response) = try await session.data(from: url)
-            return try resolveResponse(data: data, response: response, parser: parser)
+            return try await resolveResponse(data: data, response: response, decoder: decoder)
         } catch {
             throw resolveError(error: error)
         }
     }
 
-    private func resolveResponse(data: Data,
-                                 response: URLResponse,
-                                 parser: Parser) throws -> Parsable.Model {
+    private func resolveResponse<Decoder>(data: Data,
+                                          response: URLResponse,
+                                          decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
         guard let response = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
@@ -57,23 +56,24 @@ class DefaultNetworkService<Parser: DTODecodable>: NetworkServiceProtocol {
         }
 
         logger.log(data: data, statusCode: statusCode)
-        return try parser.parse(data: data)
+        return try decoder.decodeDTO(from: data)
     }
 
+    // Posible network erorr strategies
     private func resolveError(error: Error) -> NetworkError {
         if let error = error as? URLError {
             switch error.code {
             case .cancelled:
                 return NetworkError.canceled
-            case .notConnectedToInternet, .networkConnectionLost:
-                return NetworkError.networkEror
-            case .timedOut:
-                return NetworkError.timeout
+            case .notConnectedToInternet,
+                 .networkConnectionLost,
+                 .timedOut:
+                return NetworkError.retryNeeded(originalError: error)
             default:
                 return .generalError(error)
             }
         }
-        
+
         return .generalError(error)
     }
 }

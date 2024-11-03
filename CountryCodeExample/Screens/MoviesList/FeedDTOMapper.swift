@@ -6,7 +6,7 @@
 //
 
 class FeedDTOMapper: DTOMapperProtocol {
-    func mapToDomain(from modelDTO: FeedDTO) -> Feed {
+    func mapToDomain(from modelDTO: ModelDTO) -> ModelDomain {
         Feed(id: modelDTO.id,
              entry: modelDTO.entry.map {
                  Entry(id: $0.id,

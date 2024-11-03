@@ -6,20 +6,26 @@
 //
 
 protocol MoviesListRepositoryProtocol {
-    func loadMovilesList(endpoint: Endpoint) async throws -> [Entry]
+    func loadMovilesList() async throws -> Feed
 }
 
-class MoviesListRepository {
+class MoviesListRepository: MoviesListRepositoryProtocol {
     // TODO: Cache here
 
     let networkService: any NetworkServiceProtocol
+    let mapper: FeedDTOMapper
 
-    init(networkService: any NetworkServiceProtocol) {
+    init(networkService: any NetworkServiceProtocol,
+         mapper: FeedDTOMapper = FeedDTOMapper()) {
         self.networkService = networkService
+        self.mapper = mapper
     }
 
-    func loadMovilesList(endpoint: Endpoint) async throws -> [Entry] {
-        let feed = networkService.fetchRequest(endPoint: endpoint,
-                                               parser: FeedDTODecoder())
+    func loadMovilesList() async throws -> Feed {
+        let endpoint = APIStorage.MoviesScreen.moviesListEndpoint(path: "movieFeedv2.json")
+        let feedDTO = try await networkService.fetchRequest(endPoint: endpoint,
+                                                            decoder: FeedDTODecoder())
+        let feed = mapper.mapToDomain(from: feedDTO)
+        return feed
     }
 }
