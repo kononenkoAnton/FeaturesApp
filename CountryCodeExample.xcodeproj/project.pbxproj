@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		40CD77132CD29698001B6D99 /* Description.txt in Resources */ = {isa = PBXBuildFile; fileRef = 40CD77122CD29698001B6D99 /* Description.txt */; };
+		40F60BAC2CD7A61A00549D32 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 40F60BAB2CD7A61A00549D32 /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		40CD76F42CD2968B001B6D99 /* CountryCodeExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryCodeExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		40CD76FE2CD2968B001B6D99 /* CountryCodeExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryCodeExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		40CD77122CD29698001B6D99 /* Description.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Description.txt; sourceTree = "<group>"; };
+		40F60BAB2CD7A61A00549D32 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -93,6 +95,7 @@
 		40CD76D52CD29688001B6D99 = {
 			isa = PBXGroup;
 			children = (
+				40F60BAB2CD7A61A00549D32 /* Documentation.docc */,
 				40CD77122CD29698001B6D99 /* Description.txt */,
 				40CD76E02CD29688001B6D99 /* CountryCodeExample */,
 				40CD76F72CD2968B001B6D99 /* CountryCodeExampleTests */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F60BAC2CD7A61A00549D32 /* Documentation.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
