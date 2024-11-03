@@ -7,8 +7,9 @@
 
 import UIKit
 
+
 protocol MoviesListCoordinatorDependencies {
-    func createMoviesListViewController() -> MoviesListViewController
+    func createMoviesListViewController(coordinator: MoviewListCoordinatorProtocol) -> MoviesListViewController
 }
 
 protocol MoviewListCoordinatorProtocol: Coordinator {
@@ -23,7 +24,7 @@ class MoviesListCoordinator: MoviewListCoordinatorProtocol {
     var navigationController: UINavigationController
 
     func start() {
-        let vc = dependencies.createMoviesListViewController()
+        let vc = dependencies.createMoviesListViewController(coordinator: self)
         vc.coordinator = self
         moviesListVC = vc
         navigationController.pushViewController(vc, animated: false)

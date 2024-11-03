@@ -28,12 +28,13 @@ class MoviewsListScreenDIContainer: MoviesListCoordinatorDependencies {
 
     // Scene
 
-    func createMoviesListViewController() -> MoviesListViewController {
-        MoviesListViewController.create(with: createMoviesListViewModel())
+    func createMoviesListViewController(coordinator: MoviewListCoordinatorProtocol) -> MoviesListViewController {
+        MoviesListViewController.create(with: createMoviesListViewModel(coordinator: coordinator))
     }
 
-    func createMoviesListViewModel() -> MoviesListViewModel {
-        MoviesListViewModel()
+    func createMoviesListViewModel(coordinator: MoviewListCoordinatorProtocol) -> MoviesListViewModel {
+        MoviesListViewModel(moviewListManager: MoviesListManager(repository: createMoviesRepository()),
+                            coordinator: coordinator)
     }
 
     func createMoviesListCoordinator(navigationController: UINavigationController) -> MoviesListCoordinator {

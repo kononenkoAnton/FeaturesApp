@@ -7,14 +7,21 @@
 
 import UIKit
 
-class MoviesListViewController: UIViewController, StoryboardInstantiable {
+class MoviesListViewController: UISearchController, StoryboardInstantiable {
     weak var coordinator: MoviewListCoordinatorProtocol?
-    var viewModel: MoviesListViewModel!
+    var viewModel: MoviesListViewModelProtocol!
     
     static func create(with viewModel: MoviesListViewModel) -> MoviesListViewController  {
         let vc = MoviesListViewController.instantiateViewController()
         vc.viewModel = viewModel
         return vc
     }
+    
+    override func viewDidLoad() {
+        delegate = self
+    }
 }
 
+extension MoviesListViewController: UISearchControllerDelegate {
+    
+}
