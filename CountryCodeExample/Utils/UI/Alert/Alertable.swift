@@ -32,43 +32,53 @@ struct AlertData {
 
 import UIKit
 
-protocol AlertableWithAsync {
+protocol AlertableWithAsync: AlertableWithCompletion {
     func showAlert(alertData: AlertData) async -> AlertAction
 }
 
 extension AlertableWithAsync where Self: UIViewController {
     @MainActor func showAlert(alertData: AlertData) async -> AlertAction {
         await withCheckedContinuation { continuation in
-            let alertController = UIAlertController(title: alertData.title, message: alertData.message, preferredStyle: alertData.preferredStyle)
-
-            let okAction = UIAlertAction(title: alertData.okTitle, style: .default) { _ in
-                continuation.resume(returning: .ok)
+            showAlert(alertData: alertData) { alertAction in
+                continuation.resume(returning: alertAction)
             }
-
-            alertController.addAction(okAction)
-
-            if let cancelTitle = alertData.cancelTitle {
-                let cancelAction = UIAlertAction(title: cancelTitle, style: .destructive) { _ in
-                    continuation.resume(returning: .cancel)
-                }
-
-                alertController.addAction(cancelAction)
-            }
-
-            // Handle if user push outside of alert
-            if alertData.preferredStyle == .alert {
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
-                    continuation.resume(returning: .cancel)
-                })
-            }
-
-            self.present(alertController,
-                         animated: true,
-                         completion: nil)
         }
     }
 }
 
 protocol AlertableWithCompletion {
-    func showAlert(title: String, message: String, preferredStyle: UIAlertController.Style, completion: (AlertAction) -> Void)
+    func showAlert(alertData: AlertData,
+                   completion: @escaping (AlertAction) -> Void)
+}
+
+extension AlertableWithCompletion where Self: UIViewController {
+    func showAlert(alertData: AlertData,
+                   completion: @escaping (AlertAction) -> Void) {
+        let alertController = UIAlertController(title: alertData.title, message: alertData.message, preferredStyle: alertData.preferredStyle)
+
+        let okAction = UIAlertAction(title: alertData.okTitle, style: .default) { _ in
+            completion(.ok)
+        }
+
+        alertController.addAction(okAction)
+
+        if let cancelTitle = alertData.cancelTitle {
+            let cancelAction = UIAlertAction(title: cancelTitle, style: .destructive) { _ in
+                completion(.cancel)
+            }
+
+            alertController.addAction(cancelAction)
+        }
+
+        // Handle if user push outside of alert
+        if alertData.preferredStyle == .alert {
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+                completion(.cancel)
+            })
+        }
+
+        present(alertController,
+                animated: true,
+                completion: nil)
+    }
 }
