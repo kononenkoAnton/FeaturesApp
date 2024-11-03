@@ -16,6 +16,8 @@ class ExponentialBackoffStrategy: RetryStrategy {
 
     private var previousDelay: TimeInterval?
 
+    private let synchronizationQueue = DispatchQueue(label: "com.example.ExponentialBackoffStrategy")
+
     init(maxRetryCount: Int = 3,
          baseDelay: TimeInterval = 2,
          jitterStrategy: JitterStrategy = DecorrelatedJitter(),
@@ -44,11 +46,13 @@ class ExponentialBackoffStrategy: RetryStrategy {
 
     func retryDelay(for attempt: Int) -> TimeInterval {
         let exponentialDelay = min(baseDelay * pow(2.0, Double(attempt - 1)), maxDelay)
-        let jitter = jitterStrategy.calculateRetryDelay(for: exponentialDelay,
-                                                        baseDelay: baseDelay,
-                                                        maxDelay: maxDelay,
-                                                        previousDelay: previousDelay)
-        previousDelay = jitter
-        return jitter
+        return synchronizationQueue.sync {
+            let jitter = jitterStrategy.calculateRetryDelay(for: exponentialDelay,
+                                                            baseDelay: baseDelay,
+                                                            maxDelay: maxDelay,
+                                                            previousDelay: previousDelay)
+            previousDelay = jitter
+            return jitter
+        }
     }
 }
