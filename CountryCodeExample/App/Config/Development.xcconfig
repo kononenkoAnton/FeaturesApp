@@ -5,5 +5,6 @@
 //  Created by Anton Kononenko on 10/30/24.
 //
 
-API_BASE_URL = https://wino-feed.s3.amazonaws.com/movieFeed
+// $() need to simple workaround since xconfig divide // and not allow to use yrl
+API_BASE_URL=https:/$()/wino-feed.s3.amazonaws.com/movieFeed
 

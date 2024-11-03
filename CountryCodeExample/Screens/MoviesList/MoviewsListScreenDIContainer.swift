@@ -5,7 +5,9 @@
 //  Created by Anton Kononenko on 11/2/24.
 //
 
-class MoviewsScreenDIContainer {
+import UIKit
+
+class MoviewsListScreenDIContainer: MoviesListCoordinatorDependencies {
     let imageNetworkService: NetworkServiceProtocol
     let apiNetworkService: NetworkServiceProtocol
 
@@ -22,5 +24,19 @@ class MoviewsScreenDIContainer {
 
     func createThumbnailsImageRepository() -> ThumbnailImageRepositoryProtocol {
         ThumbnailImageRepository(networkService: imageNetworkService)
+    }
+
+    // Scene
+
+    func createMoviesListViewController() -> MoviesListViewController {
+        MoviesListViewController.create(with: createMoviesListViewModel())
+    }
+
+    func createMoviesListViewModel() -> MoviesListViewModel {
+        MoviesListViewModel()
+    }
+
+    func createMoviesListCoordinator(navigationController: UINavigationController) -> MoviesListCoordinator {
+        MoviesListCoordinator(navigationController: navigationController, dependencies: self)
     }
 }
