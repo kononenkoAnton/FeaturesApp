@@ -19,8 +19,8 @@ struct AlertData {
 
     init(title: String,
          message: String,
-         preferredStyle: UIAlertController.Style,
-         okTitle: String = "OK",
+         preferredStyle: UIAlertController.Style = .alert,
+         okTitle: String = String(localized: LocalizationStrings.alert_ok_button.rawValue),
          cancelTitle: String?) {
         self.title = title
         self.message = message
@@ -54,13 +54,9 @@ protocol AlertableWithCompletion {
 extension AlertableWithCompletion where Self: UIViewController {
     func showAlert(alertData: AlertData,
                    completion: @escaping (AlertAction) -> Void) {
-        let alertController = UIAlertController(title: alertData.title, message: alertData.message, preferredStyle: alertData.preferredStyle)
-
-        let okAction = UIAlertAction(title: alertData.okTitle, style: .default) { _ in
-            completion(.ok)
-        }
-
-        alertController.addAction(okAction)
+        let alertController = UIAlertController(title: alertData.title,
+                                                message: alertData.message,
+                                                preferredStyle: alertData.preferredStyle)
 
         if let cancelTitle = alertData.cancelTitle {
             let cancelAction = UIAlertAction(title: cancelTitle, style: .destructive) { _ in
@@ -70,12 +66,11 @@ extension AlertableWithCompletion where Self: UIViewController {
             alertController.addAction(cancelAction)
         }
 
-        // Handle if user push outside of alert
-        if alertData.preferredStyle == .alert {
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
-                completion(.cancel)
-            })
+        let okAction = UIAlertAction(title: alertData.okTitle, style: .default) { _ in
+            completion(.ok)
         }
+
+        alertController.addAction(okAction)
 
         present(alertController,
                 animated: true,

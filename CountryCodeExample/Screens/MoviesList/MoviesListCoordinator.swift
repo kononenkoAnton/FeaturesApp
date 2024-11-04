@@ -25,7 +25,6 @@ class MoviesListCoordinator: MoviewListCoordinatorProtocol {
 
     func start() {
         let vc = dependencies.createMoviesListViewController(coordinator: self)
-        vc.coordinator = self
         moviesListVC = vc
         navigationController.pushViewController(vc, animated: false)
     }

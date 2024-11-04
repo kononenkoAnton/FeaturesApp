@@ -28,7 +28,7 @@ extension EndpointProtocol {
             throw EndpointError.canNotCreateURL
         }
 
-        components.path = path
+        components.path.append(path)
 
         for queryPair in config.query {
             components.queryItems?.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
@@ -46,13 +46,13 @@ extension EndpointProtocol {
     }
 
     func request(config: APIConfigurable) throws -> URLRequest {
-        var requestURL = config.baseURL
+        guard var components = URLComponents(url: config.baseURL, resolvingAgainstBaseURL: true) else {
+            throw EndpointError.canNotCreateURL
+        }
 
-        if config.query.count == 0 || query.count == 0 {
-            guard var components = URLComponents(url: config.baseURL, resolvingAgainstBaseURL: true) else {
-                throw EndpointError.canNotCreateURL
-            }
+        components.path.append(path)
 
+        if config.query.count > 0 || query.count > 0 {
             for queryPair in config.query {
                 components.queryItems?.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
             }
@@ -60,15 +60,13 @@ extension EndpointProtocol {
             for queryPair in query {
                 components.queryItems?.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
             }
-
-            guard let url = components.url else {
-                throw EndpointError.canNotCreateURL
-            }
-
-            requestURL = url
         }
 
-        var request = URLRequest(url: requestURL)
+        guard let url = components.url else {
+            throw EndpointError.canNotCreateURL
+        }
+
+        var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
 
         if config.headers.count > 0 {

@@ -6,14 +6,14 @@
 //
 
 struct MediaItem {
-    let type: String
+    let type: String?
     let key: String
-    let src: String
+    let src: String?
 }
 
 struct MediaGroup {
     let type: String
-    let mediaItem: [MediaItemDTO]
+    let mediaItem: [MediaItem]
 
     enum CodingKeys: String, CodingKey {
         case type
@@ -24,29 +24,39 @@ struct MediaGroup {
 struct Content {
     let type: String
     let src: String
+    
+    init(type: String, src: String) {
+        self.type = type
+        self.src = src
+    }
 }
 
 struct Extensions {
-    let free: String
-    let playNextFeedURL: String
+    let free: Bool?
+    let playNextFeedURL: String?
+    
+    init(free: Bool?, playNextFeedURL: String?) {
+        self.free = free
+        self.playNextFeedURL = playNextFeedURL
+    }
 }
 
 struct Entry {
     let id: String
     let title: String
     let summary: String
-    let published: String
-    let content: ContentDTO
-    let mediaGroup: [MediaGroupDTO]
-    let extensions: ExtensionsDTO?
+    let published: String?
+    let content: Content
+    let mediaGroup: [MediaGroup]
+    let extensions: Extensions?
 
     init(id: String,
          title: String,
          summary: String,
-         published: String,
-         content: ContentDTO,
-         mediaGroup: [MediaGroupDTO],
-         extensions: ExtensionsDTO?) {
+         published: String?,
+         content: Content,
+         mediaGroup: [MediaGroup],
+         extensions: Extensions?) {
         self.id = id
         self.title = title
         self.summary = summary

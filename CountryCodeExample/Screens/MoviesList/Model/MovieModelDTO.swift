@@ -9,9 +9,9 @@ import Foundation
 // https://wino-feed.s3.amazonaws.com/movieFeed/movieFeedv2.json
 
 struct MediaItemDTO: Codable {
-    let type: String
+    let type: String?
     let key: String
-    let src: String
+    let src: String?
 }
 
 struct MediaGroupDTO: Codable {
@@ -30,15 +30,15 @@ struct ContentDTO: Codable {
 }
 
 struct ExtensionsDTO: Codable {
-    let free: String
-    let playNextFeedURL: String
+    let free: Bool?
+    let playNextFeedURL: String?
 }
 
 struct EntryDTO: Codable {
     let id: String
     let title: String
     let summary: String
-    let published: String
+    let published: String?
     let content: ContentDTO
     let mediaGroup: [MediaGroupDTO]
     let extensions: ExtensionsDTO?
@@ -58,7 +58,7 @@ struct EntryDTO: Codable {
         id = try container.decode(String.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         summary = try container.decode(String.self, forKey: .summary)
-        published = try container.decode(String.self, forKey: .published)
+        published = try container.decodeIfPresent(String.self, forKey: .published)
         content = try container.decode(ContentDTO.self, forKey: .content)
         mediaGroup = try container.decode([MediaGroupDTO].self, forKey: .mediaGroup)
         extensions = try container.decodeIfPresent(ExtensionsDTO.self, forKey: .extensions)
@@ -78,7 +78,7 @@ struct EntryDTO: Codable {
     init(id: String,
          title: String,
          summary: String,
-         published: String,
+         published: String?,
          content: ContentDTO,
          mediaGroup: [MediaGroupDTO],
          extensions: ExtensionsDTO?) {

@@ -22,7 +22,7 @@ class MoviesListRepository: MoviesListRepositoryProtocol {
     }
 
     func loadMovilesList() async throws -> Feed {
-        let endpoint = APIStorage.MoviesScreen.moviesListEndpoint(path: "movieFeedv2.json")
+        let endpoint = APIStorage.MoviesScreen.moviesListEndpoint(path: "/videoJSAds.json")
         let feedDTO = try await networkService.fetchRequest(endPoint: endpoint,
                                                             decoder: FeedDTODecoder())
         let feed = mapper.mapToDomain(from: feedDTO)

@@ -12,12 +12,18 @@ protocol MoviesListViewControllerDelegate {
 }
 
 protocol MoviesListViewModelDataSource {
-    
+    var entry: Observable<[Entry]> { get }
+    var error: Observable<AlertData>? { get }
+    var loading:Observable<Bool> { get }
 }
 
 protocol MoviesListViewModelProtocol: MoviesListViewControllerDelegate, MoviesListViewModelDataSource {}
 
 class MoviesListViewModel: MoviesListViewModelProtocol {
+    var entry: Observable<[Entry]> = Observable(item: [])
+    var error: Observable<AlertData>?
+    var loading:Observable<Bool> = Observable(item: true)
+
     let moviewListManager: MoviesListManagerProtocol
     let coordinator: MoviewListCoordinatorProtocol
 
@@ -32,27 +38,21 @@ class MoviesListViewModel: MoviesListViewModelProtocol {
 
 extension MoviesListViewModel {
     func viewDidLoad() {
-        Task {
+        Task(priority: .userInitiated) {
             do {
                 let feed = try await moviewListManager.loadMoviewList()
+                print(feed)
             } catch {
-                // Handle heigh level errors
+                print(error)
             }
-            
         }
-        
     }
 
     func didSelectItem(index: Int) {
-        //TODO: select item and present details
+        // TODO: select item and present details
     }
 
     func viewDidDisappiear() {
         moviewListManager.cancel()
     }
-}
-
-// MARK: - Data Sources for MoviewViewController
-
-extension MoviesListViewModel {
 }
