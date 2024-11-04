@@ -6,7 +6,7 @@
 //
 
 protocol MoviesListRepositoryProtocol {
-    func loadMovilesList() async throws -> Feed
+    func loadMovilesList() async throws -> MoviesSearchResult
 }
 
 class MoviesListRepository: MoviesListRepositoryProtocol {
@@ -21,7 +21,7 @@ class MoviesListRepository: MoviesListRepositoryProtocol {
         self.mapper = mapper
     }
 
-    func loadMovilesList() async throws -> Feed {
+    func loadMovilesList() async throws -> MoviesSearchResult {
         let endpoint = APIStorage.MoviesScreen.moviesListEndpoint(path: "/videoJSAds.json")
         let feedDTO = try await networkService.fetchRequest(endPoint: endpoint,
                                                             decoder: FeedDTODecoder())

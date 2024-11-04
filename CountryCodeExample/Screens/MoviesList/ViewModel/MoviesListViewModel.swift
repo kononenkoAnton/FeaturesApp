@@ -12,7 +12,7 @@ protocol MoviesListViewControllerDelegate {
 }
 
 protocol MoviesListViewModelDataSource {
-    var entry: Observable<[Entry]> { get }
+    var entry: Observable<[Movie]> { get }
     var error: Observable<AlertData>? { get }
     var loading:Observable<Bool> { get }
 }
@@ -20,7 +20,7 @@ protocol MoviesListViewModelDataSource {
 protocol MoviesListViewModelProtocol: MoviesListViewControllerDelegate, MoviesListViewModelDataSource {}
 
 class MoviesListViewModel: MoviesListViewModelProtocol {
-    var entry: Observable<[Entry]> = Observable(item: [])
+    var entry: Observable<[Movie]> = Observable(item: [])
     var error: Observable<AlertData>?
     var loading:Observable<Bool> = Observable(item: true)
 

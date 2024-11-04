@@ -24,6 +24,7 @@ public extension StoryboardInstantiable where Self: UIViewController {
         guard let vc = storyboard.instantiateInitialViewController() as? Self else {
             fatalError("Cannot instantiate initial view controller \(Self.self) from storyboard with name \(fileName)")
         }
+
         return vc
     }
 }

@@ -31,7 +31,8 @@ protocol NetworkLoggable {
 class DefaultNetworkLogger: NetworkLoggable {
     let logger: Logger
 
-    init(logger: Logger = LoggerFactory.createLogger(subsystem: Bundle.main.bundleIdentifier! + "Networking", category: "NetworkService")) {
+    init(logger: Logger = LoggerFactory.createLogger(subsystem: Bundle.main.bundleIdentifier! + ".Networking",
+                                                     category: "NetworkService")) {
         self.logger = logger
     }
 

@@ -10,7 +10,7 @@ import Foundation
 class AppDIContainer {
     lazy var applicationAPIConfig = ApplicationAPIConfig()
 
-    var baseURL: URL {
+    private var baseURL: URL {
         guard let url = URL(string: applicationAPIConfig.baseURL) else {
             fatalError("Can not create base api url")
         }
@@ -18,8 +18,15 @@ class AppDIContainer {
         return url
     }
 
+    private lazy var baseHeaders = {
+        ["Authorization": "Bearer \(applicationAPIConfig.accessTokenAuth)",
+         "Accept": "application/json",
+         "language": NSLocale.preferredLanguages.first ?? "en"]
+    }()
+
     lazy var apiNetworkService: NetworkServiceProtocol = {
-        let apiConfiguration = APIConfiguration(baseURL: baseURL)
+        let apiConfiguration = APIConfiguration(baseURL: baseURL,
+                                                headers: baseHeaders)
 
         return DefaultNetworkService(config: apiConfiguration)
     }()

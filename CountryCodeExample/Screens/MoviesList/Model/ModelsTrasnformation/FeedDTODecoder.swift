@@ -8,7 +8,7 @@
 import Foundation
 
 class FeedDTODecoder: DTODecodable {
-    func decodeDTO(from data: Data) throws -> FeedDTO {
-        try JSONDecoder().decode(FeedDTO.self, from: data)
+    func decodeDTO(from data: Data) throws -> MoviesSearchResultDTO {
+        try JSONDecoder().decode(MoviesSearchResultDTO.self, from: data)
     }
 }

@@ -25,13 +25,13 @@ protocol LoadingCancelable {
 
 protocol MoviesListManagerProtocol: LoadingCancelable {
     // TODO: Could be added query and pagination
-    func loadMoviewList() async throws -> Feed
+    func loadMoviewList() async throws -> MoviesSearchResult
 }
 
 class MoviesListManager: MoviesListManagerProtocol {
     let repository: MoviesListRepositoryProtocol
     let retryStrategy: RetryStrategy
-    private var loadingTask: Task<Feed, Error>? // TODO: Should be repository error or somethign
+    private var loadingTask: Task<MoviesSearchResult, Error>? // TODO: Should be repository error or somethign
     init(repository: MoviesListRepositoryProtocol,
          retryStrategy: RetryStrategy = ExponentialBackoffStrategy()) {
         self.retryStrategy = retryStrategy
@@ -45,7 +45,7 @@ class MoviesListManager: MoviesListManagerProtocol {
         loadingTask = nil
     }
 
-    func loadMoviewList() async throws -> Feed {
+    func loadMoviewList() async throws -> MoviesSearchResult {
         let task = Task(priority: .userInitiated) {
             try await repository.loadMovilesList()
         }

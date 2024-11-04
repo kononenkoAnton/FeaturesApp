@@ -45,7 +45,7 @@ class MoviesListViewController: UIViewController, StoryboardInstantiable, Alerta
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
     }
 
-    func didEntryUpdate(entry: [Entry]) {
+    func didEntryUpdate(entry: [Movie]) {
         tableViewController?.reloadData()
     }
 

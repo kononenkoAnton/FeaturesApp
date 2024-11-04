@@ -13,7 +13,7 @@ protocol MoviesListCoordinatorDependencies {
 }
 
 protocol MoviewListCoordinatorProtocol: Coordinator {
-    func showMovieDetails(entry: Entry)
+    func showMovieDetails(entry: Movie)
 }
 
 class MoviesListCoordinator: MoviewListCoordinatorProtocol {
@@ -37,7 +37,7 @@ class MoviesListCoordinator: MoviewListCoordinatorProtocol {
         self.dependencies = dependencies
     }
     
-    func showMovieDetails(entry: Entry) {
+    func showMovieDetails(entry: Movie) {
         // TODO: Implement details
     }
 }

@@ -6,93 +6,55 @@
 //
 
 import Foundation
-// https://wino-feed.s3.amazonaws.com/movieFeed/movieFeedv2.json
 
-struct MediaItemDTO: Codable {
-    let type: String?
-    let key: String
-    let src: String?
-}
-
-struct MediaGroupDTO: Codable {
-    let type: String
-    let mediaItem: [MediaItemDTO]
-
-    enum CodingKeys: String, CodingKey {
-        case type
-        case mediaItem = "media_item"
-    }
-}
-
-struct ContentDTO: Codable {
-    let type: String
-    let src: String
-}
-
-struct ExtensionsDTO: Codable {
-    let free: Bool?
-    let playNextFeedURL: String?
-}
-
-struct EntryDTO: Codable {
-    let id: String
+struct MovieDTO: Codable {
+    let id: Int
+    let adult: Bool
+    let backdropPath: String?
+    let genreIds: [Int]
+    let originalLanguage: String
+    let originalTitle: String
+    let overview: String
+    let popularity: Float
+    let posterPath: String
+    
+    /// Description: "yyyy-MM-dd"
+    /// Example: "2006-12-12"
+    let releaseDate: String
     let title: String
-    let summary: String
-    let published: String?
-    let content: ContentDTO
-    let mediaGroup: [MediaGroupDTO]
-    let extensions: ExtensionsDTO?
+    let video: Bool
+    let voteAverage: Float
+    let voteCount: Int
 
     enum CodingKeys: String, CodingKey {
         case id
+        case adult
+        case backdropPath = "backdrop_path"
+        case genreIds = "genre_ids"
+        case originalLanguage = "original_language"
+        case originalTitle = "original_title"
+        case overview
+        case popularity
+        case posterPath = "poster_path"
+        case releaseDate = "release_date"
         case title
-        case summary
-        case published
-        case content
-        case mediaGroup = "media_group"
-        case extensions
-    }
-
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
-        title = try container.decode(String.self, forKey: .title)
-        summary = try container.decode(String.self, forKey: .summary)
-        published = try container.decodeIfPresent(String.self, forKey: .published)
-        content = try container.decode(ContentDTO.self, forKey: .content)
-        mediaGroup = try container.decode([MediaGroupDTO].self, forKey: .mediaGroup)
-        extensions = try container.decodeIfPresent(ExtensionsDTO.self, forKey: .extensions)
-    }
-
-    func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(title, forKey: .title)
-        try container.encode(summary, forKey: .summary)
-        try container.encode(published, forKey: .published)
-        try container.encode(content, forKey: .content)
-        try container.encode(mediaGroup, forKey: .mediaGroup)
-        try container.encodeIfPresent(extensions, forKey: .extensions)
-    }
-
-    init(id: String,
-         title: String,
-         summary: String,
-         published: String?,
-         content: ContentDTO,
-         mediaGroup: [MediaGroupDTO],
-         extensions: ExtensionsDTO?) {
-        self.id = id
-        self.title = title
-        self.summary = summary
-        self.published = published
-        self.content = content
-        self.mediaGroup = mediaGroup
-        self.extensions = extensions
+        case video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
     }
 }
 
-struct FeedDTO: Codable {
-    let id: String
-    let entry: [EntryDTO]
+struct MoviesSearchResultDTO: Codable {
+    let page: Int
+    let totalPages: Int
+    let totalResults: Int
+    let results: [MovieDTO]
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case totalPages
+        case totalResults = "total_results"
+        case results
+    }
 }
+

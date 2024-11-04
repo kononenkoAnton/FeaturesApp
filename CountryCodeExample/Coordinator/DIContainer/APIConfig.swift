@@ -8,11 +8,24 @@
 import Foundation
 
 final class ApplicationAPIConfig {
-    var baseURL: String {
-        guard let urlString = Bundle.main.infoDictionary?["API_BASE_URL"] as? String else {
-            fatalError("Base URL is missing or invalid in .xcconfig")
-        }
+    private let infoDictionary: [String: Any]? = Bundle.main.infoDictionary
 
-        return urlString
+    private enum Keys {
+        static let apiBaseURL = "API_BASE_URL"
+        static let accessTokenAuth = "ACCESS_TOKEN_AUTH"
     }
+
+    let baseURL: String = {
+        guard let urlString = Bundle.main.infoDictionary?[Keys.apiBaseURL] as? String else {
+            fatalError("The API base URL ('\(Keys.apiBaseURL)') is missing or invalid in the .xcconfig file.")
+        }
+        return urlString
+    }()
+
+    let accessTokenAuth: String = {
+        guard let token = Bundle.main.infoDictionary?[Keys.accessTokenAuth] as? String else {
+            fatalError("The access token ('\(Keys.accessTokenAuth)') is missing or invalid in the .xcconfig file.")
+        }
+        return token
+    }()
 }
