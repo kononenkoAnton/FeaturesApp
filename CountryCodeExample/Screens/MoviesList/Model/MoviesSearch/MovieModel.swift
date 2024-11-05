@@ -24,7 +24,7 @@ struct Movie {
     let voteCount: Int
 }
 
-struct MoviesSearchResult {
+struct MoviesSearch {
     let page: Int
     let totalPages: Int
     let totalResults: Int

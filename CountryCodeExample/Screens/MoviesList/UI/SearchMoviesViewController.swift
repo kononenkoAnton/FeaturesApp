@@ -7,16 +7,16 @@
 
 import UIKit
 
-class MoviesListViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
-    var viewModel: MoviesListViewModelProtocol!
+class SearchMoviesViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
+    var viewModel: SearchMoviesViewModel!
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var searchBarContainer: UIView!
 
     private weak var tableViewController: MoviesListTableViewController?
 
-    static func create(with viewModel: MoviesListViewModel) -> MoviesListViewController {
-        let vc = MoviesListViewController.instantiateViewController()
+    static func create(with viewModel: DefaultSearchMoviesViewModel) -> SearchMoviesViewController {
+        let vc = SearchMoviesViewController.instantiateViewController()
         vc.viewModel = viewModel
         return vc
     }
@@ -39,7 +39,7 @@ class MoviesListViewController: UIViewController, StoryboardInstantiable, Alerta
         navigationController?.title = "The Movies"
     }
 
-    func bind(to viewModel: MoviesListViewModelProtocol) {
+    func bind(to viewModel: SearchMoviesViewModel) {
         viewModel.entry.addObserver(observer: self, observerBlock: didEntryUpdate)
         viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)

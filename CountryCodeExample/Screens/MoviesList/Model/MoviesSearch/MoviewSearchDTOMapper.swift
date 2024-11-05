@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class FeedDTOMapper: DTOMapperProtocol {
+class MoviewSearchDTOMapper: DTOMapperProtocol {
     private let releaseDateDateFormat = "yyyy-MM-dd"
     private let logger: SearchDTOMapperErrorLoggable
 
@@ -14,7 +14,7 @@ class FeedDTOMapper: DTOMapperProtocol {
         self.logger = logger
     }
 
-    func mapToDomain(from modelDTO: MoviesSearchResultDTO) -> MoviesSearchResult {
+    func mapToDomain(from modelDTO: MoviesSearchDTO) -> MoviesSearch {
         // As alternative could be used ISO8601DateFormatter represents same format
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = releaseDateDateFormat
@@ -41,13 +41,13 @@ class FeedDTOMapper: DTOMapperProtocol {
                          voteCount: movieDTO.voteCount)
         }
 
-        return MoviesSearchResult(page: modelDTO.page,
+        return MoviesSearch(page: modelDTO.page,
                                   totalPages: modelDTO.totalPages,
                                   totalResults: modelDTO.totalResults,
                                   results: movies)
     }
 
-    func mapToDTO(from modelDoman: MoviesSearchResult) -> MoviesSearchResultDTO {
+    func mapToDTO(from modelDoman: MoviesSearch) -> MoviesSearchDTO {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = releaseDateDateFormat
         let movies = modelDoman.results.map { movie in
@@ -67,7 +67,7 @@ class FeedDTOMapper: DTOMapperProtocol {
                      voteCount: movie.voteCount)
         }
 
-        return MoviesSearchResultDTO(page: modelDoman.page,
+        return MoviesSearchDTO(page: modelDoman.page,
                                      totalPages: modelDoman.totalPages,
                                      totalResults: modelDoman.totalResults,
                                      results: movies)

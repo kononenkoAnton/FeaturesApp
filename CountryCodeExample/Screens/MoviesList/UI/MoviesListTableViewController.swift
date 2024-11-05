@@ -8,7 +8,7 @@
 import UIKit
 
 class MoviesListTableViewController: UITableViewController {
-    var viewModel: MoviesListViewModelProtocol!
+    var viewModel: SearchMoviesViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -44,7 +44,7 @@ struct MovieDTO: Codable {
     }
 }
 
-struct MoviesSearchResultDTO: Codable {
+struct MoviesSearchDTO: Codable {
     let page: Int
     let totalPages: Int
     let totalResults: Int

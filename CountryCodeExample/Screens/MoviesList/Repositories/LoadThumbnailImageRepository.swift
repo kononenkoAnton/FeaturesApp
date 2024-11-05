@@ -38,7 +38,7 @@ class ImageDecoder: DTODecodable {
 
 extension ThumbnailImageRepository {
     func loadImage(imagePath: String, width: CGFloat) async throws -> UIImage {
-        let endpoint = APIStorage.MoviesScreen.thumbnailImageEndpoint(path: imagePath, width: width)
+        let endpoint = APIStorage.thumbnailImageEndpoint(path: imagePath, width: width)
 
         return try await networkService.fetchURL(endPoint: endpoint,
                                                  decoder: ImageDecoder())

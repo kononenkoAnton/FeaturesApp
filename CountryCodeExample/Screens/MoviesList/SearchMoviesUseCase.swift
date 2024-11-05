@@ -5,13 +5,12 @@
 //  Created by Anton Kononenko on 11/4/24.
 //
 
-protocol SearchMoviesUseCase {
-    func execute(searchQuery: SearchQuery) async throws -> [Movie]
+protocol Cancelable {
+    func cancel()
 }
 
-struct SearchQuery {
-    let query: String
-    let page: Int
+protocol SearchMoviesUseCase: Cancelable {
+    func execute(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch
 }
 
 enum SearchError: Error {
@@ -19,20 +18,34 @@ enum SearchError: Error {
 }
 
 class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
-    private let manager: MoviesListManager
+    private let manager: DefaultSearchMoviesManager
+    private var loadingTask: Task<MoviesSearch, Error>? // TODO: Should be repository error or somethign
 
-    init(manager: MoviesListManager) {
+    init(manager: DefaultSearchMoviesManager) {
         self.manager = manager
     }
 
-    func execute(searchQuery: SearchQuery) async throws -> [Movie] {
+    func execute(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
         // Apply any business logic or validation here
-        guard !searchQuery.query.isEmpty else {
+        guard !useCaseRequest.query.isEmpty else {
             throw SearchError.emptyQuery
         }
 
-        // Use the Manager to fetch data
-        manager.searchMovies(query: query, completion: completion)
+        let task = Task(priority: .userInitiated) {
+            // Use the Manager to fetch data
+            try await manager.searchMovies(useCaseRequest: useCaseRequest)
+        }
+
+        loadingTask = task
+        let moviesSearch = try await task.value
+        loadingTask = nil
+
+        return moviesSearch
+    }
+
+    func cancel() {
+        loadingTask?.cancel()
+        loadingTask = nil
     }
 }
 

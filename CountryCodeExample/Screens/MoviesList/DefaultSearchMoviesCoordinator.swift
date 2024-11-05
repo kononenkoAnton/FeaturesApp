@@ -9,22 +9,22 @@ import UIKit
 
 
 protocol MoviesListCoordinatorDependencies {
-    func createMoviesListViewController(coordinator: MoviewListCoordinatorProtocol) -> MoviesListViewController
+    func createSearchMoviesViewController(coordinator: MoviewListCoordinator) -> SearchMoviesViewController
 }
 
-protocol MoviewListCoordinatorProtocol: Coordinator {
+protocol MoviewListCoordinator: Coordinator {
     func showMovieDetails(entry: Movie)
 }
 
-class MoviesListCoordinator: MoviewListCoordinatorProtocol {
+class DefaultSearchMoviesCoordinator: MoviewListCoordinator {
     var childCoordinators: [any Coordinator]
     let dependencies: MoviesListCoordinatorDependencies
-    private weak var moviesListVC: MoviesListViewController?
+    private weak var moviesListVC: SearchMoviesViewController?
 
     var navigationController: UINavigationController
 
     func start() {
-        let vc = dependencies.createMoviesListViewController(coordinator: self)
+        let vc = dependencies.createSearchMoviesViewController(coordinator: self)
         moviesListVC = vc
         navigationController.pushViewController(vc, animated: false)
     }

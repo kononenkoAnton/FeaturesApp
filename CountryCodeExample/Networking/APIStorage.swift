@@ -8,14 +8,12 @@
 import CoreFoundation
 
 struct APIStorage {
-    struct MoviesScreen {
-        static func thumbnailImageEndpoint(path: String, width: CGFloat) -> Endpoint {
-            // TODO: make with effective
-            Endpoint(path: path)
-        }
+    static func thumbnailImageEndpoint(path: String, width: CGFloat) -> Endpoint {
+        Endpoint(path: path)
+    }
 
-        static func moviesListEndpoint(path: String) -> Endpoint {
-            Endpoint(path: path)
-        }
+    static func searchMoviesEndpoint(useCaseRequestDTO: SearchQueryUseCaseRequestDTO) throws -> Endpoint {
+        Endpoint(path: "3/search/movie",
+                 query: try useCaseRequestDTO.encodeDTO() ?? [:])
     }
 }

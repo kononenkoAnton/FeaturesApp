@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
 
     func start() {
         let moviewSceneDIContainer = appDIContainer.getMoviesListDIContainer()
-        let coordinator = moviewSceneDIContainer.createMoviesListCoordinator(navigationController: navigationController)
+        let coordinator = moviewSceneDIContainer.createSearchMoviesCoordinator(navigationController: navigationController)
         coordinator.start()
     }
 }

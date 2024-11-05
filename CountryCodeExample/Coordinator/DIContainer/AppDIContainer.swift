@@ -38,8 +38,8 @@ class AppDIContainer {
     }()
 
     // TODO: Possible should be repository
-    func getMoviesListDIContainer() -> MoviewsListScreenDIContainer {
-        MoviewsListScreenDIContainer(apiNetworkService: apiNetworkService,
+    func getMoviesListDIContainer() -> SearchMoviesScreenDIContainer {
+        SearchMoviesScreenDIContainer(apiNetworkService: apiNetworkService,
                                      imageNetworkService: imageNetworkService)
     }
 }
