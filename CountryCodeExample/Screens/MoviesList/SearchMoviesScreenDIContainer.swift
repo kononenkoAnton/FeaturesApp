@@ -16,7 +16,7 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
         self.imageNetworkService = imageNetworkService
     }
 
-    // Mark Repositories
+    // MARK: - Repositories
 
     func createSearchMoviesRepository() -> SearchMoviewRepository {
         DefaultSearchMoviesRepository(networkService: apiNetworkService) // TODO: add cache
@@ -26,21 +26,26 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
         ThumbnailImageRepository(networkService: imageNetworkService)
     }
 
-    // Mark Use case
+    // MARK: - Use case
+
     func createSearchMoviesUseCase() -> SearchMoviesUseCase {
         DefaultSearchMoviesUseCase(manager: DefaultSearchMoviesManager(repository: createSearchMoviesRepository()))
     }
 
-    // Scene
+    // MARK: - ViewModel
+
+    func createSearchMoviesViewModel(coordinator: MoviewListCoordinator) -> DefaultSearchMoviesViewModel {
+        DefaultSearchMoviesViewModel(searchMoviesUseCase: createSearchMoviesUseCase(),
+                                     coordinator: coordinator)
+    }
+
+    // MARK: - ViewController
 
     func createSearchMoviesViewController(coordinator: MoviewListCoordinator) -> SearchMoviesViewController {
         SearchMoviesViewController.create(with: createSearchMoviesViewModel(coordinator: coordinator))
     }
 
-    func createSearchMoviesViewModel(coordinator: MoviewListCoordinator) -> DefaultSearchMoviesViewModel {
-        DefaultSearchMoviesViewModel(searchMoviesUseCase: createSearchMoviesUseCase(),
-                            coordinator: coordinator)
-    }
+    // MARK: - Coordinator
 
     func createSearchMoviesCoordinator(navigationController: UINavigationController) -> DefaultSearchMoviesCoordinator {
         DefaultSearchMoviesCoordinator(navigationController: navigationController, dependencies: self)
