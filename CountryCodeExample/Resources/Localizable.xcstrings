@@ -1,7 +1,11 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "account_disabled" : {
+
+    },
     "alert_cancel_button" : {
+      "comment" : "Comment Here",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -25,6 +29,7 @@
       }
     },
     "alert_error_title" : {
+      "comment" : " ",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -70,6 +75,36 @@
         }
       }
     },
+    "api_maintenance" : {
+
+    },
+    "authentication_failed" : {
+
+    },
+    "authentication_failed_again" : {
+
+    },
+    "backend_server_unavailable" : {
+
+    },
+    "confirmation_required" : {
+
+    },
+    "device_denied" : {
+
+    },
+    "duplicate_entry" : {
+
+    },
+    "email_not_verified" : {
+
+    },
+    "entry_not_found" : {
+
+    },
+    "failed" : {
+
+    },
     "failed_to_load_movies" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -93,6 +128,57 @@
         }
       }
     },
+    "internal_error" : {
+
+    },
+    "invalid_accept_header" : {
+
+    },
+    "invalid_api_key" : {
+
+    },
+    "invalid_credentials" : {
+
+    },
+    "invalid_date" : {
+
+    },
+    "invalid_date_range" : {
+
+    },
+    "invalid_format" : {
+
+    },
+    "invalid_id" : {
+
+    },
+    "invalid_id_error" : {
+
+    },
+    "invalid_input" : {
+
+    },
+    "invalid_page" : {
+
+    },
+    "invalid_parameters" : {
+
+    },
+    "invalid_request_token" : {
+
+    },
+    "invalid_service" : {
+
+    },
+    "invalid_timezone" : {
+
+    },
+    "invalid_token" : {
+
+    },
+    "method_not_supported" : {
+
+    },
     "no_internet_connection" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -115,6 +201,63 @@
           }
         }
       }
+    },
+    "nothing_to_update" : {
+
+    },
+    "permission_denied" : {
+
+    },
+    "record_deleted" : {
+
+    },
+    "record_updated" : {
+
+    },
+    "request_limit_exceeded" : {
+
+    },
+    "request_timeout" : {
+
+    },
+    "resource_not_found" : {
+
+    },
+    "resource_private" : {
+
+    },
+    "service_offline" : {
+
+    },
+    "session_denied" : {
+
+    },
+    "session_not_found" : {
+
+    },
+    "success" : {
+
+    },
+    "suspended_api_key" : {
+
+    },
+    "token_not_approved" : {
+
+    },
+    "token_write_permission_denied" : {
+
+    },
+    "too_many_append_to_response_objects" : {
+
+    },
+    "user_suspended" : {
+
+    },
+    "username_password_required" : {
+
+    },
+    "validation_failed" : {
+
     }
   },
   "version" : "1.0"

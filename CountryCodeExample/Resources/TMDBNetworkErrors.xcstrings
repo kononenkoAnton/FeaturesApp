@@ -1,0 +1,1134 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "account_disabled" : {
+      "comment" : "31",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account disabled: Your account is no longer active. Contact TMDB if this is an error."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta deshabilitada: Tu cuenta ya no está activa. Contacta a TMDB si esto es un error."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обліковий запис вимкнено: Ваш обліковий запис більше не активний. Зверніться до TMDB, якщо це помилка."
+          }
+        }
+      }
+    },
+    "api_maintenance" : {
+      "comment" : "46",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The API is undergoing maintenance. Try again later."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La API está en mantenimiento. Inténtalo de nuevo más tarde."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API проходить технічне обслуговування. Спробуйте пізніше."
+          }
+        }
+      }
+    },
+    "authentication_failed" : {
+      "comment" : "3",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication failed: You do not have permissions to access the service."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autenticación fallida: No tienes permisos para acceder al servicio."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аутентифікація не вдалася: У вас немає дозволу на доступ до сервісу."
+          }
+        }
+      }
+    },
+    "authentication_failed_again" : {
+      "comment" : "14",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication failed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autenticación fallida."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аутентифікація не вдалася."
+          }
+        }
+      }
+    },
+    "backend_server_unavailable" : {
+      "comment" : "43",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't connect to the backend server."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo conectar al servidor backend."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося підключитися до серверу."
+          }
+        }
+      }
+    },
+    "confirmation_required" : {
+      "comment" : "29",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You must confirm this action: Please provide a confirm=true parameter."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debes confirmar esta acción: Por favor proporciona un parámetro confirm=true."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви повинні підтвердити цю дію: Будь ласка, надайте параметр confirm=true."
+          }
+        }
+      }
+    },
+    "device_denied" : {
+      "comment" : "16",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Device denied."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispositivo denegado."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пристрій відхилено."
+          }
+        }
+      }
+    },
+    "duplicate_entry" : {
+      "comment" : "8",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplicate entry: The data you tried to submit already exists."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada duplicada: Los datos que intentaste enviar уже existen."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дубльована запис: Дані, які ви намагалися відправити, вже існують."
+          }
+        }
+      }
+    },
+    "email_not_verified" : {
+      "comment" : "32",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email not verified: Your email address has not been verified."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correo electrónico no verificado: Tu dirección de correo electrónico no ha sido verificada."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Електронну пошту не перевірено: Ваша електронна адреса не була перевірена."
+          }
+        }
+      }
+    },
+    "entry_not_found" : {
+      "comment" : "21",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entry not found: The item you are trying to edit cannot be found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada no encontrada: El elemento que intentas editar no se puede encontrar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запис не знайдено: Елемент, який ви намагаєтеся редагувати, не знайдено."
+          }
+        }
+      }
+    },
+    "failed" : {
+      "comment" : "15",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fallido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося."
+          }
+        }
+      }
+    },
+    "internal_error" : {
+      "comment" : "11",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internal error: Something went wrong, contact TMDB."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error interno: Algo salió mal, contacta a TMDB."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внутрішня помилка: Щось пішло не так, зверніться до TMDB."
+          }
+        }
+      }
+    },
+    "invalid_accept_header" : {
+      "comment" : "19",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid accept header."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encabezado de aceptación inválido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний заголовок accept."
+          }
+        }
+      }
+    },
+    "invalid_api_key" : {
+      "comment" : "7",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid API key: You must be granted a valid key."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave de API inválida: Debes tener una clave válida."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний API ключ: Ви повинні мати дійсний ключ."
+          }
+        }
+      }
+    },
+    "invalid_credentials" : {
+      "comment" : "30",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid username and/or password: You did not provide a valid login."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de usuario y/o contraseña inválidos: No proporcionaste un inicio de sesión válido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильне ім'я користувача та/або пароль: Ви не надали дійсний логін."
+          }
+        }
+      }
+    },
+    "invalid_date" : {
+      "comment" : "23",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid date: Format needs to be YYYY-MM-DD."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha inválida: El formato debe ser YYYY-MM-DD."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильна дата: Формат повинен бути YYYY-MM-DD."
+          }
+        }
+      }
+    },
+    "invalid_date_range" : {
+      "comment" : "20",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid date range: Should be a range no longer than 14 days."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rango de fechas inválido: Debe ser un rango de no más de 14 días."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний діапазон дат: Повинен бути діапазон не довший за 14 днів."
+          }
+        }
+      }
+    },
+    "invalid_format" : {
+      "comment" : "4",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid format: This service doesn't exist in that format."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formato inválido: Este servicio no existe en ese formato."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний формат: Цей сервіс не існує в цьому форматі."
+          }
+        }
+      }
+    },
+    "invalid_id" : {
+      "comment" : "6",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid id: The pre-requisite id is invalid or not found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID inválido: El id pre-requisito es inválido o no se encontró."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний ID: Попередній ID недійсний або не знайдено."
+          }
+        }
+      }
+    },
+    "invalid_id_error" : {
+      "comment" : "44",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The ID is invalid."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El ID es inválido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID недійсний."
+          }
+        }
+      }
+    },
+    "invalid_input" : {
+      "comment" : "47",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The input is not valid."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La entrada no es válida."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вхідні дані недійсні."
+          }
+        }
+      }
+    },
+    "invalid_page" : {
+      "comment" : "22",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid page: Pages start at 1 and max at 500. They are expected to be an integer."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Página inválida: Las páginas comienzan en 1 y el máximo es 500. Se espera que sean un número entero."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильна сторінка: Сторінки починаються з 1 і мають максимум 500. Вони повинні бути цілим числом."
+          }
+        }
+      }
+    },
+    "invalid_parameters" : {
+      "comment" : "5",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid parameters: Your request parameters are incorrect."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parámetros inválidos: Los parámetros de tu solicitud son incorrectos."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильні параметри: Параметри вашого запиту некоректні."
+          }
+        }
+      }
+    },
+    "invalid_request_token" : {
+      "comment" : "33",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid request token: The request token is either expired or invalid."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token de solicitud inválido: El token de solicitud ha expirado o es inválido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний токен запиту: Токен запиту або прострочений, або недійсний."
+          }
+        }
+      }
+    },
+    "invalid_service" : {
+      "comment" : "2",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid service: this service does not exist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicio inválido: este servicio no existe."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний сервіс: цей сервіс не існує."
+          }
+        }
+      }
+    },
+    "invalid_timezone" : {
+      "comment" : "28",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid timezone: Please consult the documentation for a valid timezone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zona horaria inválida: Por favor consulta la documentación para una zona horaria válida."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний часовий пояс: Будь ласка, перегляньте документацію для дійсного часового поясу."
+          }
+        }
+      }
+    },
+    "invalid_token" : {
+      "comment" : "35",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid token."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token inválido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильний токен."
+          }
+        }
+      }
+    },
+    "method_not_supported" : {
+      "comment" : "42",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This request method is not supported for this resource."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este método de solicitud no es compatible con este recurso."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей метод запиту не підтримується для цього ресурсу."
+          }
+        }
+      }
+    },
+    "nothing_to_update" : {
+      "comment" : "40",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing to update."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada que actualizar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Немає чого оновлювати."
+          }
+        }
+      }
+    },
+    "permission_denied" : {
+      "comment" : "38",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You don't have permission to edit this resource."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No tienes permiso para editar este recurso."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У вас немає дозволу на редагування цього ресурсу."
+          }
+        }
+      }
+    },
+    "record_deleted" : {
+      "comment" : "13",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The item/record was deleted successfully."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El elemento/registro se eliminó correctamente."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Елемент/запис було успішно видалено."
+          }
+        }
+      }
+    },
+    "record_updated" : {
+      "comment" : "12",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The item/record was updated successfully."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El elemento/registro se actualizó correctamente."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Елемент/запис було успішно оновлено."
+          }
+        }
+      }
+    },
+    "request_limit_exceeded" : {
+      "comment" : "25",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your request count is over the allowed limit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu número de solicitudes supera el límite permitido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кількість ваших запитів перевищує дозволений ліміт."
+          }
+        }
+      }
+    },
+    "request_timeout" : {
+      "comment" : "24",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your request to the backend server timed out. Try again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu solicitud al servidor backend agotó el tiempo. Inténtalo de nuevo."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш запит до серверу з часом вийшов. Спробуйте знову."
+          }
+        }
+      }
+    },
+    "resource_not_found" : {
+      "comment" : "34",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The resource you requested could not be found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El recurso que solicitaste no pudo ser encontrado."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ресурс, який ви запитували, не було знайдено."
+          }
+        }
+      }
+    },
+    "resource_private" : {
+      "comment" : "39",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This resource is private."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este recurso es privado."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей ресурс є приватним."
+          }
+        }
+      }
+    },
+    "service_offline" : {
+      "comment" : "9",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service offline: This service is temporarily offline, try again later."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicio fuera de línea: Este servicio está temporalmente fuera de línea, inténtalo de nuevo más tarde."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сервіс офлайн: Цей сервіс тимчасово недоступний, спробуйте пізніше."
+          }
+        }
+      }
+    },
+    "session_denied" : {
+      "comment" : "17",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session denied."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesión denegada."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сесія відхилена."
+          }
+        }
+      }
+    },
+    "session_not_found" : {
+      "comment" : "37",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The requested session could not be found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sesión solicitada no pudo ser encontrada."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запитану сесію не вдалося знайти."
+          }
+        }
+      }
+    },
+    "success" : {
+      "comment" : "1",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Éxito."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успіх."
+          }
+        }
+      }
+    },
+    "suspended_api_key" : {
+      "comment" : "10",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suspended API key: Access to your account has been suspended, contact TMDB."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave de API suspendida: El acceso a tu cuenta ha sido suspendido, contacta a TMDB."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Призупинений API ключ: Доступ до вашого облікового запису було призупинено, зверніться до TMDB."
+          }
+        }
+      }
+    },
+    "token_not_approved" : {
+      "comment" : "41",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This request token hasn't been approved by the user."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este token de solicitud no ha sido aprobado por el usuario."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей токен запиту не був схвалений користувачем."
+          }
+        }
+      }
+    },
+    "token_write_permission_denied" : {
+      "comment" : "36",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This token hasn't been granted write permission by the user."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este token no ha sido concedido con permiso de escritura por el usuario."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цьому токену не надано права запису користувачем."
+          }
+        }
+      }
+    },
+    "too_many_append_to_response_objects" : {
+      "comment" : "27",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many append to response objects: The maximum number of remote calls is 20."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demasiados objetos append a la respuesta: El número máximo de llamadas remotas es 20."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Занадто багато об'єктів append до відповіді: Максимальна кількість віддалених викликів - 20."
+          }
+        }
+      }
+    },
+    "user_suspended" : {
+      "comment" : "45",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This user has been suspended."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este usuario ha sido suspendido."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей користувач було призупинено."
+          }
+        }
+      }
+    },
+    "username_password_required" : {
+      "comment" : "26",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You must provide a username and password."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debes proporcionar un nombre de usuario y contraseña."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви повинні вказати ім'я користувача та пароль."
+          }
+        }
+      }
+    },
+    "validation_failed" : {
+      "comment" : "18",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validation failed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validación fallida."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевірка не вдалася."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

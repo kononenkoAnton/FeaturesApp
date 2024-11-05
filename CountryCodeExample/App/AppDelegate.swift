@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//https://wino-feed.s3.amazonaws.com/testFeed/videoJSAds.json
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
