@@ -11,7 +11,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     var viewModel: SearchMoviesViewModel!
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var searchBarContainer: UIView!
+    @MainActor @IBOutlet var searchBarContainer: UIView!
 
     private weak var tableViewController: MoviesListTableViewController?
 
