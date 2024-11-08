@@ -26,11 +26,14 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     var loading:Observable<Bool> = Observable(item: true)
 
     let searchMoviesUseCase: SearchMoviesUseCase
+    let thumbnailImageRepository: PosterImageRepository
     let coordinator: MoviewListCoordinator
 
     init(searchMoviesUseCase: SearchMoviesUseCase,
+         thumbnailImageRepository: PosterImageRepository,
          coordinator: MoviewListCoordinator) {
         self.searchMoviesUseCase = searchMoviesUseCase
+        self.thumbnailImageRepository = thumbnailImageRepository
         self.coordinator = coordinator
     }
 }

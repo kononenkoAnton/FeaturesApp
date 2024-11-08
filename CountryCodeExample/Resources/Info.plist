@@ -23,5 +23,9 @@
 	</dict>
 	<key>API_BASE_URL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>ACCESS_TOKEN_AUTH</key>
+	<string>$(ACCESS_TOKEN_AUTH)</string>
+	<key>IMAGE_BASE_URL</key>
+	<string>${IMAGE_BASE_URL}</string>
 </dict>
 </plist>

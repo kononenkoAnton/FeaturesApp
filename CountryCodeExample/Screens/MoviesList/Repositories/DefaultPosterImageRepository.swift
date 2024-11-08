@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol ThumbnailImageRepositoryProtocol {
+protocol PosterImageRepository {
     func loadImage(imagePath: String,
-                   width: CGFloat) async throws -> UIImage
+                   width: Int) async throws -> UIImage
 }
 
 // Thinks about optimization to load big if exist, resize and save both
-class ThumbnailImageRepository: ThumbnailImageRepositoryProtocol {
+class DefaultPosterImageRepository: PosterImageRepository {
     let networkService: any NetworkServiceProtocol
 
     init(networkService: any NetworkServiceProtocol) {
@@ -36,9 +36,9 @@ class ImageDecoder: DTODecodable {
     }
 }
 
-extension ThumbnailImageRepository {
-    func loadImage(imagePath: String, width: CGFloat) async throws -> UIImage {
-        let endpoint = APIStorage.thumbnailImageEndpoint(path: imagePath, width: width)
+extension DefaultPosterImageRepository {
+    func loadImage(imagePath: String, width: Int) async throws -> UIImage {
+        let endpoint = APIStorage.posterImageEndpoint(path: imagePath, width: width)
 
         return try await networkService.fetchURL(endPoint: endpoint,
                                                  decoder: ImageDecoder())

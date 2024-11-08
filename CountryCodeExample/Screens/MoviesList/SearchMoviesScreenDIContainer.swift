@@ -22,20 +22,26 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
         DefaultSearchMoviesRepository(networkService: apiNetworkService) // TODO: add cache
     }
 
-    func createThumbnailsImageRepository() -> ThumbnailImageRepositoryProtocol {
-        ThumbnailImageRepository(networkService: imageNetworkService)
+    func createPosterImageRepository() -> PosterImageRepository {
+        DefaultPosterImageRepository(networkService: imageNetworkService)
     }
 
+    // MARK: - Manager
+    func createSearchMoviewManager() -> SearchMoviesManager {
+        DefaultSearchMoviesManager(repository: createSearchMoviesRepository())
+    }
+    
     // MARK: - Use case
 
     func createSearchMoviesUseCase() -> SearchMoviesUseCase {
-        DefaultSearchMoviesUseCase(manager: DefaultSearchMoviesManager(repository: createSearchMoviesRepository()))
+        DefaultSearchMoviesUseCase(manager: createSearchMoviewManager())
     }
 
     // MARK: - ViewModel
 
     func createSearchMoviesViewModel(coordinator: MoviewListCoordinator) -> DefaultSearchMoviesViewModel {
         DefaultSearchMoviesViewModel(searchMoviesUseCase: createSearchMoviesUseCase(),
+                                     thumbnailImageRepository: createPosterImageRepository(),
                                      coordinator: coordinator)
     }
 

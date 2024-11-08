@@ -18,15 +18,23 @@ class AppDIContainer {
         return url
     }
 
+    private var imageBaseURL: URL {
+        guard let url = URL(string: applicationAPIConfig.imageBaseURL) else {
+            fatalError("Can not create base api url")
+        }
+
+        return url
+    }
+
     private lazy var baseHeaders = {
         ["Authorization": "Bearer \(applicationAPIConfig.accessTokenAuth)",
-         "Accept": "application/json",
-         "language": NSLocale.preferredLanguages.first ?? "en"]
+         "Accept": "application/json"]
     }()
 
     lazy var apiNetworkService: NetworkServiceProtocol = {
         let apiConfiguration = APIConfiguration(baseURL: baseURL,
-                                                headers: baseHeaders)
+                                                headers: baseHeaders,
+                                                query: ["language": NSLocale.preferredLanguages.first ?? "en"])
 
         return DefaultNetworkService(config: apiConfiguration)
     }()
@@ -40,6 +48,6 @@ class AppDIContainer {
     // TODO: Possible should be repository
     func getMoviesListDIContainer() -> SearchMoviesScreenDIContainer {
         SearchMoviesScreenDIContainer(apiNetworkService: apiNetworkService,
-                                     imageNetworkService: imageNetworkService)
+                                      imageNetworkService: imageNetworkService)
     }
 }

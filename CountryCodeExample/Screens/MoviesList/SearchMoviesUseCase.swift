@@ -18,10 +18,10 @@ enum SearchError: Error {
 }
 
 class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
-    private let manager: DefaultSearchMoviesManager
+    private let manager: SearchMoviesManager
     private var loadingTask: Task<MoviesSearch, Error>? // TODO: Should be repository error or somethign
 
-    init(manager: DefaultSearchMoviesManager) {
+    init(manager: SearchMoviesManager) {
         self.manager = manager
     }
 

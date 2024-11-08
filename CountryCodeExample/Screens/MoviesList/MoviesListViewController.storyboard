@@ -78,30 +78,32 @@
                                                 <constraint firstAttribute="width" secondItem="h2w-rT-A6F" secondAttribute="height" multiplier="2:3" id="DQf-Dx-LH5"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqm-yE-80H">
-                                            <rect key="frame" x="10" y="10" width="287.33333333333331" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Description Label Description Label Description Label Description Label  Description Label Description Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlr-Nt-f5T">
-                                            <rect key="frame" x="10" y="41" width="287.33333333333331" height="61"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="imZ-PF-ttb">
+                                            <rect key="frame" x="10" y="10" width="307.33333333333331" height="100"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqm-yE-80H">
+                                                    <rect key="frame" x="0.0" y="0.0" width="307.33333333333331" height="25"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Description Label Description Label Description Label Description Label  Description Label Description Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlr-Nt-f5T">
+                                                    <rect key="frame" x="0.0" y="25" width="307.33333333333331" height="75"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="mqm-yE-80H" firstAttribute="leading" secondItem="2zp-vG-hxm" secondAttribute="leading" constant="10" id="3vb-VT-vPU"/>
-                                        <constraint firstItem="h2w-rT-A6F" firstAttribute="leading" secondItem="mqm-yE-80H" secondAttribute="trailing" constant="10" id="4kY-JA-hre"/>
-                                        <constraint firstItem="mqm-yE-80H" firstAttribute="top" secondItem="2zp-vG-hxm" secondAttribute="top" constant="10" id="6Tq-QX-4KT"/>
+                                        <constraint firstItem="imZ-PF-ttb" firstAttribute="top" secondItem="2zp-vG-hxm" secondAttribute="top" constant="10" id="Gke-5c-Ow0"/>
+                                        <constraint firstAttribute="bottom" secondItem="imZ-PF-ttb" secondAttribute="bottom" constant="10" id="QdH-Ue-HSk"/>
                                         <constraint firstAttribute="bottom" secondItem="h2w-rT-A6F" secondAttribute="bottom" constant="10" id="Tse-jb-sda"/>
                                         <constraint firstItem="h2w-rT-A6F" firstAttribute="top" secondItem="2zp-vG-hxm" secondAttribute="top" constant="-3.3333333333333357" id="eh9-P7-kDI"/>
-                                        <constraint firstItem="xlr-Nt-f5T" firstAttribute="leading" secondItem="2zp-vG-hxm" secondAttribute="leading" constant="10" id="iXG-ic-Aa8"/>
-                                        <constraint firstItem="xlr-Nt-f5T" firstAttribute="top" secondItem="mqm-yE-80H" secondAttribute="bottom" constant="10" id="jRq-Rt-1rG"/>
+                                        <constraint firstItem="imZ-PF-ttb" firstAttribute="leading" secondItem="2zp-vG-hxm" secondAttribute="leading" constant="10" id="p5m-ew-ywo"/>
                                         <constraint firstAttribute="trailing" secondItem="h2w-rT-A6F" secondAttribute="trailing" constant="10" id="qhV-Ti-P3b"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xlr-Nt-f5T" secondAttribute="bottom" constant="10" id="sZc-fV-Ad5"/>
-                                        <constraint firstItem="h2w-rT-A6F" firstAttribute="leading" secondItem="xlr-Nt-f5T" secondAttribute="trailing" constant="10" id="unU-DM-vxm"/>
+                                        <constraint firstItem="imZ-PF-ttb" firstAttribute="trailing" secondItem="h2w-rT-A6F" secondAttribute="leading" constant="10" id="w1f-q7-30X"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

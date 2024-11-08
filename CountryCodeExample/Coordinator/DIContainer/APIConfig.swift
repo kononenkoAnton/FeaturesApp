@@ -13,6 +13,7 @@ final class ApplicationAPIConfig {
     private enum Keys {
         static let apiBaseURL = "API_BASE_URL"
         static let accessTokenAuth = "ACCESS_TOKEN_AUTH"
+        static let imageBaseURL = "IMAGE_BASE_URL"
     }
 
     let baseURL: String = {
@@ -27,5 +28,12 @@ final class ApplicationAPIConfig {
             fatalError("The access token ('\(Keys.accessTokenAuth)') is missing or invalid in the .xcconfig file.")
         }
         return token
+    }()
+
+    let imageBaseURL: String = {
+        guard let imageUrlString = Bundle.main.infoDictionary?[Keys.imageBaseURL] as? String else {
+            fatalError("The Image base URL ('\(Keys.apiBaseURL)') is missing or invalid in the .xcconfig file.")
+        }
+        return imageUrlString
     }()
 }

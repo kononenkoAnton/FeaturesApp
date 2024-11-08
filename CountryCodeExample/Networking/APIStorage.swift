@@ -8,8 +8,10 @@
 import CoreFoundation
 
 struct APIStorage {
-    static func thumbnailImageEndpoint(path: String, width: CGFloat) -> Endpoint {
-        Endpoint(path: path)
+    static func posterImageEndpoint(path: String,
+                                    width: Int) -> Endpoint {
+        let matchedSize = ImageSizeWidthMatcher(matchData: [92, 154, 185, 342, 500, 780]).matchSize(width: width)
+        return Endpoint(path: "/t/p/\(matchedSize)/\(path)")
     }
 
     static func searchMoviesEndpoint(useCaseRequestDTO: SearchQueryUseCaseRequestDTO) throws -> Endpoint {
