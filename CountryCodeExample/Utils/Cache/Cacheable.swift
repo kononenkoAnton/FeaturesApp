@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 typealias CacheKey = Equatable & Hashable
 typealias CacheValue = Equatable & Hashable
@@ -20,3 +21,5 @@ protocol Cacheable {
 }
 
 protocol NetworkResponseCacheable: Cacheable where Key == URLRequest, Value == CachedURLResponse {}
+protocol InMemoryNSCacheable: Cacheable where Key == String, Value: AnyObject {}
+
