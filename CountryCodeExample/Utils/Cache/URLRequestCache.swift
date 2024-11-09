@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DefaultURLRequestCache: NetworkResponseCacheable {
+class URLRequestCache: NetworkResponseCacheable {
     let cache: URLCache
 
     func set(value: CachedURLResponse,

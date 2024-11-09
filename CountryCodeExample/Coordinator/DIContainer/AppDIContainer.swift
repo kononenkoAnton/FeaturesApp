@@ -9,9 +9,9 @@ import Foundation
 
 class AppDIContainer {
     lazy var applicationAPIConfig = ApplicationAPIConfig()
-    let urlSessionCache: NetworkResponseCacheable
+    let urlSessionCache: any NetworkResponseCacheable
 
-    init(urlSessionCache: NetworkResponseCacheable = DefaultURLRequestCache()) {
+    init(urlSessionCache: any NetworkResponseCacheable = URLRequestCache()) {
         self.urlSessionCache = urlSessionCache
     }
 

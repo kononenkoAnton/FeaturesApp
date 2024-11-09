@@ -12,12 +12,12 @@ class DefaultNetworkService: NetworkServiceProtocol {
     let config: APIConfigurable
     let logger: NetworkLoggable
     let session: URLSessionProtocol
-    let urlSessionCache: NetworkResponseCacheable?
+    let urlSessionCache: (any NetworkResponseCacheable)?
 
     init(config: APIConfigurable,
          session: URLSessionProtocol = URLSession(configuration: URLSessionConfiguration.default), // TODO: could be added another init with configuration
          logger: NetworkLoggable = DefaultNetworkLogger(),
-         urlSessionCache: NetworkResponseCacheable? = nil) {
+         urlSessionCache: (any NetworkResponseCacheable)? = nil) {
         self.config = config
         self.logger = logger
         self.session = session
@@ -37,9 +37,13 @@ class DefaultNetworkService: NetworkServiceProtocol {
 
             logger.log(request: request)
             let (data, response) = try await session.data(for: request)
-            let cachedResponse = CachedURLResponse(response: response, data: data)
-            urlSessionCache?.set(value: cachedResponse, forKey: request)
-            return try await resolveResponse(data: data, response: response, decoder: decoder)
+            let cachedResponse = CachedURLResponse(response: response,
+                                                   data: data)
+            urlSessionCache?.set(value: cachedResponse,
+                                 forKey: request)
+            return try await resolveResponse(data: data,
+                                             response: response,
+                                             decoder: decoder)
         } catch {
             throw resolveError(error: error)
         }
@@ -50,7 +54,9 @@ class DefaultNetworkService: NetworkServiceProtocol {
         do {
             let url: URL = try endPoint.url(config: config)
             let (data, response) = try await session.data(from: url)
-            return try await resolveResponse(data: data, response: response, decoder: decoder)
+            return try await resolveResponse(data: data,
+                                             response: response,
+                                             decoder: decoder)
         } catch {
             throw resolveError(error: error)
         }
