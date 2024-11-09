@@ -9,6 +9,11 @@ import Foundation
 
 class AppDIContainer {
     lazy var applicationAPIConfig = ApplicationAPIConfig()
+    let urlSessionCache: NetworkResponseCacheable
+
+    init(urlSessionCache: NetworkResponseCacheable = DefaultURLRequestCache()) {
+        self.urlSessionCache = urlSessionCache
+    }
 
     private var baseURL: URL {
         guard let url = URL(string: applicationAPIConfig.baseURL) else {

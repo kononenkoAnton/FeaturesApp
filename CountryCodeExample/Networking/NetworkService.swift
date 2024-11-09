@@ -12,20 +12,33 @@ class DefaultNetworkService: NetworkServiceProtocol {
     let config: APIConfigurable
     let logger: NetworkLoggable
     let session: URLSessionProtocol
+    let urlSessionCache: NetworkResponseCacheable?
+
     init(config: APIConfigurable,
-         session: URLSessionProtocol = URLSession(configuration: URLSessionConfiguration.default),
-         logger: NetworkLoggable = DefaultNetworkLogger()) {
+         session: URLSessionProtocol = URLSession(configuration: URLSessionConfiguration.default), // TODO: could be added another init with configuration
+         logger: NetworkLoggable = DefaultNetworkLogger(),
+         urlSessionCache: NetworkResponseCacheable? = nil) {
         self.config = config
         self.logger = logger
         self.session = session
+        self.urlSessionCache = urlSessionCache
     }
 
     func fetchRequest<Decoder>(endPoint: any EndpointProtocol,
                                decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
         do {
             let request = try endPoint.request(config: config)
+
+            if let response = urlSessionCache?.get(forKey: request) {
+                return try await resolveResponse(data: response.data,
+                                                 response: response.response,
+                                                 decoder: decoder)
+            }
+
             logger.log(request: request)
             let (data, response) = try await session.data(for: request)
+            let cachedResponse = CachedURLResponse(response: response, data: data)
+            urlSessionCache?.set(value: cachedResponse, forKey: request)
             return try await resolveResponse(data: data, response: response, decoder: decoder)
         } catch {
             throw resolveError(error: error)

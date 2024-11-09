@@ -13,12 +13,12 @@ protocol DTODecodable: Decodable {
 }
 
 // TODO: Check if usable or needs to be changed
-protocol DTOEncodable: Encodable {
-    associatedtype Dict
-    func encodeDTO() throws -> Dict?
+protocol DTOEncodable {
+    associatedtype EncodedModel
+    func encodeDTO() throws -> EncodedModel?
 }
 
-protocol DTOEncodableQuery: DTOEncodable {
+protocol DTOEncodableQuery: DTOEncodable, Encodable {
     func encodeDTO() throws -> [String: String]?
 }
 
