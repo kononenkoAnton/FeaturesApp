@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-class InMemoryImageCache: InMemoryNSCacheable {
+class DefaultInMemoryNSCacheable: InMemoryNSCacheable {
     var cache: NSCache<NSString, UIImage> = NSCache()
 
-    init(countLimit: Int,
-         totalCostLimit: Int) {
+    init(countLimit: Int = 50 * 1024 * 1024,
+         totalCostLimit: Int = 100) {
         cache.countLimit = countLimit
         cache.totalCostLimit = totalCostLimit
 

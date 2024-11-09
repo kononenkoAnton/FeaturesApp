@@ -15,9 +15,24 @@ protocol PosterImageRepository {
 // Thinks about optimization to load big if exist, resize and save both
 class DefaultPosterImageRepository: PosterImageRepository {
     let networkService: any NetworkServiceProtocol
+    let cache: any InMemoryNSCacheable
 
-    init(networkService: any NetworkServiceProtocol) {
+    init(networkService: any NetworkServiceProtocol,
+         cache: any InMemoryNSCacheable = DefaultInMemoryNSCacheable()) {
         self.networkService = networkService
+        self.cache = cache
+    }
+
+    func loadImage(imagePath: String, width: Int) async throws -> UIImage {
+        //Create request
+        let endpoint = APIStorage.posterImageEndpoint(path: imagePath,
+                                                      width: width)
+
+        if cachedImage = cache.get(forKey: endpoint)
+            
+            // Send request
+        return try await networkService.fetchURL(endPoint: endpoint,
+                                                 decoder: ImageDecoder())
     }
 }
 
@@ -33,15 +48,6 @@ class ImageDecoder: DTODecodable {
         }
 
         return image
-    }
-}
-
-extension DefaultPosterImageRepository {
-    func loadImage(imagePath: String, width: Int) async throws -> UIImage {
-        let endpoint = APIStorage.posterImageEndpoint(path: imagePath, width: width)
-
-        return try await networkService.fetchURL(endPoint: endpoint,
-                                                 decoder: ImageDecoder())
     }
 }
 
