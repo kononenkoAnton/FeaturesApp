@@ -36,23 +36,26 @@ class AppDIContainer {
          "Accept": "application/json"]
     }()
 
-    lazy var apiNetworkService: NetworkServiceProtocol = {
+    lazy var apiRequestBuilder: RequestBuilder = {
         let apiConfiguration = APIConfiguration(baseURL: baseURL,
                                                 headers: baseHeaders,
                                                 query: ["language": NSLocale.preferredLanguages.first ?? "en"])
-
-        return DefaultNetworkService(config: apiConfiguration)
+        
+        return DefaultRequestBuilder(config: apiConfiguration)
     }()
 
-    lazy var imageNetworkService: NetworkServiceProtocol = {
+    lazy var posterImageRequestBuilder: RequestBuilder = {
         let apiConfiguration = APIConfiguration(baseURL: baseURL)
 
-        return DefaultNetworkService(config: apiConfiguration)
+        return DefaultRequestBuilder(config: apiConfiguration)
     }()
-
+    
     // TODO: Possible should be repository
     func getMoviesListDIContainer() -> SearchMoviesScreenDIContainer {
-        SearchMoviesScreenDIContainer(apiNetworkService: apiNetworkService,
-                                      imageNetworkService: imageNetworkService)
+        SearchMoviesScreenDIContainer(apiRequestBuilder: apiRequestBuilder,
+                                      posterImageRequestBuilder: posterImageRequestBuilder)
     }
 }
+
+
+

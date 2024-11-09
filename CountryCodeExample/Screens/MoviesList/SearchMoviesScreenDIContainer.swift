@@ -8,29 +8,33 @@
 import UIKit
 
 class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
-    let imageNetworkService: NetworkServiceProtocol
-    let apiNetworkService: NetworkServiceProtocol
+    let posterImageRequestBuilder: RequestBuilder
+    let apiRequestBuilder: RequestBuilder
 
-    init(apiNetworkService: NetworkServiceProtocol, imageNetworkService: NetworkServiceProtocol) {
-        self.apiNetworkService = apiNetworkService
-        self.imageNetworkService = imageNetworkService
+    init(apiRequestBuilder: RequestBuilder,
+         posterImageRequestBuilder: RequestBuilder) {
+        self.apiRequestBuilder = apiRequestBuilder
+        self.posterImageRequestBuilder = posterImageRequestBuilder
     }
 
     // MARK: - Repositories
 
     func createSearchMoviesRepository() -> SearchMoviewRepository {
-        DefaultSearchMoviesRepository(networkService: apiNetworkService) // TODO: add cache
+        DefaultSearchMoviesRepository(networkService: DefaultNetworkService(),
+                                      requestBuilder: apiRequestBuilder) // TODO: add cache
     }
 
     func createPosterImageRepository() -> PosterImageRepository {
-        DefaultPosterImageRepository(networkService: imageNetworkService)
+        DefaultPosterImageRepository(networkService: DefaultNetworkService(),
+                                     requestBuilder: posterImageRequestBuilder)
     }
 
     // MARK: - Manager
+
     func createSearchMoviewManager() -> SearchMoviesManager {
         DefaultSearchMoviesManager(repository: createSearchMoviesRepository())
     }
-    
+
     // MARK: - Use case
 
     func createSearchMoviesUseCase() -> SearchMoviesUseCase {

@@ -12,27 +12,43 @@ protocol PosterImageRepository {
                    width: Int) async throws -> UIImage
 }
 
+enum RepositoryError: Error {
+    case canNotCreateURL
+}
+
 // Thinks about optimization to load big if exist, resize and save both
-class DefaultPosterImageRepository: PosterImageRepository {
+class DefaultPosterImageRepository<ImageCachable: InMemoryNSCacheable>: PosterImageRepository where ImageCachable.Value == UIImage {
     let networkService: any NetworkServiceProtocol
-    let cache: any InMemoryNSCacheable
+    let cache: ImageCachable
+    let requestBuilder: RequestBuilder
 
     init(networkService: any NetworkServiceProtocol,
-         cache: any InMemoryNSCacheable = DefaultInMemoryNSCacheable()) {
+         requestBuilder: RequestBuilder,
+         cache: ImageCachable = DefaultInMemoryNSCacheable()) {
         self.networkService = networkService
         self.cache = cache
+        self.requestBuilder = requestBuilder
     }
 
     func loadImage(imagePath: String, width: Int) async throws -> UIImage {
-        //Create request
+        // Create request
         let endpoint = APIStorage.posterImageEndpoint(path: imagePath,
                                                       width: width)
+        let request = try requestBuilder.request(endpoint: endpoint)
 
-        if cachedImage = cache.get(forKey: endpoint)
-            
-            // Send request
-        return try await networkService.fetchURL(endPoint: endpoint,
-                                                 decoder: ImageDecoder())
+        guard let urlString = request.url?.absoluteString else {
+            throw RepositoryError.canNotCreateURL
+        }
+
+        if let cachedImage = cache.get(forKey: urlString) {
+            return cachedImage
+        }
+
+        let image = try await networkService.fetchRequest(request: request,
+                                                          decoder: ImageDecoder())
+        cache.set(value: image, forKey: urlString)
+
+        return image
     }
 }
 

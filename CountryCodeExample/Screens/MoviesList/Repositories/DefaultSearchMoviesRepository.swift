@@ -14,17 +14,21 @@ class DefaultSearchMoviesRepository: SearchMoviewRepository {
 
     let networkService: any NetworkServiceProtocol
     let mapper: MoviewSearchDTOMapper
-
+    let requestBuilder: RequestBuilder
+    
     init(networkService: any NetworkServiceProtocol,
+         requestBuilder: RequestBuilder,
          mapper: MoviewSearchDTOMapper = MoviewSearchDTOMapper()) {
         self.networkService = networkService
         self.mapper = mapper
+        self.requestBuilder = requestBuilder
     }
 
     func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
         let useCaseRequestDTO = SearchQueryUseCaseRequestDTOMapper().mapToDTO(from: useCaseRequest)
         let endpoint = try APIStorage.searchMoviesEndpoint(useCaseRequestDTO: useCaseRequestDTO)
-        let feedDTO = try await networkService.fetchRequest(endPoint: endpoint,
+        let request = try requestBuilder.request(endpoint: endpoint)
+        let feedDTO = try await networkService.fetchRequest(request: request,
                                                             decoder: MoviewSearchDTODecoder())
         let feed = mapper.mapToDomain(from: feedDTO)
         return feed

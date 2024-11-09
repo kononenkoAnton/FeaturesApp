@@ -5,6 +5,8 @@
 //  Created by Anton Kononenko on 11/2/24.
 //
 
+import Foundation
+
 enum NetworkError: Error {
     case serverError(code: Int)
     case retryNeeded(originalError: Error)
@@ -29,8 +31,6 @@ enum NetworkError: Error {
 }
 
 protocol NetworkServiceProtocol {
-    func fetchRequest<Decoder: DTODecodable>(endPoint: EndpointProtocol,
+    func fetchRequest<Decoder: DTODecodable>(request: URLRequest,
                                              decoder: Decoder) async throws -> Decoder.ModelDTO
-    func fetchURL<Decoder: DTODecodable>(endPoint: EndpointProtocol,
-                                         decoder: Decoder) async throws -> Decoder.ModelDTO
 }

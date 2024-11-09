@@ -9,26 +9,21 @@ import Foundation
 
 class DefaultNetworkService: NetworkServiceProtocol {
     // TODO: Add logger, error, response, request
-    let config: APIConfigurable
     let logger: NetworkLoggable
     let session: URLSessionProtocol
     let urlSessionCache: (any NetworkResponseCacheable)?
 
-    init(config: APIConfigurable,
-         session: URLSessionProtocol = URLSession(configuration: URLSessionConfiguration.default), // TODO: could be added another init with configuration
+    init(session: URLSessionProtocol = URLSession(configuration: URLSessionConfiguration.default), // TODO: could be added another init with configuration
          logger: NetworkLoggable = DefaultNetworkLogger(),
          urlSessionCache: (any NetworkResponseCacheable)? = nil) {
-        self.config = config
         self.logger = logger
         self.session = session
         self.urlSessionCache = urlSessionCache
     }
 
-    func fetchRequest<Decoder>(endPoint: any EndpointProtocol,
+    func fetchRequest<Decoder>(request: URLRequest,
                                decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
         do {
-            let request = try endPoint.request(config: config)
-
             if let response = urlSessionCache?.get(forKey: request) {
                 return try await resolveResponse(data: response.data,
                                                  response: response.response,
@@ -41,19 +36,6 @@ class DefaultNetworkService: NetworkServiceProtocol {
                                                    data: data)
             urlSessionCache?.set(value: cachedResponse,
                                  forKey: request)
-            return try await resolveResponse(data: data,
-                                             response: response,
-                                             decoder: decoder)
-        } catch {
-            throw resolveError(error: error)
-        }
-    }
-
-    func fetchURL<Decoder>(endPoint: any EndpointProtocol,
-                           decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
-        do {
-            let url: URL = try endPoint.url(config: config)
-            let (data, response) = try await session.data(from: url)
             return try await resolveResponse(data: data,
                                              response: response,
                                              decoder: decoder)
