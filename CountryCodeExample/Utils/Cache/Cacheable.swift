@@ -19,9 +19,4 @@ protocol Cacheable {
     func clearAll()
 }
 
-protocol NetworkResponseCacheable {
-    func set(value: CachedURLResponse, forKey key: URLRequest)
-    func get(forKey key: URLRequest) -> CachedURLResponse?
-    func remove(forKey key: URLRequest)
-    func clearAll()
-}
+protocol NetworkResponseCacheable: Cacheable where Key == URLRequest, Value == CachedURLResponse {}
