@@ -22,18 +22,8 @@ protocol CellDataSource {
     func updateData(model: Model)
 }
 
-protocol Section: Hashable {
-    var id: UUID { get }
-    var title: String { get }
-}
-
-struct DefaultSection: Section {
-    let id: UUID = UUID()
-    let title: String
-
-    init(title: String) {
-        self.title = title
-    }
+enum DefaultSection {
+    case main
 }
 
 class SearchMovieCell: UITableViewCell, CellIdentifierable {

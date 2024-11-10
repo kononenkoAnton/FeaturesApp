@@ -9,11 +9,13 @@ import UIKit
 
 class MoviesListTableViewController: UITableViewController {
     weak var viewModel: SearchMoviesViewModel!
+    var isRefreshing: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDataSource()
-        tableView.prefetchDataSource = self
+        setupTableView()
+        setupRefreshControl()
+        bind(to: viewModel)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -21,14 +23,49 @@ class MoviesListTableViewController: UITableViewController {
         try? viewModel.posterImageRepository.cancelLoadAll()
     }
 
-    // MARK: - Public
+    // MARK: - Private
 
-    func reloadData() {
-        configureDiffableDataSourceSnapshot()
-        tableView.reloadData()
+    private func setupTableView() {
+        tableView.prefetchDataSource = self
+        configureDataSource()
     }
 
-    // MARK: - Private
+    func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: String(localized: LocalizationStrings.pull_to_refresh.rawValue))
+        refreshControl?.addTarget(self, action: #selector(performPullToRefresh), for: .valueChanged)
+    }
+
+    @objc private func performPullToRefresh() {
+        isRefreshing = true
+        viewModel.didPullToRefresh()
+    }
+
+    private func bind(to viewModel: SearchMoviesViewModel) {
+        viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
+        viewModel.data.addObserver(observer: self, observerBlock: didNewPageDataRecieve)
+    }
+
+    private func didNewPageDataRecieve(newPageData: [MoviewSearchViewModel]) {
+        let snapshot = dataSource.snapshot()
+        guard snapshot.numberOfSections != 0,
+              isRefreshing == false else {
+            refreshControl?.endRefreshing()
+            isRefreshing = false
+            reloadSnapshotData()
+            return
+        }
+
+        appendNewPageDataToSnapshot(with: newPageData)
+    }
+
+    private func didLoadingUpdate(loadingType: SearchMoviesLoadingType) {
+        if loadingType == .nextPage {
+            showLoadingFooter()
+        } else {
+            hideLoadingFooter()
+        }
+    }
 
     var dataSource: UITableViewDiffableDataSource<DefaultSection, MoviewSearchViewModel>!
 
@@ -45,17 +82,20 @@ class MoviesListTableViewController: UITableViewController {
         }
     }
 
-    func configureDiffableDataSourceSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
-        let section = DefaultSection(title: "Movies")
+    func appendNewPageDataToSnapshot(with newItems: [MoviewSearchViewModel]) {
+        var snapshot = dataSource.snapshot()
 
-        snapshot.appendSections([section])
-        snapshot.appendItems(viewModel.data.item, toSection: section)
-
-        dataSource.apply(snapshot, animatingDifferences: true)
+        snapshot.appendItems(viewModel.data.item,
+                             toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 
-    func updateSnapshot(section: DefaultSection) {
+    @objc func reloadSnapshotData() {
+        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(viewModel.data.item,
+                             toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 
     // MARK: - Table view data source
@@ -79,40 +119,106 @@ extension MoviesListTableViewController {
 }
 
 extension MoviesListTableViewController: UITableViewDataSourcePrefetching {
-    func cellImageData(for indexPath: IndexPath) -> (viewModel: MoviewSearchViewModel, width: Int)? {
+    func handleNextPageRequest() {
+        if viewModel.hasMorePages {
+            viewModel.didLoadNextPage()
+        } else if tableView.tableFooterView == nil {
+            showNoMorePages(message: String(localized: LocalizationStrings.no_more_data.rawValue))
+        }
+    }
+
+    func cellImageData(for indexPath: IndexPath) -> (cellViewModel: MoviewSearchViewModel, width: Int)? {
         let dataSource = viewModel.data.item
         guard dataSource.count > indexPath.row else {
             return nil
         }
 
         let movieSearchViewModel = dataSource[indexPath.row]
-        //TODO: change to some better way
+        // TODO: change to some better way
         return (movieSearchViewModel, 66)
+    }
+
+    func isNeedToLoadNewPage(indexPath: IndexPath) -> Bool {
+        let loadNewPageOffset = 5
+        return indexPath.row >= viewModel.data.item.count - loadNewPageOffset
     }
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            guard let (viewModel, width) = cellImageData(for: indexPath) else {
+            guard let (cellViewModel, width) = cellImageData(for: indexPath) else {
                 continue
             }
 
-            if indexPaths.contains(where: isLoadingCell) {
-                  loadData(cursor: nextCursor)
-              }
-            
+            if indexPaths.contains(where: isNeedToLoadNewPage) {
+                handleNextPageRequest()
+            }
+
             Task(priority: .userInitiated) {
-                await viewModel.loadImage(width: width)
+                await cellViewModel.loadImage(width: width)
             }
         }
     }
 
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            guard let (viewModel, width) = cellImageData(for: indexPath) else {
+            guard let (cellViewModel, width) = cellImageData(for: indexPath) else {
                 continue
             }
 
-            viewModel.cancelLoad(width: width)
+            cellViewModel.cancelLoad(width: width)
         }
+    }
+}
+
+extension MoviesListTableViewController {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let threshold: CGFloat = 100.0
+        let contentHeight = scrollView.contentSize.height
+        let offsetY = scrollView.contentOffset.y
+        let frameHeight = scrollView.frame.size.height
+        if offsetY > contentHeight - frameHeight - threshold {
+            handleNextPageRequest()
+        }
+    }
+}
+
+extension MoviesListTableViewController {
+    var footerFrame: CGRect {
+        CGRect(x: 0,
+               y: 0,
+               width: tableView.bounds.width,
+               height: 44)
+    }
+
+    func showLoadingFooter() {
+        let footerView = UIActivityIndicatorView(style: .medium)
+        footerView.startAnimating()
+        footerView.frame = footerFrame
+        tableView.tableFooterView = footerView
+    }
+
+    func showNoMorePages(message: String) {
+        let footerView = UITableViewHeaderFooterView()
+        footerView.frame = footerFrame
+
+        let label = UILabel(frame: footerView.bounds)
+        label.text = message
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        footerView.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: footerView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: footerView.bottomAnchor),
+        ])
+
+        tableView.tableFooterView = footerView
+    }
+
+    func hideLoadingFooter() {
+        tableView.tableFooterView = nil
     }
 }

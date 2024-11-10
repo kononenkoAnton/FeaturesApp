@@ -192,109 +192,109 @@ enum TMDBNetworkErrors: Int {
         }
     }
 }
-
-extension TMDBNetworkErrors {
-    var localizationKey: String.LocalizationValue {
-        switch self {
-        case .success:
-            return "success"
-        case .invalidService:
-            return "invalid_service"
-        case .authenticationFailed:
-            return "authentication_failed"
-        case .invalidFormat:
-            return "invalid_format"
-        case .invalidParameters:
-            return "invalid_parameters"
-        case .invalidID:
-            return "invalid_id"
-        case .invalidAPIKey:
-            return "invalid_api_key"
-        case .duplicateEntry:
-            return "duplicate_entry"
-        case .serviceOffline:
-            return "service_offline"
-        case .suspendedAPIKey:
-            return "suspended_api_key"
-        case .internalError:
-            return "internal_error"
-        case .recordUpdated:
-            return "record_updated"
-        case .recordDeleted:
-            return "record_deleted"
-        case .authenticationFailedAgain:
-            return "authentication_failed_again"
-        case .failed:
-            return "failed"
-        case .deviceDenied:
-            return "device_denied"
-        case .sessionDenied:
-            return "session_denied"
-        case .validationFailed:
-            return "validation_failed"
-        case .invalidAcceptHeader:
-            return "invalid_accept_header"
-        case .invalidDateRange:
-            return "invalid_date_range"
-        case .entryNotFound:
-            return "entry_not_found"
-        case .invalidPage:
-            return "invalid_page"
-        case .invalidDate:
-            return "invalid_date"
-        case .requestTimeout:
-            return "request_timeout"
-        case .requestLimitExceeded:
-            return "request_limit_exceeded"
-        case .usernamePasswordRequired:
-            return "username_password_required"
-        case .tooManyAppendToResponseObjects:
-            return "too_many_append_to_response_objects"
-        case .invalidTimezone:
-            return "invalid_timezone"
-        case .confirmationRequired:
-            return "confirmation_required"
-        case .invalidCredentials:
-            return "invalid_credentials"
-        case .accountDisabled:
-            return "account_disabled"
-        case .emailNotVerified:
-            return "email_not_verified"
-        case .invalidRequestToken:
-            return "invalid_request_token"
-        case .resourceNotFound:
-            return "resource_not_found"
-        case .invalidToken:
-            return "invalid_token"
-        case .tokenWritePermissionDenied:
-            return "token_write_permission_denied"
-        case .sessionNotFound:
-            return "session_not_found"
-        case .permissionDenied:
-            return "permission_denied"
-        case .resourcePrivate:
-            return "resource_private"
-        case .nothingToUpdate:
-            return "nothing_to_update"
-        case .tokenNotApproved:
-            return "token_not_approved"
-        case .methodNotSupported:
-            return "method_not_supported"
-        case .backendServerUnavailable:
-            return "backend_server_unavailable"
-        case .invalidIDError:
-            return "invalid_id_error"
-        case .userSuspended:
-            return "user_suspended"
-        case .apiMaintenance:
-            return "api_maintenance"
-        case .invalidInput:
-            return "invalid_input"
-        }
-    }
-
-    var localizedDescription: String {
-        // Using String(localized: table:) for modern localization
-        return String(localized: localizationKey, table: "TMDBNetworkErrors")
-    }
-}
+//
+//extension TMDBNetworkErrors {
+//    var localizationKey: String.LocalizationValue {
+//        switch self {
+//        case .success:
+//            return "success"
+//        case .invalidService:
+//            return "invalid_service"
+//        case .authenticationFailed:
+//            return "authentication_failed"
+//        case .invalidFormat:
+//            return "invalid_format"
+//        case .invalidParameters:
+//            return "invalid_parameters"
+//        case .invalidID:
+//            return "invalid_id"
+//        case .invalidAPIKey:
+//            return "invalid_api_key"
+//        case .duplicateEntry:
+//            return "duplicate_entry"
+//        case .serviceOffline:
+//            return "service_offline"
+//        case .suspendedAPIKey:
+//            return "suspended_api_key"
+//        case .internalError:
+//            return "internal_error"
+//        case .recordUpdated:
+//            return "record_updated"
+//        case .recordDeleted:
+//            return "record_deleted"
+//        case .authenticationFailedAgain:
+//            return "authentication_failed_again"
+//        case .failed:
+//            return "failed"
+//        case .deviceDenied:
+//            return "device_denied"
+//        case .sessionDenied:
+//            return "session_denied"
+//        case .validationFailed:
+//            return "validation_failed"
+//        case .invalidAcceptHeader:
+//            return "invalid_accept_header"
+//        case .invalidDateRange:
+//            return "invalid_date_range"
+//        case .entryNotFound:
+//            return "entry_not_found"
+//        case .invalidPage:
+//            return "invalid_page"
+//        case .invalidDate:
+//            return "invalid_date"
+//        case .requestTimeout:
+//            return "request_timeout"
+//        case .requestLimitExceeded:
+//            return "request_limit_exceeded"
+//        case .usernamePasswordRequired:
+//            return "username_password_required"
+//        case .tooManyAppendToResponseObjects:
+//            return "too_many_append_to_response_objects"
+//        case .invalidTimezone:
+//            return "invalid_timezone"
+//        case .confirmationRequired:
+//            return "confirmation_required"
+//        case .invalidCredentials:
+//            return "invalid_credentials"
+//        case .accountDisabled:
+//            return "account_disabled"
+//        case .emailNotVerified:
+//            return "email_not_verified"
+//        case .invalidRequestToken:
+//            return "invalid_request_token"
+//        case .resourceNotFound:
+//            return "resource_not_found"
+//        case .invalidToken:
+//            return "invalid_token"
+//        case .tokenWritePermissionDenied:
+//            return "token_write_permission_denied"
+//        case .sessionNotFound:
+//            return "session_not_found"
+//        case .permissionDenied:
+//            return "permission_denied"
+//        case .resourcePrivate:
+//            return "resource_private"
+//        case .nothingToUpdate:
+//            return "nothing_to_update"
+//        case .tokenNotApproved:
+//            return "token_not_approved"
+//        case .methodNotSupported:
+//            return "method_not_supported"
+//        case .backendServerUnavailable:
+//            return "backend_server_unavailable"
+//        case .invalidIDError:
+//            return "invalid_id_error"
+//        case .userSuspended:
+//            return "user_suspended"
+//        case .apiMaintenance:
+//            return "api_maintenance"
+//        case .invalidInput:
+//            return "invalid_input"
+//        }
+//    }
+//
+//    var localizedDescription: String {
+//        // Using String(localized: table:) for modern localization
+//        return String(localized: localizationKey, table: "TMDBNetworkErrors")
+//    }
+//}

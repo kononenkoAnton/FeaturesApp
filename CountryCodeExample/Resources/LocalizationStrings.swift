@@ -11,4 +11,7 @@ enum LocalizationStrings: String.LocalizationValue {
     case alert_cancel_button
     case alert_ok_button
     case alert_error_title
+    case no_more_data
+    case pull_to_refresh
+    case search_screen_title
 }

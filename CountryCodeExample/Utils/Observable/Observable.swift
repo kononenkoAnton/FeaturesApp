@@ -23,8 +23,8 @@ protocol ObservableProtocol {
 
 final class Observable<Item>: ObservableProtocol {
     private var observers: [WeakObserver<Item>] = []
-    private let queue = DispatchQueue(label: "com.observable.queue", attributes: .concurrent)
-    private(set) var item: Item {
+    private let queue = DispatchQueue(label: "com.observable.queue")
+    var item: Item {
         didSet {
             removeDeadObservers()
             DispatchQueue.main.async { [weak self] in

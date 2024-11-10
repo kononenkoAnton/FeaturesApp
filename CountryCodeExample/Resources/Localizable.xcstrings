@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "account_disabled" : {
-
-    },
     "alert_cancel_button" : {
       "comment" : "Comment Here",
       "extractionState" : "manual",
@@ -75,36 +72,6 @@
         }
       }
     },
-    "api_maintenance" : {
-
-    },
-    "authentication_failed" : {
-
-    },
-    "authentication_failed_again" : {
-
-    },
-    "backend_server_unavailable" : {
-
-    },
-    "confirmation_required" : {
-
-    },
-    "device_denied" : {
-
-    },
-    "duplicate_entry" : {
-
-    },
-    "email_not_verified" : {
-
-    },
-    "entry_not_found" : {
-
-    },
-    "failed" : {
-
-    },
     "failed_to_load_movies" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -127,57 +94,6 @@
           }
         }
       }
-    },
-    "internal_error" : {
-
-    },
-    "invalid_accept_header" : {
-
-    },
-    "invalid_api_key" : {
-
-    },
-    "invalid_credentials" : {
-
-    },
-    "invalid_date" : {
-
-    },
-    "invalid_date_range" : {
-
-    },
-    "invalid_format" : {
-
-    },
-    "invalid_id" : {
-
-    },
-    "invalid_id_error" : {
-
-    },
-    "invalid_input" : {
-
-    },
-    "invalid_page" : {
-
-    },
-    "invalid_parameters" : {
-
-    },
-    "invalid_request_token" : {
-
-    },
-    "invalid_service" : {
-
-    },
-    "invalid_timezone" : {
-
-    },
-    "invalid_token" : {
-
-    },
-    "method_not_supported" : {
-
     },
     "no_internet_connection" : {
       "extractionState" : "manual",
@@ -202,62 +118,74 @@
         }
       }
     },
-    "nothing_to_update" : {
-
+    "no_more_data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No more data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay más datos"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Більше немає даних"
+          }
+        }
+      }
     },
-    "permission_denied" : {
-
+    "pull_to_refresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pull to refresh"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para actualizar"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Потягніть для оновлення"
+          }
+        }
+      }
     },
-    "record_deleted" : {
-
-    },
-    "record_updated" : {
-
-    },
-    "request_limit_exceeded" : {
-
-    },
-    "request_timeout" : {
-
-    },
-    "resource_not_found" : {
-
-    },
-    "resource_private" : {
-
-    },
-    "service_offline" : {
-
-    },
-    "session_denied" : {
-
-    },
-    "session_not_found" : {
-
-    },
-    "success" : {
-
-    },
-    "suspended_api_key" : {
-
-    },
-    "token_not_approved" : {
-
-    },
-    "token_write_permission_denied" : {
-
-    },
-    "too_many_append_to_response_objects" : {
-
-    },
-    "user_suspended" : {
-
-    },
-    "username_password_required" : {
-
-    },
-    "validation_failed" : {
-
+    "search_screen_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Movies Seach"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Búsqueda de películas"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пошук фільмів"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

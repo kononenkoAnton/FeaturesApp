@@ -36,35 +36,43 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     func setupViews() {
-        navigationController?.title = "The Movies"
+        
+        // TODO: check why title not visisble
+        
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = .white
+//        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//        
+        self.title = String(localized: LocalizationStrings.search_screen_title.rawValue)
     }
 
     func bind(to viewModel: SearchMoviesViewModel) {
-        viewModel.data.addObserver(observer: self, observerBlock: didEntryUpdate)
         viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
-    }
-
-    func didEntryUpdate(entry: [MoviewSearchViewModel]) {
-        tableViewController?.reloadData()
     }
 
     func didErrorUpdate(alertData: AlertData?) {
         guard let alertData else {
             return
         }
-        
+
         Task.detached {
             // TODO: Maybe to send completion and return nil for alertData
             await self.showAlert(alertData: alertData)
         }
-        
     }
 
-    func didLoadingUpdate(loading: Bool) {
-        loading ?
-            activityIndicator.startAnimating() :
+    func didLoadingUpdate(loadingType: SearchMoviesLoadingType) {
+        if loadingType == .screen {
+            activityIndicator.startAnimating()
+        } else {
             activityIndicator.stopAnimating()
+        }
     }
 }
 
