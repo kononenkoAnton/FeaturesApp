@@ -22,13 +22,6 @@ protocol CellDataSource {
     func updateData(model: Model)
 }
 
-struct SearchMoviewModel: Hashable {
-    let id: UUID = UUID()
-    let title: String
-    let desciption: String
-    let image: UIImage
-}
-
 protocol Section: Hashable {
     var id: UUID { get }
     var title: String { get }
@@ -37,7 +30,7 @@ protocol Section: Hashable {
 struct DefaultSection: Section {
     let id: UUID = UUID()
     let title: String
-    
+
     init(title: String) {
         self.title = title
     }
@@ -47,17 +40,34 @@ class SearchMovieCell: UITableViewCell, CellIdentifierable {
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
+    weak var viewModel: MoviewSearchViewModel?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        posterImageView.image = nil
+        titleLabel.text = nil
+        descriptionLabel.text = nil
     }
 }
 
 extension SearchMovieCell: CellDataSource {
-    func updateData(model: SearchMoviewModel) {
+    func updateData(model: MoviewSearchViewModel) {
+        viewModel = model
         titleLabel.text = model.title
-        descriptionLabel.text = model.desciption
-        posterImageView?.image = model.image
+        descriptionLabel.text = model.overview
+        posterImageView.image = .moviewSearchPlaceholder
+        loadImage()
+    }
+
+    func loadImage() {
+        Task(priority: .userInitiated) {
+            let image = await viewModel?.loadImage(width: 66)
+            Task { @MainActor in
+                if let image {
+                    posterImageView.image = image
+                }
+            }
+        }
     }
 }

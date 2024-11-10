@@ -27,7 +27,9 @@ final class Observable<Item>: ObservableProtocol {
     private(set) var item: Item {
         didSet {
             removeDeadObservers()
-            notifyObservers()
+            DispatchQueue.main.async { [weak self] in
+                self?.notifyObservers()
+            }
         }
     }
 
@@ -73,7 +75,7 @@ final class Observable<Item>: ObservableProtocol {
     }
 
     private func notifyObservers() {
-        let currentObservers = queue.sync {
+        let currentObservers: [WeakObserver<Item>] = queue.sync {
             observers
         }
 

@@ -25,7 +25,11 @@ protocol DTOEncodableQuery: DTOEncodable, Encodable {
 extension DTOEncodableQuery {
     func encodeDTO() throws -> [String: String]? {
         let data = try JSONEncoder().encode(self)
-        return try JSONSerialization.jsonObject(with: data) as? [String: String]
+        guard let encodedDict = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return nil
+        }
+
+        return encodedDict.mapValues({ "\($0)" })
     }
 }
 

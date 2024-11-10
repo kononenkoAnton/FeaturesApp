@@ -7,9 +7,12 @@
 
 import UIKit
 
-protocol PosterImageRepository {
-    func loadImage(imagePath: String,
+protocol PosterImageRepository: AnyObject {
+    func loadImage(posterPath: String,
                    width: Int) async throws -> UIImage
+    func cancelLoad(posterPath: String,
+                    width: Int) throws
+    func cancelLoadAll() throws
 }
 
 enum RepositoryError: Error {
@@ -19,20 +22,23 @@ enum RepositoryError: Error {
 // Thinks about optimization to load big if exist, resize and save both
 class DefaultPosterImageRepository<ImageCachable: InMemoryNSCacheable>: PosterImageRepository where ImageCachable.Value == UIImage {
     let networkService: any NetworkServiceProtocol
-    let cache: ImageCachable
+    let imageCache: ImageCachable
+    let taskCache: any TaskCacheable
     let requestBuilder: RequestBuilder
 
     init(networkService: any NetworkServiceProtocol,
          requestBuilder: RequestBuilder,
-         cache: ImageCachable = DefaultInMemoryNSCacheable()) {
+         cache: ImageCachable = DefaultInMemoryCache(),
+         taskCache: any TaskCacheable = DefaultPosterImageTaskCache()) {
         self.networkService = networkService
-        self.cache = cache
+        imageCache = cache
         self.requestBuilder = requestBuilder
+        self.taskCache = taskCache
     }
 
-    func loadImage(imagePath: String, width: Int) async throws -> UIImage {
+    func loadImage(posterPath: String, width: Int) async throws -> UIImage {
         // Create request
-        let endpoint = APIStorage.posterImageEndpoint(path: imagePath,
+        let endpoint = APIStorage.posterImageEndpoint(path: posterPath,
                                                       width: width)
         let request = try requestBuilder.request(endpoint: endpoint)
 
@@ -40,15 +46,30 @@ class DefaultPosterImageRepository<ImageCachable: InMemoryNSCacheable>: PosterIm
             throw RepositoryError.canNotCreateURL
         }
 
-        if let cachedImage = cache.get(forKey: urlString) {
+        if let cachedImage = imageCache.get(forKey: urlString) {
             return cachedImage
         }
 
         let image = try await networkService.fetchRequest(request: request,
                                                           decoder: ImageDecoder())
-        cache.set(value: image, forKey: urlString)
-
+        imageCache.set(value: image, forKey: urlString)
+        taskCache.remove(forKey: urlString)
         return image
+    }
+
+    func cancelLoad(posterPath: String, width: Int) throws {
+        let endpoint = APIStorage.posterImageEndpoint(path: posterPath,
+                                                      width: width)
+
+        guard let url = try requestBuilder.url(endpoint: endpoint) else {
+            return
+        }
+
+        taskCache.remove(forKey: url.absoluteString)
+    }
+
+    func cancelLoadAll() throws {
+        taskCache.removeAll()
     }
 }
 

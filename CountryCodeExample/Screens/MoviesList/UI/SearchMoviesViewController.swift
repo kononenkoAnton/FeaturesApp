@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchMoviesViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
-    var viewModel: SearchMoviesViewModel!
+    private var viewModel: SearchMoviesViewModel!
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @MainActor @IBOutlet var searchBarContainer: UIView!
@@ -40,12 +40,12 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     func bind(to viewModel: SearchMoviesViewModel) {
-        viewModel.entry.addObserver(observer: self, observerBlock: didEntryUpdate)
+        viewModel.data.addObserver(observer: self, observerBlock: didEntryUpdate)
         viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
     }
 
-    func didEntryUpdate(entry: [Movie]) {
+    func didEntryUpdate(entry: [MoviewSearchViewModel]) {
         tableViewController?.reloadData()
     }
 

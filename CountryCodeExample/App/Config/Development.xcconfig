@@ -6,9 +6,9 @@
 //
 
 // $() need to simple workaround since xconfig divide // and not allow to use yrl
-API_BASE_URL=https:/$()/api.themoviedb.org
+API_BASE_URL=https:/$()/api.themoviedb.org/
 ACCESS_TOKEN_AUTH=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MmM3MDY5NWU2ODUyYzFhYzNjYjNiZDM1YzI3MDg2YiIsIm5iZiI6MTczMDY2MjMwNC4wNzI1NjQxLCJzdWIiOiI2NzE5YWFkNDM0YzBmYWJkNjgxYzUyZWYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.9sT5MXTPHYzIBVwFYxSE2PmUH1-hK3_0MWSPSCbEdxA
-IMAGE_BASE_URL=https:/$()/image.tmdb.org
+IMAGE_BASE_URL=https:/$()/image.tmdb.org/
 
 //TODO: Change to load API maybe
 //BACKDROP_SIZES=[

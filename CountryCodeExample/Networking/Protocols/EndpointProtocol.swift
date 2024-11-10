@@ -53,13 +53,20 @@ extension EndpointProtocol {
         components.path.append(path)
 
         if config.query.count > 0 || query.count > 0 {
+            
+            var queryItems:[URLQueryItem] = []
             for queryPair in config.query {
-                components.queryItems?.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
+                queryItems.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
             }
 
             for queryPair in query {
-                components.queryItems?.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
+                queryItems.append(URLQueryItem(name: queryPair.key, value: queryPair.value))
             }
+            
+            if !queryItems.isEmpty {
+                components.queryItems = queryItems
+            }
+            
         }
 
         guard let url = components.url else {

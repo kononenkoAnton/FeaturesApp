@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class DefaultInMemoryNSCacheable: InMemoryNSCacheable {
+class DefaultInMemoryCache: InMemoryNSCacheable {
     var cache: NSCache<NSString, UIImage> = NSCache()
 
     init(countLimit: Int = 50 * 1024 * 1024,
@@ -17,7 +17,7 @@ class DefaultInMemoryNSCacheable: InMemoryNSCacheable {
         cache.totalCostLimit = totalCostLimit
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(clearAll),
+                                               selector: #selector(removeAll),
                                                name: UIApplication.didReceiveMemoryWarningNotification,
                                                object: nil)
     }
@@ -34,7 +34,7 @@ class DefaultInMemoryNSCacheable: InMemoryNSCacheable {
         cache.removeObject(forKey: key as NSString)
     }
 
-    @objc func clearAll() {
+    @objc func removeAll() {
         cache.removeAllObjects()
     }
 }

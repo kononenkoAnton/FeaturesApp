@@ -32,7 +32,7 @@ final class ApplicationAPIConfig {
 
     let imageBaseURL: String = {
         guard let imageUrlString = Bundle.main.infoDictionary?[Keys.imageBaseURL] as? String else {
-            fatalError("The Image base URL ('\(Keys.apiBaseURL)') is missing or invalid in the .xcconfig file.")
+            fatalError("The Image base URL ('\(Keys.imageBaseURL)') is missing or invalid in the .xcconfig file.")
         }
         return imageUrlString
     }()

@@ -16,7 +16,7 @@ struct Movie {
     let originalTitle: String
     let overview: String
     let popularity: Float
-    let posterPath: String
+    let posterPath: String?
     let releaseDate: Date
     let title: String
     let video: Bool

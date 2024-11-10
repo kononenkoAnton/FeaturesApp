@@ -45,7 +45,7 @@ class AppDIContainer {
     }()
 
     lazy var posterImageRequestBuilder: RequestBuilder = {
-        let apiConfiguration = APIConfiguration(baseURL: baseURL)
+        let apiConfiguration = APIConfiguration(baseURL: imageBaseURL)
 
         return DefaultRequestBuilder(config: apiConfiguration)
     }()

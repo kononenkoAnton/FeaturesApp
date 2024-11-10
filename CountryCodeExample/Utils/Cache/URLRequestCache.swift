@@ -24,7 +24,7 @@ class URLRequestCache: NetworkResponseCacheable {
         cache.removeCachedResponse(for: key)
     }
 
-    func clearAll() {
+    func removeAll() {
         cache.removeAllCachedResponses()
     }
 

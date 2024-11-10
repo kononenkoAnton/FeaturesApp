@@ -8,29 +8,35 @@
 import UIKit
 
 class MoviesListTableViewController: UITableViewController {
-    var viewModel: SearchMoviesViewModel!
+    weak var viewModel: SearchMoviesViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
         tableView.prefetchDataSource = self
-        configureDiffableDataSourceSnapshot()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        try? viewModel.posterImageRepository.cancelLoadAll()
     }
 
     // MARK: - Public
 
     func reloadData() {
+        configureDiffableDataSourceSnapshot()
         tableView.reloadData()
     }
 
     // MARK: - Private
 
-    var dataSource: UITableViewDiffableDataSource<DefaultSection, SearchMoviewModel>!
+    var dataSource: UITableViewDiffableDataSource<DefaultSection, MoviewSearchViewModel>!
 
     func configureDataSource() {
         dataSource = UITableViewDiffableDataSource(tableView: tableView) { tableView, indexPath, model -> SearchMovieCell? in
 
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchMovieCell.cellIdentifier, for: indexPath) as? SearchMovieCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchMovieCell.cellIdentifier,
+                                                           for: indexPath) as? SearchMovieCell else {
                 return nil
             }
 
@@ -38,20 +44,18 @@ class MoviesListTableViewController: UITableViewController {
             return cell
         }
     }
-    
-    func configureDiffableDataSourceSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, SearchMoviewModel>()
-        let section = DefaultSection(title: "Movies")
-        
-        snapshot.appendSections([section])
-        snapshot.appendItems([], toSection: section)
-        
-        dataSource.apply(snapshot, animatingDifferences: true)
 
+    func configureDiffableDataSourceSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
+        let section = DefaultSection(title: "Movies")
+
+        snapshot.appendSections([section])
+        snapshot.appendItems(viewModel.data.item, toSection: section)
+
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
+
     func updateSnapshot(section: DefaultSection) {
-        
     }
 
     // MARK: - Table view data source
@@ -75,14 +79,40 @@ extension MoviesListTableViewController {
 }
 
 extension MoviesListTableViewController: UITableViewDataSourcePrefetching {
+    func cellImageData(for indexPath: IndexPath) -> (viewModel: MoviewSearchViewModel, width: Int)? {
+        let dataSource = viewModel.data.item
+        guard dataSource.count > indexPath.row else {
+            return nil
+        }
+
+        let movieSearchViewModel = dataSource[indexPath.row]
+        //TODO: change to some better way
+        return (movieSearchViewModel, 66)
+    }
+
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//        updateSnapshot() after 
+        for indexPath in indexPaths {
+            guard let (viewModel, width) = cellImageData(for: indexPath) else {
+                continue
+            }
+
+            if indexPaths.contains(where: isLoadingCell) {
+                  loadData(cursor: nextCursor)
+              }
+            
+            Task(priority: .userInitiated) {
+                await viewModel.loadImage(width: width)
+            }
+        }
     }
-    
+
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        
+        for indexPath in indexPaths {
+            guard let (viewModel, width) = cellImageData(for: indexPath) else {
+                continue
+            }
+
+            viewModel.cancelLoad(width: width)
+        }
     }
-    
-    
-    
 }

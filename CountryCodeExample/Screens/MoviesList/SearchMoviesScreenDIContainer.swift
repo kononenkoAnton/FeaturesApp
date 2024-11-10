@@ -45,7 +45,7 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
 
     func createSearchMoviesViewModel(coordinator: MoviewListCoordinator) -> DefaultSearchMoviesViewModel {
         DefaultSearchMoviesViewModel(searchMoviesUseCase: createSearchMoviesUseCase(),
-                                     thumbnailImageRepository: createPosterImageRepository(),
+                                     posterImageRepository: createPosterImageRepository(),
                                      coordinator: coordinator)
     }
 

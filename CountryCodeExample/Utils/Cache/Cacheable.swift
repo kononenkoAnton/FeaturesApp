@@ -17,9 +17,13 @@ protocol Cacheable {
     func set(value: Value, forKey key: Key)
     func get(forKey key: Key) -> Value?
     func remove(forKey key: Key)
-    func clearAll()
+    func removeAll()
 }
 
 protocol NetworkResponseCacheable: Cacheable where Key == URLRequest, Value == CachedURLResponse {}
 protocol InMemoryNSCacheable: Cacheable where Key == String, Value: AnyObject {}
 
+protocol TaskCacheable: Cacheable where Key == String, Value == Task<Success, Failure> {
+    associatedtype Success: Sendable
+    associatedtype Failure: Error
+}
