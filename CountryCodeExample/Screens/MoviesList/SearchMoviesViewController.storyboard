@@ -24,7 +24,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="56" id="Yrf-SU-iPM"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zp-b0-IGA">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zp-b0-IGA" userLabel="TableViewControllerContainer">
                                 <rect key="frame" x="0.0" y="115" width="393" height="703"/>
                                 <connections>
                                     <segue destination="LZ3-K5-Ztm" kind="embed" identifier="MoviesListTableViewController" id="aPH-bH-BdZ"/>
@@ -33,11 +33,22 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-1u-vZ0">
                                 <rect key="frame" x="178" y="420" width="37" height="37"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rL6-xz-lBl">
+                                <rect key="frame" x="50" y="441.66666666666669" width="293" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="Zzn-7N-2A7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <constraints>
+                            <constraint firstItem="rL6-xz-lBl" firstAttribute="centerY" secondItem="1zp-b0-IGA" secondAttribute="centerY" id="8Db-ue-p3E"/>
                             <constraint firstItem="CGG-tf-KOq" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="A15-Eh-Ibo"/>
                             <constraint firstItem="CGG-tf-KOq" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Cxj-yl-zya"/>
+                            <constraint firstItem="rL6-xz-lBl" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="50" id="Dg7-81-CJp"/>
                             <constraint firstItem="1zp-b0-IGA" firstAttribute="top" secondItem="CGG-tf-KOq" secondAttribute="bottom" id="OjO-tP-PuD"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="1zp-b0-IGA" secondAttribute="bottom" id="RQn-HQ-Y9N"/>
                             <constraint firstItem="1zp-b0-IGA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WTG-b0-sh3"/>
@@ -45,10 +56,12 @@
                             <constraint firstItem="6pU-1u-vZ0" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="jQu-JU-zcg"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="CGG-tf-KOq" secondAttribute="trailing" id="oYg-wt-6bW"/>
                             <constraint firstItem="6pU-1u-vZ0" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="shM-fP-4A1"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="rL6-xz-lBl" secondAttribute="trailing" constant="50" id="yCN-gL-FgU"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="6pU-1u-vZ0" id="E3P-sS-ckp"/>
+                        <outlet property="emptySearchResults" destination="rL6-xz-lBl" id="ewC-ou-tcE"/>
                         <outlet property="searchBarContainer" destination="CGG-tf-KOq" id="nHh-5D-Evj"/>
                     </connections>
                 </viewController>
@@ -61,7 +74,7 @@
             <objects>
                 <tableViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="LZ3-K5-Ztm" customClass="MoviesListTableViewController" customModule="CountryCodeExample" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="120" estimatedRowHeight="120" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Tnm-Zn-F9M">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="659"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="703"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>

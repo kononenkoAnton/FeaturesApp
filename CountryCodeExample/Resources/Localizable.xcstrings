@@ -141,6 +141,29 @@
         }
       }
     },
+    "no_search_result" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry, we couldn’t find any results. Please try searching with different keywords."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo sentimos, no encontramos resultados. Por favor, intenta buscar con otras palabras clave."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибачте, ми не знайшли жодних результатів. Спробуйте шукати за іншими ключовими словами."
+          }
+        }
+      }
+    },
     "pull_to_refresh" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -30,6 +30,8 @@ protocol SearchMoviesViewModelDataSource: AnyObject {
     var posterImageRepository: PosterImageRepository { get }
     var query: Observable<String> { get }
     var hasMorePages: Bool { get }
+    var screenTitle: String { get }
+    var emptySearchResults: String { get }
 }
 
 protocol SearchMoviesViewModel: SearchMoviesViewModelDelegate, SearchMoviesViewModelDataSource {}
@@ -54,6 +56,9 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     var hasMorePages: Bool { currentPage < totalPageCount }
     var nextPage: Int { hasMorePages ? currentPage + 1 : currentPage }
 
+    var screenTitle: String = String(localized: LocalizationStrings.search_screen_title.rawValue)
+    var emptySearchResults: String = String(localized: LocalizationStrings.no_search_result.rawValue)
+    
     init(searchMoviesUseCase: SearchMoviesUseCase,
          posterImageRepository: PosterImageRepository,
          coordinator: MoviewListCoordinator) {

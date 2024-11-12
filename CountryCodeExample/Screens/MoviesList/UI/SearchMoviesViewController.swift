@@ -10,7 +10,8 @@ import UIKit
 class SearchMoviesViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
     private var viewModel: SearchMoviesViewModel!
 
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var emptySearchResults: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @MainActor @IBOutlet var searchBarContainer: UIView!
 
     private weak var tableViewController: MoviesListTableViewController?
@@ -25,6 +26,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         viewModel.viewDidLoad()
         setupViews()
         bind(to: viewModel)
+        setupBehaviors()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -36,19 +38,12 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     func setupViews() {
-        
-        // TODO: check why title not visisble
-        
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = .white
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-//
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//        
-        self.title = String(localized: LocalizationStrings.search_screen_title.rawValue)
+        title = viewModel.screenTitle
+        emptySearchResults.text = viewModel.emptySearchResults
+    }
+
+    fileprivate func setupBehaviors() {
+        addBehaviors([BlackStyleNavigationBarBehavior()])
     }
 
     func bind(to viewModel: SearchMoviesViewModel) {
