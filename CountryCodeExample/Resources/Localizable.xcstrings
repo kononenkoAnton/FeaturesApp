@@ -187,6 +187,29 @@
         }
       }
     },
+    "search_bar_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for movies, actors, or genres..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Busca películas, actores o géneros..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шукайте фільми, акторів або жанри..."
+          }
+        }
+      }
+    },
     "search_screen_title" : {
       "extractionState" : "manual",
       "localizations" : {

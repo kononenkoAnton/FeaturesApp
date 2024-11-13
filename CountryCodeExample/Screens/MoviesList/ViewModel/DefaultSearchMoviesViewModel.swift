@@ -11,7 +11,8 @@ protocol SearchMoviesViewModelDelegate: AnyObject {
     func viewDidLoad()
     func didSelectItem(index: Int)
     func viewDidDisappiear()
-    func didUserHandleSearch(useCaseRequest: SearchQueryUseCaseRequest)
+    func didUserHandleSearch(query: String)
+    func cancelSearch()
     func didLoadNextPage()
     func didPullToRefresh()
 }
@@ -32,6 +33,7 @@ protocol SearchMoviesViewModelDataSource: AnyObject {
     var hasMorePages: Bool { get }
     var screenTitle: String { get }
     var emptySearchResults: String { get }
+    var searchBarPlaceholder: String { get }
 }
 
 protocol SearchMoviesViewModel: SearchMoviesViewModelDelegate, SearchMoviesViewModelDataSource {}
@@ -49,6 +51,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     let posterImageRepository: PosterImageRepository
     let coordinator: MoviewListCoordinator
 
+    private var debouncer: Debouncable?
+
     // MARK: - Pagination
 
     var currentPage = 1
@@ -58,7 +62,7 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
 
     var screenTitle: String = String(localized: LocalizationStrings.search_screen_title.rawValue)
     var emptySearchResults: String = String(localized: LocalizationStrings.no_search_result.rawValue)
-    
+    var searchBarPlaceholder: String = String(localized: LocalizationStrings.search_bar_placeholder.rawValue)
     init(searchMoviesUseCase: SearchMoviesUseCase,
          posterImageRepository: PosterImageRepository,
          coordinator: MoviewListCoordinator) {
@@ -74,9 +78,9 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
         print("Loading: <\(loadingType.rawValue)> page:\(useCaseRequest.page) and query: \(query), totalPages: \(totalPageCount)")
         Task(priority: .userInitiated) {
             do {
+                try await Task.sleep(seconds: 2)
                 let movie = try await searchMoviesUseCase.execute(useCaseRequest: useCaseRequest)
-//                totalPageCount = movie.totalPages
-                totalPageCount = 2
+                totalPageCount = movie.totalPages
                 currentPage = movie.page
                 await appendPage(results: movie.results)
                 loading.setItem(.none)
@@ -95,7 +99,7 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
                                   posterImageRepository: posterImageRepository)
         })
 
-        data.setItem(mappedValues)
+        newPageData.setItem(mappedValues)
         data.setItem(data.item + mappedValues)
     }
 }
@@ -116,15 +120,29 @@ extension DefaultSearchMoviesViewModel {
         searchMoviesUseCase.cancel()
     }
 
-    func didUserHandleSearch(useCaseRequest: SearchQueryUseCaseRequest) {
-        Task(priority: .userInitiated) {
-            do {
-                let feed = try await searchMoviesUseCase.execute(useCaseRequest: useCaseRequest)
-                print(feed)
-            } catch {
-                print(error)
+    //TODO: Handle no data on search
+    func didUserHandleSearch(query: String) {
+        guard loading.item == .none else {
+            return
+        }
+
+        if debouncer == nil {
+            debouncer = DefaultDebouncer()
+        }
+
+        debouncer?.call {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                resetPages()
+                loadMovie(useCaseRequest: SearchQueryUseCaseRequest(query: query, page: 1),
+                          loadingType: .screen)
+                debouncer = nil
             }
         }
+    }
+
+    func cancelSearch() {
+        searchMoviesUseCase.cancel()
     }
 
     func didLoadNextPage() {
@@ -140,15 +158,14 @@ extension DefaultSearchMoviesViewModel {
         guard loading.item == .none else {
             return
         }
-        
+
         Task { @MainActor in
             resetPages()
             loadMovie(useCaseRequest: SearchQueryUseCaseRequest(query: query.item, page: 1),
-                      loadingType: .none)
+                      loadingType: .screen)
         }
-        
     }
-    
+
     @MainActor private func resetPages() {
         currentPage = 1
         totalPageCount = 0

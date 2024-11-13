@@ -9,7 +9,6 @@ import UIKit
 
 class MoviesListTableViewController: UITableViewController {
     weak var viewModel: SearchMoviesViewModel!
-    var isRefreshing: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +27,7 @@ class MoviesListTableViewController: UITableViewController {
     private func setupTableView() {
         tableView.prefetchDataSource = self
         configureDataSource()
+        makeEmptySnapshot()
     }
 
     func setupRefreshControl() {
@@ -37,7 +37,7 @@ class MoviesListTableViewController: UITableViewController {
     }
 
     @objc private func performPullToRefresh() {
-        isRefreshing = true
+        makeEmptySnapshot()
         viewModel.didPullToRefresh()
     }
 
@@ -47,24 +47,19 @@ class MoviesListTableViewController: UITableViewController {
     }
 
     private func didNewPageDataRecieve(newPageData: [MoviewSearchViewModel]) {
-        let snapshot = dataSource.snapshot()
-        guard snapshot.numberOfSections != 0,
-              isRefreshing == false else {
-            refreshControl?.endRefreshing()
-            isRefreshing = false
-            reloadSnapshotData()
-            return
-        }
-
+        refreshControl?.endRefreshing()
         appendNewPageDataToSnapshot(with: newPageData)
     }
 
     private func didLoadingUpdate(loadingType: SearchMoviesLoadingType) {
         if loadingType == .nextPage {
             showLoadingFooter()
-        } else {
-            hideLoadingFooter()
+            return
+        } else if loadingType == .screen {
+            makeEmptySnapshot()
         }
+
+        hideLoadingFooter()
     }
 
     var dataSource: UITableViewDiffableDataSource<DefaultSection, MoviewSearchViewModel>!
@@ -82,6 +77,13 @@ class MoviesListTableViewController: UITableViewController {
         }
     }
 
+    func makeEmptySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems([], toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+
     func appendNewPageDataToSnapshot(with newItems: [MoviewSearchViewModel]) {
         var snapshot = dataSource.snapshot()
 
@@ -90,13 +92,12 @@ class MoviesListTableViewController: UITableViewController {
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 
-    @objc func reloadSnapshotData() {
-        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(viewModel.data.item,
-                             toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
+//    @objc func reloadSnapshotData() {
+//        var snapshot = NSDiffableDataSourceSnapshot<DefaultSection, MoviewSearchViewModel>()
+//        snapshot.appendItems(viewModel.data.item,
+//                             toSection: .main)
+//        dataSource.apply(snapshot, animatingDifferences: false)
+//    }
 
     // MARK: - Table view data source
 
@@ -120,6 +121,9 @@ extension MoviesListTableViewController {
 
 extension MoviesListTableViewController: UITableViewDataSourcePrefetching {
     func handleNextPageRequest() {
+        let snapshot = dataSource.snapshot()
+        guard snapshot.numberOfItems > 0 else { return }
+
         if viewModel.hasMorePages {
             viewModel.didLoadNextPage()
         } else if tableView.tableFooterView == nil {

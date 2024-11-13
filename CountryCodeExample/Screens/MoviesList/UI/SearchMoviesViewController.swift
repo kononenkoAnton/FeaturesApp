@@ -10,11 +10,12 @@ import UIKit
 class SearchMoviesViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
     private var viewModel: SearchMoviesViewModel!
 
-    @IBOutlet weak var emptySearchResults: UILabel!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var emptySearchResults: UILabel!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @MainActor @IBOutlet var searchBarContainer: UIView!
 
     private weak var tableViewController: MoviesListTableViewController?
+    private lazy var searchController = UISearchController(searchResultsController: nil)
 
     static func create(with viewModel: DefaultSearchMoviesViewModel) -> SearchMoviesViewController {
         let vc = SearchMoviesViewController.instantiateViewController()
@@ -37,18 +38,43 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         }
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         title = viewModel.screenTitle
+        emptySearchResults.isHidden = true
         emptySearchResults.text = viewModel.emptySearchResults
+        setupSearchController()
+    }
+
+    fileprivate func setupSearchController() {
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = viewModel.searchBarPlaceholder
+
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.translatesAutoresizingMaskIntoConstraints = true
+        searchController.searchBar.barStyle = .black
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.frame = searchBarContainer.bounds
+        searchController.searchBar.autoresizingMask = [.flexibleWidth]
+        searchBarContainer.addSubview(searchController.searchBar)
+
+//        searchController.searchBar.scopeButtonTitles = ["All", "Favorites", "Recent"]
+
+        definesPresentationContext = true
+//        searchController.searchBar.searchTextField.accessibilityIdentifier = AccessibilityIdentifier.searchField
     }
 
     fileprivate func setupBehaviors() {
         addBehaviors([BlackStyleNavigationBarBehavior()])
     }
 
-    func bind(to viewModel: SearchMoviesViewModel) {
+    fileprivate func bind(to viewModel: SearchMoviesViewModel) {
         viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
+    }
+
+    fileprivate func updateQueriesSuggestions() {
     }
 
     func didErrorUpdate(alertData: AlertData?) {
@@ -71,7 +97,38 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 }
 
-// extension MoviesListViewController: UISearchControllerDelegate {
-// }
-//
-//
+extension SearchMoviesViewController: UISearchControllerDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text else { return }
+        viewModel.didUserHandleSearch(query: query)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.cancelSearch()
+    }
+}
+
+extension SearchMoviesViewController: UISearchBarDelegate {
+    public func willPresentSearchController(_ searchController: UISearchController) {
+        updateQueriesSuggestions()
+    }
+
+    public func willDismissSearchController(_ searchController: UISearchController) {
+        updateQueriesSuggestions()
+    }
+
+    public func didDismissSearchController(_ searchController: UISearchController) {
+        updateQueriesSuggestions()
+    }
+}
+
+extension SearchMoviesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let query = searchController.searchBar.text,
+        query.count > 0 else {
+            return
+        }
+
+        viewModel.didUserHandleSearch(query: query)
+    }
+}

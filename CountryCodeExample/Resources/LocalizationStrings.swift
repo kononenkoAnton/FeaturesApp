@@ -15,4 +15,5 @@ enum LocalizationStrings: String.LocalizationValue {
     case pull_to_refresh
     case search_screen_title
     case no_search_result
+    case search_bar_placeholder
 }
