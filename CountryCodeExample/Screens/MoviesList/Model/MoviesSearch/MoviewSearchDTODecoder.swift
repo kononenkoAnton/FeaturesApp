@@ -7,8 +7,8 @@
 
 import Foundation
 
-class MoviewSearchDTODecoder: DTODecodable {
-    func decodeDTO(from data: Data) throws -> MoviesSearchDTO {
+class MoviewSearchDTODecoder: DecodableData {
+    func from(data: Data) throws -> MoviesSearchDTO {
         try JSONDecoder().decode(MoviesSearchDTO.self, from: data)
     }
 }

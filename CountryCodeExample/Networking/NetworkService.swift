@@ -22,7 +22,7 @@ class DefaultNetworkService: NetworkServiceProtocol {
     }
 
     func fetchRequest<Decoder>(request: URLRequest,
-                               decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
+                               decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DecodableData {
         do {
             if let response = urlSessionCache?.get(forKey: request) {
                 return try await resolveResponse(data: response.data,
@@ -46,7 +46,7 @@ class DefaultNetworkService: NetworkServiceProtocol {
 
     private func resolveResponse<Decoder>(data: Data,
                                           response: URLResponse,
-                                          decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DTODecodable {
+                                          decoder: Decoder) async throws -> Decoder.ModelDTO where Decoder: DecodableData {
         guard let response = response as? HTTPURLResponse else {
             throw NetworkError.invalidResponse
         }
@@ -57,7 +57,7 @@ class DefaultNetworkService: NetworkServiceProtocol {
         }
 
         logger.log(data: data, statusCode: statusCode)
-        return try decoder.decodeDTO(from: data)
+        return try decoder.from(data: data)
     }
 
     // Posible network erorr strategies

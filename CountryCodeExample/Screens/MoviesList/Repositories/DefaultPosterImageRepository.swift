@@ -77,17 +77,16 @@ enum ImageError: Error {
     case decodingFailed
 }
 
-class ImageDecoder: DTODecodable {
-    func decodeDTO(from data: Data) throws -> UIImage {
+class ImageDecoder: DecodableData {
+
+    func from(data: Data) throws -> UIImage {
         guard let image = UIImage(data: data) else {
-            // TODO: think about error that will be universal
             throw ImageError.decodingFailed
         }
 
         return image
     }
 }
-
 // In-Memory Size (bytes) = Width × Height × Bytes Per Pixel
 // other option image.pngData()?.count
 extension UIImage {

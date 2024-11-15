@@ -25,8 +25,7 @@ class DefaultSearchMoviesRepository: SearchMoviewRepository {
     }
 
     func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
-        let useCaseRequestDTO = SearchQueryUseCaseRequestDTOMapper().mapToDTO(from: useCaseRequest)
-        let endpoint = try APIStorage.searchMoviesEndpoint(useCaseRequestDTO: useCaseRequestDTO)
+        let endpoint = try APIStorage.searchMoviesEndpoint(useCaseRequest: useCaseRequest)
         let request = try requestBuilder.request(endpoint: endpoint)
         let feedDTO = try await networkService.fetchRequest(request: request,
                                                             decoder: MoviewSearchDTODecoder())

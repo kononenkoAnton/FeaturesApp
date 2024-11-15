@@ -31,6 +31,6 @@ enum NetworkError: Error {
 }
 
 protocol NetworkServiceProtocol {
-    func fetchRequest<Decoder: DTODecodable>(request: URLRequest,
-                                             decoder: Decoder) async throws -> Decoder.ModelDTO
+    func fetchRequest<Decoder: DecodableData>(request: URLRequest,
+                                              decoder: Decoder) async throws -> Decoder.ModelDTO
 }
