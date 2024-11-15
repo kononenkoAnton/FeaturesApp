@@ -5,6 +5,6 @@
 //  Created by Anton Kononenko on 11/13/24.
 //
 
-struct MovieQuery: Hashable, EncodableData, Decodable {
+struct MovieQuery: Hashable, Codable {
     let query: String
 }
