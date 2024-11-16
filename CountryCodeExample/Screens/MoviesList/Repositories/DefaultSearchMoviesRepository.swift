@@ -6,7 +6,7 @@
 //
 
 protocol SearchMoviewRepository {
-    func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch
+    func searchMovies(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch
 }
 
 class DefaultSearchMoviesRepository: SearchMoviewRepository {
@@ -24,8 +24,8 @@ class DefaultSearchMoviesRepository: SearchMoviewRepository {
         self.requestBuilder = requestBuilder
     }
 
-    func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
-        let endpoint = try APIStorage.searchMoviesEndpoint(useCaseRequest: useCaseRequest)
+    func searchMovies(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
+        let endpoint = try APIStorage.searchMoviesEndpoint(useCaseRequest: .init(query: useCaseRequest.query.query, page: useCaseRequest.page))
         let request = try requestBuilder.request(endpoint: endpoint)
         let feedDTO = try await networkService.fetchRequest(request: request,
                                                             decoder: MoviewSearchDTODecoder())

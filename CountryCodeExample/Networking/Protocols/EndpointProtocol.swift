@@ -66,7 +66,6 @@ extension EndpointProtocol {
             if !queryItems.isEmpty {
                 components.queryItems = queryItems
             }
-            
         }
 
         guard let url = components.url else {

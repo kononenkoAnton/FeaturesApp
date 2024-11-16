@@ -18,7 +18,7 @@ protocol RetryStrategy {
 }
 
 protocol SearchMoviesManager {
-    func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch
+    func searchMovies(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch
 }
 
 class DefaultSearchMoviesManager: SearchMoviesManager {
@@ -31,7 +31,7 @@ class DefaultSearchMoviesManager: SearchMoviesManager {
     }
 
     private var retryAttempt = 0
-    private func handleRetry(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
+    private func handleRetry(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
         retryAttempt += 1
 
         let offset = retryStrategy.retryDelay(for: retryAttempt)
@@ -41,7 +41,7 @@ class DefaultSearchMoviesManager: SearchMoviesManager {
 
     // MARK: MoviesListManagerProtocol
 
-    func searchMovies(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
+    func searchMovies(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
         do {
             let moviewSearch = try await repository.searchMovies(useCaseRequest: useCaseRequest)
 

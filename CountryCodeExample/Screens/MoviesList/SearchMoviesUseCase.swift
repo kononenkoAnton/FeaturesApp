@@ -10,7 +10,7 @@ protocol Cancelable {
 }
 
 protocol SearchMoviesUseCase: Cancelable {
-    func execute(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch
+    func execute(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch
 }
 
 enum SearchError: Error {
@@ -19,21 +19,25 @@ enum SearchError: Error {
 
 class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     private let manager: SearchMoviesManager
+    private let queryRepository: MoviesQueryRepository
     private var loadingTask: Task<MoviesSearch, Error>? // TODO: Should be repository error or somethign
 
-    init(manager: SearchMoviesManager) {
+    init(manager: SearchMoviesManager,
+         queryRepository: MoviesQueryRepository) {
         self.manager = manager
+        self.queryRepository = queryRepository
     }
 
-    func execute(useCaseRequest: SearchQueryUseCaseRequest) async throws -> MoviesSearch {
-        // Apply any business logic or validation here
-        guard !useCaseRequest.query.isEmpty else {
+    func execute(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
+        guard !useCaseRequest.isQueryEmpty else {
             throw SearchError.emptyQuery
         }
 
         let task = Task(priority: .userInitiated) {
-            // Use the Manager to fetch data
-            try await manager.searchMovies(useCaseRequest: useCaseRequest)
+            let searchResult = try await manager.searchMovies(useCaseRequest: useCaseRequest)
+            try await queryRepository.saveQuery(query: useCaseRequest.query)
+
+            return searchResult
         }
 
         loadingTask = task

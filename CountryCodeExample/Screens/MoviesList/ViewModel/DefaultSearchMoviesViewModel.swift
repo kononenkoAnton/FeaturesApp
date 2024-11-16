@@ -71,15 +71,16 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
         self.coordinator = coordinator
     }
 
-    func loadMovie(useCaseRequest: SearchQueryUseCaseRequest, loadingType: SearchMoviesLoadingType) {
-        query.setItem(useCaseRequest.query)
+    func loadMovie(movieQuery: MovieQuery,
+                   loadingType: SearchMoviesLoadingType) {
+        query.setItem(movieQuery.query)
         loading.setItem(loadingType)
 
-        print("Loading: <\(loadingType.rawValue)> page:\(useCaseRequest.page) and query: \(query), totalPages: \(totalPageCount)")
+        print("Loading: <\(loadingType.rawValue)> page:\(nextPage) and query: \(query), totalPages: \(totalPageCount)")
         Task(priority: .userInitiated) {
             do {
                 try await Task.sleep(seconds: 2)
-                let movie = try await searchMoviesUseCase.execute(useCaseRequest: useCaseRequest)
+                let movie = try await searchMoviesUseCase.execute(useCaseRequest: .init(query: movieQuery, page: nextPage))
                 totalPageCount = movie.totalPages
                 currentPage = movie.page
                 await appendPage(results: movie.results)
@@ -108,7 +109,7 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
 
 extension DefaultSearchMoviesViewModel {
     func viewDidLoad() {
-        loadMovie(useCaseRequest: .init(query: "war", page: nextPage),
+        loadMovie(movieQuery: .init(query: "war"),
                   loadingType: .screen)
     }
 
@@ -120,7 +121,7 @@ extension DefaultSearchMoviesViewModel {
         searchMoviesUseCase.cancel()
     }
 
-    //TODO: Handle no data on search
+    // TODO: Handle no data on search
     func didUserHandleSearch(query: String) {
         guard loading.item == .none else {
             return
@@ -134,7 +135,7 @@ extension DefaultSearchMoviesViewModel {
             Task { @MainActor [weak self] in
                 guard let self else { return }
                 resetPages()
-                loadMovie(useCaseRequest: SearchQueryUseCaseRequest(query: query, page: 1),
+                loadMovie(movieQuery: .init(query: query),
                           loadingType: .screen)
                 debouncer = nil
             }
@@ -150,7 +151,7 @@ extension DefaultSearchMoviesViewModel {
               loading.item == .none else { return }
         loading.setItem(.nextPage)
 
-        loadMovie(useCaseRequest: .init(query: query.item, page: nextPage),
+        loadMovie(movieQuery: .init(query: query.item),
                   loadingType: .nextPage)
     }
 
@@ -161,7 +162,7 @@ extension DefaultSearchMoviesViewModel {
 
         Task { @MainActor in
             resetPages()
-            loadMovie(useCaseRequest: SearchQueryUseCaseRequest(query: query.item, page: 1),
+            loadMovie(movieQuery: .init(query: query.item),
                       loadingType: .screen)
         }
     }

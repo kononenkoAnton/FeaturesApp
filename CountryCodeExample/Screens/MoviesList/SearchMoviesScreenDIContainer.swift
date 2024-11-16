@@ -7,6 +7,13 @@
 
 import UIKit
 
+// enum PreferredPersistStorage {
+//    case userDefaults
+//    case file
+//    case sqlite
+//    case coreData
+// }
+
 class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
     let posterImageRequestBuilder: RequestBuilder
     let apiRequestBuilder: RequestBuilder
@@ -29,16 +36,38 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
                                      requestBuilder: posterImageRequestBuilder)
     }
 
+    func createQueryRepository() -> MoviesQueryRepository {
+        DefaultMoviesQueryReository(storage: createQueryStorage())
+    }
+
     // MARK: - Manager
 
     func createSearchMoviewManager() -> SearchMoviesManager {
         DefaultSearchMoviesManager(repository: createSearchMoviesRepository())
     }
 
-    // MARK: - Use case
+    // MARK: - Use Case
 
     func createSearchMoviesUseCase() -> SearchMoviesUseCase {
-        DefaultSearchMoviesUseCase(manager: createSearchMoviewManager())
+        DefaultSearchMoviesUseCase(manager: createSearchMoviewManager(),
+                                   queryRepository: createQueryRepository())
+    }
+
+    // MARK: - Storage
+
+    // TODO: Resolve problem to device this func on two func and decide something with non sendable Filemanager or UserDefaults
+    func createQueryStorage() -> MoviesQueriesStorage {
+        let fileManager = FileManager.default
+        guard let cacheFolderURL = fileManager.urls(for: .documentDirectory,
+                                                    in: .userDomainMask).first else {
+            fatalError("Can not create cache folder URL")
+        }
+
+        let cacheFolderTitle = String(describing: DefaultFileBasedCache<[MovieQuery], String>.self)
+        let cacheURLFolder = cacheFolderURL.appendingPathComponent(cacheFolderTitle)
+        let fileBaseCache = DefaultFileBasedCache<[MovieQuery], String>(cacheURLFolder: cacheURLFolder)
+
+        return DefaultMovieQueriesStorage(cache: fileBaseCache)
     }
 
     // MARK: - ViewModel

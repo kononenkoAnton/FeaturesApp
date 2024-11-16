@@ -14,7 +14,7 @@ struct APIStorage {
         return Endpoint(path: "t/p/\(matchedSize)\(path)")
     }
 
-    static func searchMoviesEndpoint(useCaseRequest: SearchQueryUseCaseRequest) throws -> Endpoint {
+    static func searchMoviesEndpoint(useCaseRequest: SearchMoviewRequestDTO) throws -> Endpoint {
         Endpoint(path: "3/search/movie",
                  query: try useCaseRequest.toQueryParameters())
     }

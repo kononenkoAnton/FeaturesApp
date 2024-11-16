@@ -7,15 +7,24 @@
 
 import Foundation
 
+protocol MoviesQueriesStorage {
+    func fetchQueries(limit: Int) async throws -> [MovieQuery]
+    @discardableResult
+    func saveQuery(query: MovieQuery) async throws -> MovieQuery
+}
 
-class MovieQueriesFileStorage<Cache: Storage, LRU: LRUCache> where Cache.Value == [MovieQuery], LRU.Key == String, LRU.Value == MovieQuery {
+class DefaultMovieQueriesStorage<Cache: Storage,
+    LRU: LRUCache> where Cache.Value == [MovieQuery],
+    LRU.Key == String,
+    LRU.Value == MovieQuery {
     private var lruCache: LRU
-    let queriesFilePath = "moviewQueries"
+    let queriesFilePath = "moviesQueries"
 
     let cache: Cache
 
     init(cache: Cache,
-         lruCache: LRU = DefaultLRUCache<String, MovieQuery>(maxCapacity: 20)
+         lruCache: LRU = DefaultLRUCache<String,
+             MovieQuery>(maxCapacity: 20)
     ) {
         self.cache = cache
         self.lruCache = lruCache
@@ -32,9 +41,9 @@ class MovieQueriesFileStorage<Cache: Storage, LRU: LRUCache> where Cache.Value =
     }
 }
 
-extension MovieQueriesFileStorage: MoviesQueriesStorage {
+extension DefaultMovieQueriesStorage: MoviesQueriesStorage {
     func fetchQueries(limit: Int) async throws -> [MovieQuery] {
-        var queries = try await cache.retrieve(forKey: queriesFilePath) ?? []
+        let queries = try await cache.retrieve(forKey: queriesFilePath) ?? []
         return Array(queries.prefix(limit))
     }
 
