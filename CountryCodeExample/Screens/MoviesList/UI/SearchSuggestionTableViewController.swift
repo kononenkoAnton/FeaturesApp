@@ -33,7 +33,8 @@ class SearchSuggestionTableViewController: UITableViewController, StoryboardInst
     func setupTableView() {
         configureDataSource()
         updateSnapshot()
-        tableView.tableFooterView = UIView()
+//        let view = UIView()
+//        tableView.tableFooterView = view
         tableView.backgroundColor = .clear
         tableView.estimatedRowHeight = SearchSuggestionCell.cellHeight
         tableView.rowHeight = UITableView.automaticDimension
@@ -67,8 +68,6 @@ class SearchSuggestionTableViewController: UITableViewController, StoryboardInst
         snapshot.appendItems(items, toSection: .main)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
-
-    // MARK: - Table view data source
 
     // MARK: - Table view delegate
 
