@@ -8,6 +8,7 @@
 import UIKit
 
 class SearchSuggestionCell: UITableViewCell, CellIdentifierable {
+    static let cellHeight:CGFloat = 50.0
     var model: MovieQuery?
 
     override func prepareForReuse() {

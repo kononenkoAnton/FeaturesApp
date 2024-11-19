@@ -9,7 +9,7 @@ import Combine
 
 protocol SearchSuggerstionViewModelDelegate {
     func viewWillAppear()
-    func didSelectItem(index: MovieQuery)
+    func didSelectItem(index: Int)
 }
 
 protocol SearchSuggerstionViewModelDataSource {
@@ -28,7 +28,7 @@ class DefaultSearchSuggerstionViewModel: SearchSuggerstionViewModelProtocol {
     var didSelect: MoviesQueryListViewModelDidSelectAction
 
     init(didSelect: @escaping MoviesQueryListViewModelDidSelectAction,
-         numberOfQueriesToShow:Int,
+         numberOfQueriesToShow: Int,
          fetchRecentMovieQueriesUseCaseFactory: @escaping FetchRecentMovieQueriesUseCaseFactory) {
         self.didSelect = didSelect
         self.numberOfQueriesToShow = numberOfQueriesToShow
@@ -52,7 +52,7 @@ class DefaultSearchSuggerstionViewModel: SearchSuggerstionViewModelProtocol {
         updateMoviesQueries()
     }
 
-    func didSelectItem(index: MovieQuery) {
-//        didSelect?(MovieQuery(query: item.query))
+    func didSelectItem(index: Int) {
+        didSelect(items[index])
     }
 }

@@ -32,6 +32,11 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         setupBehaviors()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchController.isActive = false
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == String(describing: MoviesListTableViewController.self),
            let destinationVC = segue.destination as? MoviesListTableViewController {
@@ -74,6 +79,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     fileprivate func bind(to viewModel: SearchMoviesViewModel) {
         viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
+        viewModel.query.addObserver(observer: self, observerBlock: updateSearchQuery)
+        viewModel.data.addObserver(observer: self, observerBlock: didDataUpdate)
     }
 
     fileprivate func updateQueriesSuggestions() {
@@ -102,14 +109,24 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         } else {
             activityIndicator.stopAnimating()
         }
-        
+
         updateQueriesSuggestions()
+    }
+
+    func updateSearchQuery(_ query: String) {
+        searchController.isActive = false
+        searchController.searchBar.text = query
+    }
+    
+    func didDataUpdate(data:[MoviewSearchViewModel]) {
+        emptySearchResults.isHidden = data.count != 0
     }
 }
 
 extension SearchMoviesViewController: UISearchControllerDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text else { return }
+        searchController.isActive = false
         viewModel.didUserHandleSearch(query: query)
     }
 

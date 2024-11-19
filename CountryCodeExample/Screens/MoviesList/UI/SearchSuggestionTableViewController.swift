@@ -33,6 +33,10 @@ class SearchSuggestionTableViewController: UITableViewController, StoryboardInst
     func setupTableView() {
         configureDataSource()
         updateSnapshot()
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = .clear
+        tableView.estimatedRowHeight = SearchSuggestionCell.cellHeight
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     func bindData(to viewModel: SearchSuggerstionViewModelProtocol) {
@@ -70,5 +74,6 @@ class SearchSuggestionTableViewController: UITableViewController, StoryboardInst
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectItem(index: indexPath.row)
     }
 }

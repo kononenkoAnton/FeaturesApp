@@ -81,7 +81,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
         print("Loading: <\(loadingType.rawValue)> page:\(nextPage) and query: \(query), totalPages: \(totalPageCount)")
         Task(priority: .userInitiated) {
             do {
-                try await Task.sleep(seconds: 2)
+                // For test purpose only
+//                try await Task.sleep(seconds: 2)
                 let movie = try await searchMoviesUseCase.execute(useCaseRequest: .init(query: movieQuery, page: nextPage))
                 totalPageCount = movie.totalPages
                 currentPage = movie.page
