@@ -24,13 +24,13 @@ final class WeakWrapper: ReachabilityObservable, Hashable {
             hasher.combine(ObjectIdentifier(value))
         }
     }
-
-    func didReachabilityChange(to type: ReachabilityType) {
-        value?.didReachabilityChange(to: type)
+    
+    func didReachabilityChange(to status: ReachabilityStatus) {
+        value?.didReachabilityChange(to: status)
     }
 }
 
-enum ReachabilityType {
+enum ReachabilityStatus {
     case reachable
     case noInternet
     case restricted
@@ -38,13 +38,13 @@ enum ReachabilityType {
 }
 
 protocol ReachabilityObservable: AnyObject {
-    func didReachabilityChange(to type: ReachabilityType)
+    func didReachabilityChange(to type: ReachabilityStatus)
 }
 
 protocol ReachabilityService {
     func addObserver(_ observer: ReachabilityObservable)
     func removeObserver(_ observer: ReachabilityObservable)
-    var currentStatus: ReachabilityType { get }
+    var currentStatus: ReachabilityStatus { get }
 }
 
 protocol NetworkMonitoring {
@@ -56,7 +56,7 @@ protocol NetworkMonitoring {
 extension NWPathMonitor: NetworkMonitoring {}
 class DefaultReachablity {
     static let shared = DefaultReachablity()
-    private(set) var currentStatus: ReachabilityType = .unknown
+    private(set) var currentStatus: ReachabilityStatus = .unknown
 
     private var monitor: NetworkMonitoring
     // To make autoreleasable, needs to add weak self wrapper
@@ -75,7 +75,7 @@ class DefaultReachablity {
     func prepareMonitor() {
         monitor.pathUpdateHandler = { [weak self] path in
             guard let self else { return }
-            let newStatus: ReachabilityType
+            let newStatus: ReachabilityStatus
             if path.status == .satisfied {
                 if path.isConstrained {
                     newStatus = .restricted
@@ -97,7 +97,7 @@ class DefaultReachablity {
         monitor.start(queue: queue)
     }
 
-    func notifyObservers(type: ReachabilityType) {
+    func notifyObservers(type: ReachabilityStatus) {
         queue.async {
             self.observers.forEach { $0.didReachabilityChange(to: type) }
             self.observers = self.observers.filter { $0.value != nil }
