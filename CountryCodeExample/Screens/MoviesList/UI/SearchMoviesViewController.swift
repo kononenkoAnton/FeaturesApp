@@ -12,6 +12,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
 
     @IBOutlet var emptySearchResults: UILabel!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var searchSuggesionContainer: UIView!
+
     @MainActor @IBOutlet var searchBarContainer: UIView!
 
     private weak var tableViewController: MoviesListTableViewController?
@@ -75,6 +77,12 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     fileprivate func updateQueriesSuggestions() {
+        guard searchController.searchBar.isFirstResponder else {
+            viewModel.closeQueriesSuggestions()
+            return
+        }
+
+        viewModel.showQueriesSuggestions()
     }
 
     func didErrorUpdate(alertData: AlertData?) {
@@ -94,6 +102,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         } else {
             activityIndicator.stopAnimating()
         }
+        
+        updateQueriesSuggestions()
     }
 }
 
@@ -113,10 +123,9 @@ extension SearchMoviesViewController: UISearchBarDelegate {
         updateQueriesSuggestions()
     }
 
-    public func willDismissSearchController(_ searchController: UISearchController) {
-        updateQueriesSuggestions()
-    }
-
+//    public func willDismissSearchController(_ searchController: UISearchController) {
+//        updateQueriesSuggestions()
+//    }
     public func didDismissSearchController(_ searchController: UISearchController) {
         updateQueriesSuggestions()
     }
@@ -125,10 +134,11 @@ extension SearchMoviesViewController: UISearchBarDelegate {
 extension SearchMoviesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text,
-        query.count > 0 else {
+              query.count > 0 else {
             return
         }
 
-        viewModel.didUserHandleSearch(query: query)
+        // Handle search with delay if user typing
+//        viewModel.didUserHandleSearch(query: query)
     }
 }

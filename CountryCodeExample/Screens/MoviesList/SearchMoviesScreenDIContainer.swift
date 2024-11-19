@@ -53,6 +53,12 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
                                    queryRepository: createQueryRepository())
     }
 
+    func createFetchRecentMovieQueriesUseCase(requestValue: DefaultFetchRecentMovieQueriesUseCase.RequestValue) -> FetchRecentMovieQueriesUseCase {
+        DefaultFetchRecentMovieQueriesUseCase(requestValue: requestValue,
+                                              moviesQueriesRepository: createQueryRepository())
+    }
+    
+
     // MARK: - Storage
 
     // TODO: Resolve problem to device this func on two func and decide something with non sendable Filemanager or UserDefaults
@@ -78,6 +84,12 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
                                      coordinator: coordinator)
     }
 
+    func createSearchSuggestionViewModel(didSelect: @escaping MoviesQueryListViewModelDidSelectAction) -> SearchSuggerstionViewModelProtocol {
+        DefaultSearchSuggerstionViewModel(didSelect: didSelect,
+                                          numberOfQueriesToShow: 10,
+                                          fetchRecentMovieQueriesUseCaseFactory: createFetchRecentMovieQueriesUseCase)
+    }
+
     // MARK: - ViewController
 
     func createSearchMoviesViewController(coordinator: MoviewListCoordinator) -> SearchMoviesViewController {
@@ -88,5 +100,13 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
 
     func createSearchMoviesCoordinator(navigationController: UINavigationController) -> DefaultSearchMoviesCoordinator {
         DefaultSearchMoviesCoordinator(navigationController: navigationController, dependencies: self)
+    }
+
+    func createMoviesDetailsViewController(movie: Movie) -> UIViewController {
+        UIViewController()
+    }
+
+    func createMoviesQueriesSuggestionsListViewController(didSelect: @escaping MoviesQueryListViewModelDidSelectAction) -> UIViewController {
+        SearchSuggestionTableViewController.create(with: createSearchSuggestionViewModel(didSelect: didSelect))
     }
 }

@@ -30,6 +30,9 @@
                                     <segue destination="LZ3-K5-Ztm" kind="embed" identifier="MoviesListTableViewController" id="aPH-bH-BdZ"/>
                                 </connections>
                             </containerView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WaK-1X-Ay3" userLabel="SearchSuggestionContainer">
+                                <rect key="frame" x="0.0" y="115" width="393" height="703"/>
+                            </containerView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-1u-vZ0">
                                 <rect key="frame" x="178" y="420" width="37" height="37"/>
                             </activityIndicatorView>
@@ -49,10 +52,14 @@
                             <constraint firstItem="CGG-tf-KOq" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="A15-Eh-Ibo"/>
                             <constraint firstItem="CGG-tf-KOq" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Cxj-yl-zya"/>
                             <constraint firstItem="rL6-xz-lBl" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="50" id="Dg7-81-CJp"/>
+                            <constraint firstItem="WaK-1X-Ay3" firstAttribute="top" secondItem="CGG-tf-KOq" secondAttribute="bottom" id="G3m-a4-0Mn"/>
+                            <constraint firstItem="WaK-1X-Ay3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="INQ-iu-OBZ"/>
+                            <constraint firstItem="WaK-1X-Ay3" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="NAg-jt-kHH"/>
                             <constraint firstItem="1zp-b0-IGA" firstAttribute="top" secondItem="CGG-tf-KOq" secondAttribute="bottom" id="OjO-tP-PuD"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="1zp-b0-IGA" secondAttribute="bottom" id="RQn-HQ-Y9N"/>
                             <constraint firstItem="1zp-b0-IGA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WTG-b0-sh3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="1zp-b0-IGA" secondAttribute="trailing" id="YTs-s5-1U5"/>
+                            <constraint firstItem="WaK-1X-Ay3" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="b7K-Cn-gXJ"/>
                             <constraint firstItem="6pU-1u-vZ0" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="jQu-JU-zcg"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="CGG-tf-KOq" secondAttribute="trailing" id="oYg-wt-6bW"/>
                             <constraint firstItem="6pU-1u-vZ0" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="shM-fP-4A1"/>
@@ -63,11 +70,12 @@
                         <outlet property="activityIndicator" destination="6pU-1u-vZ0" id="E3P-sS-ckp"/>
                         <outlet property="emptySearchResults" destination="rL6-xz-lBl" id="ewC-ou-tcE"/>
                         <outlet property="searchBarContainer" destination="CGG-tf-KOq" id="nHh-5D-Evj"/>
+                        <outlet property="searchSuggesionContainer" destination="WaK-1X-Ay3" id="cvX-mn-CNI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="4"/>
+            <point key="canvasLocation" x="104.58015267175573" y="3.5211267605633805"/>
         </scene>
         <!--Movies List Table View Controller-->
         <scene sceneID="Aal-fk-rBL">
@@ -134,7 +142,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oxj-yo-Gqi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1017.5572519083969" y="3.8732394366197185"/>
+            <point key="canvasLocation" x="935" y="4"/>
         </scene>
     </scenes>
     <resources>

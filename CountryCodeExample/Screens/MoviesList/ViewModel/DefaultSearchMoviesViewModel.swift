@@ -15,6 +15,8 @@ protocol SearchMoviesViewModelDelegate: AnyObject {
     func cancelSearch()
     func didLoadNextPage()
     func didPullToRefresh()
+    func showQueriesSuggestions()
+    func closeQueriesSuggestions()
 }
 
 enum SearchMoviesLoadingType: String {
@@ -121,6 +123,14 @@ extension DefaultSearchMoviesViewModel {
         searchMoviesUseCase.cancel()
     }
 
+    private func update(movieQuery: MovieQuery) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            resetPages()
+            loadMovie(movieQuery: movieQuery, loadingType: .screen)
+        }
+    }
+
     // TODO: Handle no data on search
     func didUserHandleSearch(query: String) {
         guard loading.item == .none else {
@@ -172,5 +182,16 @@ extension DefaultSearchMoviesViewModel {
         totalPageCount = 0
         data.item.removeAll()
         newPageData.item.removeAll()
+    }
+
+    func showQueriesSuggestions() {
+        // Check if not memory leak to pass func like this
+        coordinator.showQueriesSuggestions(didSelect: update(movieQuery:))
+        print("A: showQueriesSuggestions")
+    }
+
+    func closeQueriesSuggestions() {
+        coordinator.closeQueriesSuggestions()
+        print("A: closeQueriesSuggestions")
     }
 }

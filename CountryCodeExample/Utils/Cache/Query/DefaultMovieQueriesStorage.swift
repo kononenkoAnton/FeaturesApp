@@ -24,10 +24,10 @@ class DefaultMovieQueriesStorage<Cache: Storage,
 
     init(cache: Cache,
          lruCache: LRU = DefaultLRUCache<String,
-             MovieQuery>(maxCapacity: 20)
-    ) {
+             MovieQuery>(maxCapacity: 20)) {
         self.cache = cache
         self.lruCache = lruCache
+        prepapreLRU()
     }
 
     private func prepapreLRU() {
