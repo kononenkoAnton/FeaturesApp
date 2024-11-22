@@ -26,6 +26,7 @@ class MoviesListTableViewController: UITableViewController {
 
     private func setupTableView() {
         tableView.prefetchDataSource = self
+        tableView.delegate = self
         configureDataSource()
         makeEmptySnapshot()
     }
@@ -98,17 +99,6 @@ class MoviesListTableViewController: UITableViewController {
 //                             toSection: .main)
 //        dataSource.apply(snapshot, animatingDifferences: false)
 //    }
-
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        super.tableView(tableView, cellForRowAt: indexPath)
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchMovieCell.cellIdentifier, for: indexPath) as! SearchMovieCell
-
-        return cell
-    }
 }
 
 extension MoviesListTableViewController {
@@ -116,6 +106,7 @@ extension MoviesListTableViewController {
                             didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath,
                               animated: true)
+        viewModel.didSelectItem(index: indexPath.row)
     }
 }
 

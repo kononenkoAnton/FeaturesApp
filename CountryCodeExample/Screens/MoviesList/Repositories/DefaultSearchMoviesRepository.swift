@@ -15,7 +15,7 @@ class DefaultSearchMoviesRepository: SearchMoviewRepository {
     let networkService: any NetworkServiceProtocol
     let mapper: MoviewSearchDTOMapper
     let requestBuilder: RequestBuilder
-    
+
     init(networkService: any NetworkServiceProtocol,
          requestBuilder: RequestBuilder,
          mapper: MoviewSearchDTOMapper = MoviewSearchDTOMapper()) {
@@ -33,4 +33,3 @@ class DefaultSearchMoviesRepository: SearchMoviewRepository {
         return feed
     }
 }
-

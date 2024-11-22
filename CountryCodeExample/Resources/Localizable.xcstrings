@@ -95,25 +95,48 @@
         }
       }
     },
+    "internet_connection_availible" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internet connection available, you can continue to enjoy our service."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conexión a Internet disponible, puede seguir disfrutando de nuestro servicio."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підключення до Інтернету доступне, ви можете продовжувати користуватися нашим сервісом."
+          }
+        }
+      }
+    },
     "no_internet_connection" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No internet connection"
+            "value" : "No Internet connection, please try again later."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sin conexión a Internet"
+            "value" : "Sin conexión a Internet, por favor inténtelo de nuevo más tarde."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Немає підключення до Інтернету"
+            "value" : "Немає підключення до Інтернету, будь ласка, спробуйте пізніше."
           }
         }
       }

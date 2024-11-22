@@ -11,7 +11,7 @@ final class WeakWrapper: ReachabilityObservable, Hashable {
     weak var value: ReachabilityObservable?
 
     init(object: ReachabilityObservable) {
-        self.value = object
+        value = object
     }
 
     static func == (lhs: WeakWrapper,
@@ -24,7 +24,7 @@ final class WeakWrapper: ReachabilityObservable, Hashable {
             hasher.combine(ObjectIdentifier(value))
         }
     }
-    
+
     func didReachabilityChange(to status: ReachabilityStatus) {
         value?.didReachabilityChange(to: status)
     }
@@ -59,7 +59,7 @@ class DefaultReachablity {
     private(set) var currentStatus: ReachabilityStatus = .unknown
 
     private var monitor: NetworkMonitoring
-    // To make autoreleasable, needs to add weak self wrapper
+
     private var observers: Set<WeakWrapper> = []
     let queue = DispatchQueue(label: "NetworkMonitor")
 

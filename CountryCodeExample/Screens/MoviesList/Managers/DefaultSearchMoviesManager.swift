@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum SearchMoviesManagerError {
-    case RetriesFailed(originalError: Error)
+enum SearchMoviesManagerError: Error {
+    case retriesFailed(originalError: Error)
 }
 
 protocol RetryStrategy {
@@ -20,6 +20,7 @@ protocol RetryStrategy {
 protocol SearchMoviesManager {
     func searchMovies(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch
 }
+
 
 class DefaultSearchMoviesManager: SearchMoviesManager {
     let repository: SearchMoviewRepository
@@ -49,7 +50,7 @@ class DefaultSearchMoviesManager: SearchMoviesManager {
         } catch {
             guard retryStrategy.shouldRetry(for: error,
                                             currentAttempt: retryAttempt) else {
-                throw error
+                throw SearchMoviesManagerError.retriesFailed(originalError: error)
             }
 
             return try await handleRetry(useCaseRequest: useCaseRequest)

@@ -57,7 +57,6 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
         DefaultFetchRecentMovieQueriesUseCase(requestValue: requestValue,
                                               moviesQueriesRepository: createQueryRepository())
     }
-    
 
     // MARK: - Storage
 
@@ -90,23 +89,28 @@ class SearchMoviesScreenDIContainer: MoviesListCoordinatorDependencies {
                                           fetchRecentMovieQueriesUseCaseFactory: createFetchRecentMovieQueriesUseCase)
     }
 
+    func createMovieDetailsViewModek(movie: Movie) -> MoviewDetailsViewModel {
+        DefaultMoviewDetailsViewModel(model: movie,
+                                      posterImageRepository: createPosterImageRepository())
+    }
+
     // MARK: - ViewController
 
     func createSearchMoviesViewController(coordinator: MoviewListCoordinator) -> SearchMoviesViewController {
         SearchMoviesViewController.create(with: createSearchMoviesViewModel(coordinator: coordinator))
     }
 
-    // MARK: - Coordinator
-
-    func createSearchMoviesCoordinator(navigationController: UINavigationController) -> DefaultSearchMoviesCoordinator {
-        DefaultSearchMoviesCoordinator(navigationController: navigationController, dependencies: self)
-    }
-
     func createMoviesDetailsViewController(movie: Movie) -> UIViewController {
-        UIViewController()
+        MoviewDetailsViewController.create(with: createMovieDetailsViewModek(movie: movie))
     }
 
     func createMoviesQueriesSuggestionsListViewController(didSelect: @escaping MoviesQueryListViewModelDidSelectAction) -> UIViewController {
         SearchSuggestionTableViewController.create(with: createSearchSuggestionViewModel(didSelect: didSelect))
+    }
+
+    // MARK: - Coordinator
+
+    func createSearchMoviesCoordinator(navigationController: UINavigationController) -> DefaultSearchMoviesCoordinator {
+        DefaultSearchMoviesCoordinator(navigationController: navigationController, dependencies: self)
     }
 }

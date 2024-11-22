@@ -77,7 +77,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     fileprivate func bind(to viewModel: SearchMoviesViewModel) {
-        viewModel.error?.addObserver(observer: self, observerBlock: didErrorUpdate)
+        viewModel.error.addObserver(observer: self, observerBlock: didErrorUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
         viewModel.query.addObserver(observer: self, observerBlock: updateSearchQuery)
         viewModel.data.addObserver(observer: self, observerBlock: didDataUpdate)
@@ -92,8 +92,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         viewModel.showQueriesSuggestions()
     }
 
-    func didErrorUpdate(alertData: AlertData?) {
-        guard let alertData else {
+    func didErrorUpdate(alertData: AlertData) {
+        guard alertData.message.isEmpty == false else {
             return
         }
 
@@ -103,7 +103,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         }
     }
 
-    func didLoadingUpdate(loadingType: SearchMoviesLoadingType) {
+    func didLoadingUpdate(loadingType: SearchMoviesLoadingType?) {
         if loadingType == .screen {
             activityIndicator.startAnimating()
         } else {
@@ -118,7 +118,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         searchController.searchBar.text = query
     }
     
-    func didDataUpdate(data:[MoviewSearchViewModel]) {
+    func didDataUpdate(data:[MoviewSearchViewModel] = []) {
         emptySearchResults.isHidden = data.count != 0
     }
 }

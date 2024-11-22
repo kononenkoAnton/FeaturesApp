@@ -21,7 +21,7 @@ struct AlertData {
          message: String,
          preferredStyle: UIAlertController.Style = .alert,
          okTitle: String = String(localized: LocalizationStrings.alert_ok_button.rawValue),
-         cancelTitle: String?) {
+         cancelTitle: String? = nil) {
         self.title = title
         self.message = message
         self.preferredStyle = preferredStyle

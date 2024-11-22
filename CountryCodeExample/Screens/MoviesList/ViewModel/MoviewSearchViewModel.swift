@@ -54,3 +54,4 @@ extension MoviewSearchViewModel: Hashable {
         return lhs.id == rhs.id
     }
 }
+

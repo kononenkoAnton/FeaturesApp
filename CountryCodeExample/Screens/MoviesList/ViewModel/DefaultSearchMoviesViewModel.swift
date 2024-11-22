@@ -28,7 +28,7 @@ enum SearchMoviesLoadingType: String {
 protocol SearchMoviesViewModelDataSource: AnyObject {
     var data: Observable<[MoviewSearchViewModel]> { get }
     var newPageData: Observable<[MoviewSearchViewModel]> { get }
-    var error: Observable<AlertData>? { get }
+    var error: Observable<AlertData> { get }
     var loading: Observable<SearchMoviesLoadingType> { get }
     var posterImageRepository: PosterImageRepository { get }
     var query: Observable<String> { get }
@@ -45,15 +45,17 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     // Handle changed data to update diffable data source
     @MainActor var newPageData: Observable<[MoviewSearchViewModel]> = Observable(item: [])
 
-    var error: Observable<AlertData>?
+    var error: Observable<AlertData> = Observable(item: AlertData(title: "", message: ""))
     var loading: Observable<SearchMoviesLoadingType> = Observable(item: .screen)
     var query: Observable<String> = Observable(item: "")
+    private var movies: [Movie] = []
 
     let searchMoviesUseCase: SearchMoviesUseCase
     let posterImageRepository: PosterImageRepository
     let coordinator: MoviewListCoordinator
 
     private var debouncer: Debouncable?
+    private var rechability: ReachabilityService
 
     // MARK: - Pagination
 
@@ -67,10 +69,17 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     var searchBarPlaceholder: String = String(localized: LocalizationStrings.search_bar_placeholder.rawValue)
     init(searchMoviesUseCase: SearchMoviesUseCase,
          posterImageRepository: PosterImageRepository,
-         coordinator: MoviewListCoordinator) {
+         coordinator: MoviewListCoordinator,
+         rechability: ReachabilityService = DefaultReachablity.shared) {
         self.searchMoviesUseCase = searchMoviesUseCase
         self.posterImageRepository = posterImageRepository
         self.coordinator = coordinator
+        self.rechability = rechability
+        startObserveRechability()
+    }
+
+    deinit {
+        stopObserveRechability()
     }
 
     func loadMovie(movieQuery: MovieQuery,
@@ -88,7 +97,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
                 currentPage = movie.page
                 await appendPage(results: movie.results)
                 loading.setItem(.none)
-            } catch {
+            }
+            catch {
                 print(error)
                 print(error.localizedDescription)
             }
@@ -96,6 +106,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     }
 
     @MainActor func appendPage(results: [Movie]) {
+        // TODO: Check is no duplication
+        movies += results
         let mappedValues = results.map({ movie in
             MoviewSearchViewModel(title: movie.title,
                                   overview: movie.overview,
@@ -105,6 +117,12 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
 
         newPageData.setItem(mappedValues)
         data.setItem(data.item + mappedValues)
+    }
+
+    private func updateError(errorTitle: String = String(localized: LocalizationStrings.alert_error_title.rawValue), errorMessage: String) {
+        loading.item = .none
+        error.item = AlertData(title: errorTitle,
+                               message: errorMessage)
     }
 }
 
@@ -117,7 +135,7 @@ extension DefaultSearchMoviesViewModel {
     }
 
     func didSelectItem(index: Int) {
-        // TODO: select item and present details
+        coordinator.showMovieDetails(entry: movies[index])
     }
 
     func viewDidDisappiear() {
@@ -194,5 +212,32 @@ extension DefaultSearchMoviesViewModel {
     func closeQueriesSuggestions() {
         coordinator.closeQueriesSuggestions()
         print("A: closeQueriesSuggestions")
+    }
+}
+
+extension DefaultSearchMoviesViewModel: ReachabilityObservable {
+    func showNoInternetError() {
+        updateError(errorTitle: String(localized: LocalizationStrings.alert_error_title.rawValue),
+                    errorMessage: String(localized: LocalizationStrings.no_internet_connection.rawValue))
+    }
+    func didReachabilityChange(to type: ReachabilityStatus) {
+        switch type {
+        case .noInternet: break
+//            showNoInternetError()
+        case .reachable:
+            break
+        case .restricted:
+            break
+        default:
+            break
+        }
+    }
+
+    func startObserveRechability() {
+        rechability.addObserver(self)
+    }
+
+    func stopObserveRechability() {
+        rechability.removeObserver(self)
     }
 }

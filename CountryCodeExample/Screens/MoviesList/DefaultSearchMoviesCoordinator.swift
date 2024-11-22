@@ -44,7 +44,8 @@ class DefaultSearchMoviesCoordinator: MoviewListCoordinator {
     }
 
     func showMovieDetails(entry: Movie) {
-        // TODO: Implement details
+        let vc = dependencies.createMoviesDetailsViewController(movie: entry)
+        navigationController.pushViewController(vc, animated: true)
     }
 
     func closeQueriesSuggestions() {

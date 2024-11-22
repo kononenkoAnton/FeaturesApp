@@ -17,10 +17,12 @@ enum SearchError: Error {
     case emptyQuery
 }
 
+
+
 class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     private let manager: SearchMoviesManager
     private let queryRepository: MoviesQueryRepository
-    private var loadingTask: Task<MoviesSearch, Error>? // TODO: Should be repository error or somethign
+    private var loadingTask: Task<MoviesSearch, Error>?
 
     init(manager: SearchMoviesManager,
          queryRepository: MoviesQueryRepository) {
@@ -29,22 +31,28 @@ class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     }
 
     func execute(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
+        
         guard !useCaseRequest.isQueryEmpty else {
             throw SearchError.emptyQuery
         }
+        
+        do {
+            let task = Task(priority: .userInitiated) {
+                let searchResult = try await manager.searchMovies(useCaseRequest: useCaseRequest)
+                try await queryRepository.saveQuery(query: useCaseRequest.query)
 
-        let task = Task(priority: .userInitiated) {
-            let searchResult = try await manager.searchMovies(useCaseRequest: useCaseRequest)
-            try await queryRepository.saveQuery(query: useCaseRequest.query)
+                return searchResult
+            }
 
-            return searchResult
+            loadingTask = task
+            let moviesSearch = try await task.value
+            loadingTask = nil
+
+            return moviesSearch
+        } catch {
+            print(error)
+            throw error
         }
-
-        loadingTask = task
-        let moviesSearch = try await task.value
-        loadingTask = nil
-
-        return moviesSearch
     }
 
     func cancel() {
