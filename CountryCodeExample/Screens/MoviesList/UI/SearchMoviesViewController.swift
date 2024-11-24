@@ -10,9 +10,9 @@ import UIKit
 class SearchMoviesViewController: UIViewController, StoryboardInstantiable, AlertableWithAsync {
     private var viewModel: SearchMoviesViewModel!
 
-    @IBOutlet var emptySearchResults: UILabel!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var searchSuggesionContainer: UIView!
+    @IBOutlet weak var emptySearchResults: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var searchSuggesionContainer: UIView!
 
     @MainActor @IBOutlet var searchBarContainer: UIView!
 
@@ -77,7 +77,7 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     }
 
     fileprivate func bind(to viewModel: SearchMoviesViewModel) {
-        viewModel.error.addObserver(observer: self, observerBlock: didErrorUpdate)
+        viewModel.alerData.addObserver(observer: self, observerBlock: didAlertUpdate)
         viewModel.loading.addObserver(observer: self, observerBlock: didLoadingUpdate)
         viewModel.query.addObserver(observer: self, observerBlock: updateSearchQuery)
         viewModel.data.addObserver(observer: self, observerBlock: didDataUpdate)
@@ -92,8 +92,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         viewModel.showQueriesSuggestions()
     }
 
-    func didErrorUpdate(alertData: AlertData) {
-        guard alertData.message.isEmpty == false else {
+    func didAlertUpdate(alertData: AlertData?) {
+        guard let alertData else {
             return
         }
 
@@ -106,6 +106,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
     func didLoadingUpdate(loadingType: SearchMoviesLoadingType?) {
         if loadingType == .screen {
             activityIndicator.startAnimating()
+            emptySearchResults.isHidden = true
+
         } else {
             activityIndicator.stopAnimating()
         }
@@ -117,8 +119,8 @@ class SearchMoviesViewController: UIViewController, StoryboardInstantiable, Aler
         searchController.isActive = false
         searchController.searchBar.text = query
     }
-    
-    func didDataUpdate(data:[MoviewSearchViewModel] = []) {
+
+    func didDataUpdate(data: [MoviewSearchViewModel] = []) {
         emptySearchResults.isHidden = data.count != 0
     }
 }

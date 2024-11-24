@@ -18,4 +18,5 @@ enum LocalizationStrings: String.LocalizationValue {
     case search_bar_placeholder
     case internet_connection_availible
     case no_internet_connection
+    case loading_issue_message
 }

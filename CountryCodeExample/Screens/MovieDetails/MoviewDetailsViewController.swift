@@ -13,7 +13,8 @@ class MoviewDetailsViewController: UIViewController, StoryboardInstantiable, Ale
     @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var imageView: UIImageView!
     private var viewModel: MoviewDetailsViewModel!
-
+    @IBOutlet weak var releaseDate: UILabel!
+    
     static func create(with viewModel: MoviewDetailsViewModel) -> MoviewDetailsViewController {
         let vc = MoviewDetailsViewController.instantiateViewController()
         vc.viewModel = viewModel
@@ -48,5 +49,6 @@ class MoviewDetailsViewController: UIViewController, StoryboardInstantiable, Ale
     func setupView() {
         title = viewModel.title
         descriptionTextView.text = viewModel.overview
+        releaseDate.text = viewModel.releasedDate
     }
 }

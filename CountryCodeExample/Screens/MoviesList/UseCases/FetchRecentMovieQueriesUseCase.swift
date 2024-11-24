@@ -26,7 +26,6 @@ class DefaultFetchRecentMovieQueriesUseCase: FetchRecentMovieQueriesUseCase {
         do {
             return try await moviesQueriesRepository.fetchQueries(limit: requestValue.maxCount)
         } catch {
-            print("DefaultFetchRecentMovieQueriesUseCase error: \(error)")
             return []
         }
     }

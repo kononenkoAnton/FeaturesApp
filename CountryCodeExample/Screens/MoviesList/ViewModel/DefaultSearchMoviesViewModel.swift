@@ -28,7 +28,7 @@ enum SearchMoviesLoadingType: String {
 protocol SearchMoviesViewModelDataSource: AnyObject {
     var data: Observable<[MoviewSearchViewModel]> { get }
     var newPageData: Observable<[MoviewSearchViewModel]> { get }
-    var error: Observable<AlertData> { get }
+    var alerData: Observable<AlertData?> { get }
     var loading: Observable<SearchMoviesLoadingType> { get }
     var posterImageRepository: PosterImageRepository { get }
     var query: Observable<String> { get }
@@ -45,8 +45,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
     // Handle changed data to update diffable data source
     @MainActor var newPageData: Observable<[MoviewSearchViewModel]> = Observable(item: [])
 
-    var error: Observable<AlertData> = Observable(item: AlertData(title: "", message: ""))
-    var loading: Observable<SearchMoviesLoadingType> = Observable(item: .screen)
+    var alerData: Observable<AlertData?> = Observable(item: nil)
+    var loading: Observable<SearchMoviesLoadingType> = Observable(item: .none)
     var query: Observable<String> = Observable(item: "")
     private var movies: [Movie] = []
 
@@ -90,17 +90,13 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
         print("Loading: <\(loadingType.rawValue)> page:\(nextPage) and query: \(query), totalPages: \(totalPageCount)")
         Task(priority: .userInitiated) {
             do {
-                // For test purpose only
-//                try await Task.sleep(seconds: 2)
                 let movie = try await searchMoviesUseCase.execute(useCaseRequest: .init(query: movieQuery, page: nextPage))
                 totalPageCount = movie.totalPages
                 currentPage = movie.page
                 await appendPage(results: movie.results)
                 loading.setItem(.none)
-            }
-            catch {
-                print(error)
-                print(error.localizedDescription)
+            } catch {
+                handleError(error: error)
             }
         }
     }
@@ -121,8 +117,8 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
 
     private func updateError(errorTitle: String = String(localized: LocalizationStrings.alert_error_title.rawValue), errorMessage: String) {
         loading.item = .none
-        error.item = AlertData(title: errorTitle,
-                               message: errorMessage)
+        alerData.item = AlertData(title: errorTitle,
+                                  message: errorMessage)
     }
 }
 
@@ -130,8 +126,6 @@ class DefaultSearchMoviesViewModel: SearchMoviesViewModel {
 
 extension DefaultSearchMoviesViewModel {
     func viewDidLoad() {
-        loadMovie(movieQuery: .init(query: "war"),
-                  loadingType: .screen)
     }
 
     func didSelectItem(index: Int) {
@@ -206,12 +200,10 @@ extension DefaultSearchMoviesViewModel {
     func showQueriesSuggestions() {
         // Check if not memory leak to pass func like this
         coordinator.showQueriesSuggestions(didSelect: update(movieQuery:))
-        print("A: showQueriesSuggestions")
     }
 
     func closeQueriesSuggestions() {
         coordinator.closeQueriesSuggestions()
-        print("A: closeQueriesSuggestions")
     }
 }
 
@@ -220,10 +212,16 @@ extension DefaultSearchMoviesViewModel: ReachabilityObservable {
         updateError(errorTitle: String(localized: LocalizationStrings.alert_error_title.rawValue),
                     errorMessage: String(localized: LocalizationStrings.no_internet_connection.rawValue))
     }
+
+    func showGeneralError() {
+        updateError(errorTitle: String(localized: LocalizationStrings.alert_error_title.rawValue),
+                    errorMessage: String(localized: LocalizationStrings.loading_issue_message.rawValue))
+    }
+
     func didReachabilityChange(to type: ReachabilityStatus) {
         switch type {
-        case .noInternet: break
-//            showNoInternetError()
+        case .noInternet:
+            showNoInternetError()
         case .reachable:
             break
         case .restricted:
@@ -239,5 +237,20 @@ extension DefaultSearchMoviesViewModel: ReachabilityObservable {
 
     func stopObserveRechability() {
         rechability.removeObserver(self)
+    }
+}
+
+extension DefaultSearchMoviesViewModel {
+    func handleError(error: Error) {
+        switch error {
+        case let SearchMoviesManagerError.retriesFailed(originalError: error):
+            if rechability.currentStatus == .noInternet {
+                showNoInternetError()
+            } else {
+                showGeneralError()
+            }
+        default:
+            showGeneralError()
+        }
     }
 }

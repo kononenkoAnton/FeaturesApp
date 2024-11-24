@@ -13,11 +13,9 @@ protocol SearchMoviesUseCase: Cancelable {
     func execute(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch
 }
 
-enum SearchError: Error {
+enum SearchMoviesUseCaseError: Error {
     case emptyQuery
 }
-
-
 
 class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     private let manager: SearchMoviesManager
@@ -31,28 +29,22 @@ class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     }
 
     func execute(useCaseRequest: SearchMoviewRequest) async throws -> MoviesSearch {
-        
         guard !useCaseRequest.isQueryEmpty else {
-            throw SearchError.emptyQuery
+            throw SearchMoviesUseCaseError.emptyQuery
         }
-        
-        do {
-            let task = Task(priority: .userInitiated) {
-                let searchResult = try await manager.searchMovies(useCaseRequest: useCaseRequest)
-                try await queryRepository.saveQuery(query: useCaseRequest.query)
 
-                return searchResult
-            }
+        let task = Task(priority: .userInitiated) {
+            let searchResult = try await manager.searchMovies(useCaseRequest: useCaseRequest)
+            try await queryRepository.saveQuery(query: useCaseRequest.query)
 
-            loadingTask = task
-            let moviesSearch = try await task.value
-            loadingTask = nil
-
-            return moviesSearch
-        } catch {
-            print(error)
-            throw error
+            return searchResult
         }
+
+        loadingTask = task
+        let moviesSearch = try await task.value
+        loadingTask = nil
+
+        return moviesSearch
     }
 
     func cancel() {

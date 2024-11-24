@@ -118,6 +118,29 @@
         }
       }
     },
+    "loading_issue_message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading issue, please try again later."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problema de carga, por favor inténtalo de nuevo más tarde."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проблема завантаження, будь ласка, спробуйте пізніше."
+          }
+        }
+      }
+    },
     "no_internet_connection" : {
       "extractionState" : "manual",
       "localizations" : {
